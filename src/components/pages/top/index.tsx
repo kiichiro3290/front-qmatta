@@ -1,4 +1,3 @@
-import React from 'react'
 import { TopPresenter } from './presenter'
 
 export type TopProps = {
