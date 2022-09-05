@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
-import { Top } from '~/components/pages/top'
+import { QmaPage } from '~/components/pages/qma'
 
 const Home: NextPage = () => {
-  return <Top />
+  return <QmaPage />
 }
 
 export default Home
