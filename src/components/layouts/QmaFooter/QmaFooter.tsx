@@ -8,7 +8,7 @@ export type QmaFooterProps = {
 }
 
 export const QmaFooter: React.FC<QmaFooterProps> = () => {
-  const [isShowDialogue, setIsShowDialogue] = useState(false)
+  const [isShowDialogue, setIsShowDialogue] = useState(true)
   const [dialogues, setDialogues] = useState<string[]>([])
   const [dialogue, setDialogue] = useState<string>('')
   const [composing, setComposition] = useState(false)
@@ -42,35 +42,36 @@ export const QmaFooter: React.FC<QmaFooterProps> = () => {
         position: 'fixed',
         py: '40px',
         width: '100%',
-        zIndex: 2,
       }}
     >
-      <Box sx={{ display: 'flex', margin: '0 auto', maxWidth: '800px' }}>
-        <InputBase
-          placeholder='クマに相談しよう！'
-          color='primary'
-          sx={{ borderBottom: '2px solid black', fontSize: '36px', mx: '12px', px: '24px' }}
-          fullWidth
-          value={dialogue}
-          onChange={(e) => {
-            setDialogue(e.target.value)
-          }}
-          onCompositionEnd={endComposition}
-          onCompositionStart={startComposition}
-          onKeyDown={(e) => onKeydown(e.key)}
-          endAdornment={
+      <Box>
+        <Box sx={{ margin: '0 auto', maxWidth: '560px' }}>
+          <InputBase
+            placeholder='クマに話しかける...'
+            color='primary'
+            sx={{ borderBottom: '2px solid #ddd', fontSize: '36px', mx: '12px', px: '24px' }}
+            fullWidth
+            value={dialogue}
+            onChange={(e) => {
+              setDialogue(e.target.value)
+            }}
+            onCompositionEnd={endComposition}
+            onCompositionStart={startComposition}
+            onKeyDown={(e) => onKeydown(e.key)}
+          />
+          <Box sx={{ display: 'flex' }}>
             <IconButton color='primary' aria-label='dialogue'>
               <Avatar sx={{ bgcolor: 'secondary.main' }}>
                 <TagFaces />
               </Avatar>
             </IconButton>
-          }
-        />
-        <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
-          <Avatar sx={{ bgcolor: 'primary.main' }}>
-            <SpeakerNotes />
-          </Avatar>
-        </IconButton>
+            <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
+              <Avatar sx={{ bgcolor: 'primary.main' }}>
+                <SpeakerNotes />
+              </Avatar>
+            </IconButton>
+          </Box>
+        </Box>
       </Box>
       <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
         <QmaDialogue dialogues={dialogues} />
