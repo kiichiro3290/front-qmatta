@@ -5,6 +5,7 @@ export const defaultTheme = createTheme({
     background: {
       default: '#F7FAFF',
     },
+    grey: { 100: '#dddddd' },
     primary: {
       contrastText: '#FFFFFF',
       dark: '#2329A7',
