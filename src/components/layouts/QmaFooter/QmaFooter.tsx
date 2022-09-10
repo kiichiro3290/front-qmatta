@@ -40,12 +40,24 @@ export const QmaFooter: React.FC<QmaFooterProps> = () => {
         boxShadow: '0px 2px 10px #5e5e5e',
         left: 0,
         position: 'fixed',
-        py: '40px',
+        py: '28px',
         width: '100%',
       }}
     >
       <Box>
         <Box sx={{ margin: '0 auto', maxWidth: '560px' }}>
+          <Box sx={{ display: 'flex' }}>
+            <IconButton color='primary' aria-label='dialogue'>
+              <Avatar sx={{ bgcolor: 'secondary.main' }}>
+                <TagFaces />
+              </Avatar>
+            </IconButton>
+            <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
+              <Avatar sx={{ bgcolor: 'primary.main' }}>
+                <SpeakerNotes />
+              </Avatar>
+            </IconButton>
+          </Box>
           <InputBase
             placeholder='クマに話しかける...'
             color='primary'
@@ -59,18 +71,6 @@ export const QmaFooter: React.FC<QmaFooterProps> = () => {
             onCompositionStart={startComposition}
             onKeyDown={(e) => onKeydown(e.key)}
           />
-          <Box sx={{ display: 'flex' }}>
-            <IconButton color='primary' aria-label='dialogue'>
-              <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                <TagFaces />
-              </Avatar>
-            </IconButton>
-            <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
-              <Avatar sx={{ bgcolor: 'primary.main' }}>
-                <SpeakerNotes />
-              </Avatar>
-            </IconButton>
-          </Box>
         </Box>
       </Box>
       <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
