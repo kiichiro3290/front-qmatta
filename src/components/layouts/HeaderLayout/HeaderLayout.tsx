@@ -1,5 +1,5 @@
-import { AccountCircle, Menu } from '@mui/icons-material'
-import { AppBar, Avatar, Box, Drawer, IconButton, MenuItem, Toolbar, Typography } from '@mui/material'
+import { Menu } from '@mui/icons-material'
+import { AppBar, Avatar, Box, Drawer, IconButton, Toolbar, Typography } from '@mui/material'
 import { useCallback, useState } from 'react'
 import { SideBar } from '../SideBar/SideBar'
 
@@ -26,10 +26,13 @@ export const HeaderLayout = () => {
             <IconButton size='large' edge='start' color='inherit' aria-label='menu' onClick={onClickMenuButton}>
               <Menu />
             </IconButton>
-            <Drawer anchor='left' open={isShowSideBar} onClose={onCloseMenuButton}>
-              <Box sx={{ px: '16px' }}>
-                <SideBar />
-              </Box>
+            <Drawer
+              anchor='left'
+              open={isShowSideBar}
+              onClose={onCloseMenuButton}
+              sx={{ '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '320px' } }}
+            >
+              <SideBar />
             </Drawer>
             <Typography>Qmatta</Typography>
           </Box>

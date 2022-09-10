@@ -19,27 +19,22 @@ export type SideBarProps = {
 
 export const SideBar: React.FC<SideBarProps> = () => {
   const router = useRouter()
-  const onClickQuestionButton = useCallback(() => {
-    router.push('/question')
-  }, [])
+
   const onClickQmaButton = useCallback(() => {
     router.push('/')
   }, [])
   const onClickWorkspaceButton = useCallback((workspaceId: string) => {
-    router.push('/record')
+    router.push(`/workspace/${workspaceId}`)
   }, [])
   const workspaces = [
-    { id: 'aaaa', name: 'python', photo: 'url' },
-    { id: 'bbbb', name: 'Go', photo: 'url' },
-    { id: 'cccc', name: 'Flutter', photo: 'url' },
+    { id: 'python', name: 'python', photo: 'url' },
+    { id: 'go', name: 'Go', photo: 'url' },
+    { id: 'flutter', name: 'Flutter', photo: 'url' },
   ]
   return (
-    <Box sx={{ height: '100vh', maxWidth: '100%', pt: '96px', px: '16px', width: 320 }}>
+    <Box sx={{ height: '100vh', margin: '0 auto', maxWidth: '320px', pt: '96px', px: '16px', width: '80%' }}>
       <Button fullWidth variant='contained' color='secondary' sx={{ my: '8px' }} onClick={onClickQmaButton}>
-        クマに相談する
-      </Button>
-      <Button fullWidth variant='contained' sx={{ my: '8px' }} onClick={onClickQuestionButton}>
-        質問する
+        クマに話しかける
       </Button>
 
       <Typography variant='h5' sx={{ fontWeight: 'bold', my: '16px' }}>
