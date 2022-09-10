@@ -38,13 +38,14 @@ export const QmaFooter: React.FC<QmaFooterProps> = () => {
       sx={{
         bottom: 0,
         boxShadow: '0px 2px 10px #5e5e5e',
+        left: 0,
         position: 'fixed',
-        py: '48px',
+        py: '40px',
         width: '100%',
         zIndex: 2,
       }}
     >
-      <Box sx={{ display: 'flex', maxWidth: '800px', mx: 'auto' }}>
+      <Box sx={{ display: 'flex', margin: '0 auto', maxWidth: '800px' }}>
         <InputBase
           placeholder='クマに相談しよう！'
           color='primary'
