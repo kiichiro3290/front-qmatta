@@ -1,16 +1,20 @@
 import { Box } from '@mui/material'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
 import qmaImg from 'public/quma.png'
 
 export type QmaPagePresenterProps = {
-  //
+  qmaMessage: any
 }
 
-export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = () => {
+export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({ qmaMessage }) => {
   const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
+
+  useEffect(() => {
+    console.log(qmaMessage)
+  }, [])
 
   return (
     <Box>
@@ -50,7 +54,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = () => {
               zIndex: 10,
             }}
           >
-            ああああ
+            {qmaMessage}
           </Box>
         ) : (
           <Box></Box>

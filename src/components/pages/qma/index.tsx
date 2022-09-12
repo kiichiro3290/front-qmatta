@@ -1,3 +1,4 @@
+import { useFetchQmaMessage } from '~/pages/api/fetch'
 import { QmaPagePresenter } from './presenter'
 
 export type QmaPageProps = {
@@ -5,5 +6,7 @@ export type QmaPageProps = {
 }
 
 export const QmaPage: React.FC<QmaPageProps> = () => {
-  return <QmaPagePresenter />
+  const { data, error } = useFetchQmaMessage()
+
+  return <QmaPagePresenter qmaMessage={data} />
 }
