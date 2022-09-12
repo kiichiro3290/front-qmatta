@@ -1,17 +1,32 @@
 import { Box } from '@mui/material'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useEffect } from 'react'
 import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
+
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
 import qmaImg from 'public/quma.png'
 
 export type QmaPagePresenterProps = {
-  qmaMessage: any
+  qmaMessage: string
+  isShowChatBaloon: boolean
+  onKeydown: (e: string) => void
+  startComposition: () => void
+  endComposition: () => void
+  onChangeDialogue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  dialogue: string
+  dialogues: string[]
 }
 
-export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({ qmaMessage }) => {
-  const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
-
+export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
+  dialogue,
+  dialogues,
+  endComposition,
+  isShowChatBaloon,
+  onChangeDialogue,
+  onKeydown,
+  qmaMessage,
+  startComposition,
+}) => {
   useEffect(() => {
     console.log(qmaMessage)
   }, [])
@@ -71,7 +86,14 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({ qmaMessage }
           <Image src={qmaImg.src} width='800px' height='800px' alt='qma' />
         </Box>
       </Box>
-      <QmaFooter />
+      <QmaFooter
+        onKeydown={onKeydown}
+        startComposition={startComposition}
+        endComposition={endComposition}
+        onChangeDialogue={onChangeDialogue}
+        dialogue={dialogue}
+        dialogues={dialogues}
+      />
     </Box>
   )
 }

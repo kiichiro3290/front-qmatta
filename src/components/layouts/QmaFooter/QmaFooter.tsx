@@ -1,35 +1,27 @@
 import { SpeakerNotes, TagFaces } from '@mui/icons-material'
 import { Avatar, Box, Drawer, IconButton, InputBase } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { ChangeEvent, useCallback, useState } from 'react'
 import { QmaDialogue } from '../QmaDialogue/QmaDialogue'
 
 export type QmaFooterProps = {
-  // TODO
+  onKeydown: (e: string) => void
+  startComposition: () => void
+  endComposition: () => void
+  onChangeDialogue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  dialogue: string
+  dialogues: string[]
 }
 
-export const QmaFooter: React.FC<QmaFooterProps> = () => {
-  const [isShowDialogue, setIsShowDialogue] = useState(true)
-  const [dialogues, setDialogues] = useState<string[]>([])
-  const [dialogue, setDialogue] = useState<string>('')
-  const [composing, setComposition] = useState(false)
-  const startComposition = () => setComposition(true)
-  const endComposition = () => setComposition(false)
+export const QmaFooter: React.FC<QmaFooterProps> = ({
+  dialogue,
+  dialogues,
+  endComposition,
+  onChangeDialogue,
+  onKeydown,
+  startComposition,
+}) => {
+  const [isShowDialogue, setIsShowDialogue] = useState<boolean>()
 
-  const onKeydown = (key: string) => {
-    switch (key) {
-      case 'Enter':
-        if (composing) {
-          break
-        } else {
-          // エンターキー押下時の処理
-          const newDialogues = dialogues
-          newDialogues.push(dialogue)
-          setDialogues(newDialogues)
-          setDialogue('')
-        }
-        break
-    }
-  }
   const onClickDialogueButton = useCallback(() => {
     setIsShowDialogue((flag) => !flag)
   }, [])
@@ -64,9 +56,7 @@ export const QmaFooter: React.FC<QmaFooterProps> = () => {
             sx={{ borderBottom: '2px solid #ddd', fontSize: '36px', mx: '12px', px: '24px' }}
             fullWidth
             value={dialogue}
-            onChange={(e) => {
-              setDialogue(e.target.value)
-            }}
+            onChange={(e) => onChangeDialogue(e)}
             onCompositionEnd={endComposition}
             onCompositionStart={startComposition}
             onKeyDown={(e) => onKeydown(e.key)}
