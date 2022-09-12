@@ -6,7 +6,7 @@ export type WorkSpacePagePresenterProps = {
   workspaceId: string | string[] | undefined
 }
 
-export const WorkSpacePagePresenter: React.FC<WorkSpacePagePresenterProps> = ({ workspaceId }) => {
+export const WorkSpacePagePresenter: React.FC<WorkSpacePagePresenterProps> = () => {
   return (
     <Box>
       <HeaderLayout />

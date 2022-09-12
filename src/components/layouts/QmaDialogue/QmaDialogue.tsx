@@ -7,9 +7,11 @@ export type QmaDialogueProps = {
 
 export const QmaDialogue: React.FC<QmaDialogueProps> = ({ dialogues }) => {
   return (
-    <Box sx={{ pt: '64px', px: '12px', width: 400, zIndex: 1 }}>
+    <Box sx={{ px: '16px', width: 400 }}>
       {dialogues.map((dialogue, index) => (
-        <Typography key={index}>{dialogue}</Typography>
+        <Box key={index} sx={{ backgroundColor: 'grey.100', borderRadius: '16px', my: '16px', p: '12px 24px' }}>
+          <Typography sx={{ fontSize: '20px' }}>{dialogue}</Typography>
+        </Box>
       ))}
     </Box>
   )

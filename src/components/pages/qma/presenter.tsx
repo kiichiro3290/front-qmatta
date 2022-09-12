@@ -1,8 +1,10 @@
-import { Box } from '@mui/material'
+import { Chat, ChevronLeftRounded, ChevronRightRounded } from '@mui/icons-material'
+import { Box, Drawer, IconButton, Typography } from '@mui/material'
 import Image from 'next/image'
-import { ChangeEvent, useEffect } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 
+import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
 import qmaImg from 'public/quma.png'
 
@@ -31,9 +33,46 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
     console.log(qmaMessage)
   }, [])
 
+  const [isShowDialogue, setIsShowDialogue] = useState<boolean>(true)
+
+  const onClickDialogueButton = useCallback(() => {
+    setIsShowDialogue((flag) => !flag)
+  }, [])
+
   return (
     <Box>
       <HeaderLayout />
+      <Box
+        sx={{
+          alignItems: 'center',
+          backgroundColor: 'grey.100',
+          border: 'solid 2px #ddd',
+          borderRadius: '8px 0px 0px 8px',
+          boxShadow: '0px 0px 2px',
+          display: 'flex',
+          height: '40px',
+          justifyContent: 'flex-start',
+          position: 'absolute',
+          right: '0',
+          top: '80px',
+          width: '36px',
+        }}
+      >
+        <IconButton size='small' aria-label='open-dialogue-modal' onClick={onClickDialogueButton}>
+          <ChevronLeftRounded />
+        </IconButton>
+      </Box>
+      <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
+        <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'flex-start', mt: '80px' }}>
+          <IconButton onClick={onClickDialogueButton}>
+            <ChevronLeftRounded />
+          </IconButton>
+          <Typography component='h1' variant='subtitle1' sx={{ fontSize: '24px', textAlign: 'center' }}>
+            議事録
+          </Typography>
+        </Box>
+        <QmaDialogue dialogues={dialogues} />
+      </Drawer>
       <Box
         sx={{
           display: 'flex',

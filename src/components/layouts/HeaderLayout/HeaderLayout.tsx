@@ -14,7 +14,7 @@ export const HeaderLayout = () => {
   }, [])
 
   return (
-    <AppBar position='fixed'>
+    <AppBar position='fixed' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Toolbar>
         <Box
           display='flex'

@@ -1,7 +1,6 @@
-import { SpeakerNotes, TagFaces } from '@mui/icons-material'
-import { Avatar, Box, Drawer, IconButton, InputBase } from '@mui/material'
-import { ChangeEvent, useCallback, useState } from 'react'
-import { QmaDialogue } from '../QmaDialogue/QmaDialogue'
+import { TagFaces } from '@mui/icons-material'
+import { Avatar, Box, IconButton, InputBase } from '@mui/material'
+import { ChangeEvent } from 'react'
 
 export type QmaFooterProps = {
   onKeydown: (e: string) => void
@@ -14,17 +13,11 @@ export type QmaFooterProps = {
 
 export const QmaFooter: React.FC<QmaFooterProps> = ({
   dialogue,
-  dialogues,
   endComposition,
   onChangeDialogue,
   onKeydown,
   startComposition,
 }) => {
-  const [isShowDialogue, setIsShowDialogue] = useState<boolean>()
-
-  const onClickDialogueButton = useCallback(() => {
-    setIsShowDialogue((flag) => !flag)
-  }, [])
   return (
     <Box
       sx={{
@@ -44,11 +37,6 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
                 <TagFaces />
               </Avatar>
             </IconButton>
-            <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
-              <Avatar sx={{ bgcolor: 'primary.main' }}>
-                <SpeakerNotes />
-              </Avatar>
-            </IconButton>
           </Box>
           <InputBase
             placeholder='クマに話しかける...'
@@ -63,9 +51,6 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
           />
         </Box>
       </Box>
-      <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
-        <QmaDialogue dialogues={dialogues} />
-      </Drawer>
     </Box>
   )
 }
