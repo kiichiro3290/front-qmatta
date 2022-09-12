@@ -1,5 +1,5 @@
 import { ChevronLeftRounded } from '@mui/icons-material'
-import { Box, Drawer, IconButton, Typography } from '@mui/material'
+import { Box, Divider, Drawer, IconButton, Typography } from '@mui/material'
 import Image from 'next/image'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
@@ -71,6 +71,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
           <Typography component='h1' variant='subtitle1' sx={{ fontSize: '24px', textAlign: 'center' }}>
             会話ログ
           </Typography>
+          <Divider />
         </Box>
         <QmaDialogue dialogues={dialogues} />
       </Drawer>

@@ -6,17 +6,21 @@ export const defaultTheme = createTheme({
       default: '#F7FAFF',
     },
     grey: { 100: '#e5e5e5' },
+    icon: {
+      blue: '#304ffe',
+      pink: '#FF5C57',
+    },
     primary: {
-      contrastText: '#FFFFFF',
-      dark: '#2329A7',
-      light: '#3581FF',
-      main: '#3C44FF',
+      contrastText: '#222222',
+      dark: '#FFDF99',
+      light: '#FFDF99',
+      main: '#FFAF03',
     },
     secondary: {
-      contrastText: '#FFFFFF',
-      dark: '#B32F2B',
+      contrastText: '#5e5e5e',
+      dark: '#1CE4FF',
       light: '#FF7570',
-      main: '#FF5C57',
+      main: '#B2F6FF',
     },
     text: {
       primary: '#555555',

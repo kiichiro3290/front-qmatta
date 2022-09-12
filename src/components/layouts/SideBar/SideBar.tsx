@@ -1,4 +1,4 @@
-import { ImageOutlined } from '@mui/icons-material'
+import { Add, ImageOutlined } from '@mui/icons-material'
 import {
   Avatar,
   Box,
@@ -33,7 +33,11 @@ export const SideBar: React.FC<SideBarProps> = () => {
   ]
   return (
     <Box sx={{ height: '100vh', margin: '0 auto', maxWidth: '320px', pt: '96px', px: '16px', width: '80%' }}>
-      <Button fullWidth variant='contained' color='secondary' sx={{ my: '8px' }} onClick={onClickQmaButton}>
+      <Typography variant='h5' sx={{ fontWeight: 'bold', my: '16px' }}>
+        TOP
+      </Typography>
+
+      <Button fullWidth variant='contained' color='primary' sx={{ mb: '24px', mt: '8px' }} onClick={onClickQmaButton}>
         クマに話しかける
       </Button>
 
@@ -43,7 +47,7 @@ export const SideBar: React.FC<SideBarProps> = () => {
 
       <Divider />
 
-      <MenuList sx={{ my: '16px' }}>
+      <MenuList sx={{ my: '20px' }}>
         {workspaces.map((workspace) => (
           <MenuItem key={workspace.id} onClick={() => onClickWorkspaceButton(workspace.id)}>
             <ListItemAvatar>
@@ -54,21 +58,13 @@ export const SideBar: React.FC<SideBarProps> = () => {
             <ListItemText primary={workspace.name} />
           </MenuItem>
         ))}
-      </MenuList>
-      <Button fullWidth variant='contained' sx={{ my: '24px' }}>
-        ワークスペースを追加
-      </Button>
-
-      <Divider />
-
-      {/* <MenuList>
-        <MenuItem sx={{ my: '16px' }}>
-          <ListItemIcon>
-            <Cloud fontSize='small' />
-          </ListItemIcon>
-          <ListItemText>Web Clipboard</ListItemText>
+        <MenuItem>
+          <Avatar>
+            <Add />
+          </Avatar>
+          <ListItemText primary={'追加する'} sx={{ ml: '16px' }} />
         </MenuItem>
-      </MenuList> */}
+      </MenuList>
     </Box>
   )
 }

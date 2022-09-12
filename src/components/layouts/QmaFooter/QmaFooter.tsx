@@ -42,12 +42,12 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
       >
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: '12px', width: '100%' }}>
           <IconButton color='primary' aria-label='dialogue'>
-            <Avatar sx={{ bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ bgcolor: 'icon.pink' }}>
               <TagFaces />
             </Avatar>
           </IconButton>
           <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
-            <Avatar sx={{ bgcolor: 'primary.main' }}>
+            <Avatar sx={{ bgcolor: 'icon.blue' }}>
               <Chat />
             </Avatar>
           </IconButton>
