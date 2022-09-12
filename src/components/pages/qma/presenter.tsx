@@ -1,4 +1,4 @@
-import { Chat, ChevronLeftRounded, ChevronRightRounded } from '@mui/icons-material'
+import { ChevronLeftRounded } from '@mui/icons-material'
 import { Box, Drawer, IconButton, Typography } from '@mui/material'
 import Image from 'next/image'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
@@ -42,7 +42,8 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   return (
     <Box>
       <HeaderLayout />
-      <Box
+      {/* 検討：Dialogueモーダルを開閉するトグルボタンをどこに配置するか */}
+      {/* <Box
         sx={{
           alignItems: 'center',
           backgroundColor: 'grey.100',
@@ -61,14 +62,14 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         <IconButton size='small' aria-label='open-dialogue-modal' onClick={onClickDialogueButton}>
           <ChevronLeftRounded />
         </IconButton>
-      </Box>
+      </Box> */}
       <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
         <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'flex-start', mt: '80px' }}>
           <IconButton onClick={onClickDialogueButton}>
             <ChevronLeftRounded />
           </IconButton>
           <Typography component='h1' variant='subtitle1' sx={{ fontSize: '24px', textAlign: 'center' }}>
-            議事録
+            会話ログ
           </Typography>
         </Box>
         <QmaDialogue dialogues={dialogues} />
@@ -88,7 +89,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
             sx={{
               '&::before': {
                 border: '36px solid transparent',
-                borderLeft: '80px solid #dddddd',
+                borderLeft: '80px solid #e5e5e5',
                 content: '""',
                 display: 'block',
                 left: '64%',
@@ -131,7 +132,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         endComposition={endComposition}
         onChangeDialogue={onChangeDialogue}
         dialogue={dialogue}
-        dialogues={dialogues}
+        onClickDialogueButton={onClickDialogueButton}
       />
     </Box>
   )

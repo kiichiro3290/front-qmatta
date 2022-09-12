@@ -37,7 +37,6 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           // バックエンドからクマのセリフを取得する
           const data = await fetchQmaMessage()
           setQmaMessage(data)
-          console.log('bug', data)
         }
         break
     }
