@@ -42,27 +42,6 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   return (
     <Box>
       <HeaderLayout />
-      {/* 検討：Dialogueモーダルを開閉するトグルボタンをどこに配置するか */}
-      {/* <Box
-        sx={{
-          alignItems: 'center',
-          backgroundColor: 'grey.100',
-          border: 'solid 2px #ddd',
-          borderRadius: '8px 0px 0px 8px',
-          boxShadow: '0px 0px 2px',
-          display: 'flex',
-          height: '40px',
-          justifyContent: 'flex-start',
-          position: 'absolute',
-          right: '0',
-          top: '80px',
-          width: '36px',
-        }}
-      >
-        <IconButton size='small' aria-label='open-dialogue-modal' onClick={onClickDialogueButton}>
-          <ChevronLeftRounded />
-        </IconButton>
-      </Box> */}
       <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
         <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'flex-start', mt: '80px' }}>
           <IconButton onClick={onClickDialogueButton}>

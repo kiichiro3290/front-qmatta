@@ -1,10 +1,24 @@
-import { Menu } from '@mui/icons-material'
-import { AppBar, Avatar, Box, Drawer, IconButton, Toolbar, Typography } from '@mui/material'
+import { Menu as MenuIcon } from '@mui/icons-material'
+import {
+  AppBar,
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from '@mui/material'
+import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { SideBar } from '../SideBar/SideBar'
 
 export const HeaderLayout = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false)
 
   const onClickMenuButton = useCallback(() => {
     setIsShowSideBar(true)
@@ -13,6 +27,9 @@ export const HeaderLayout = () => {
     setIsShowSideBar(false)
   }, [])
 
+  const handleCloseDialog = useCallback(() => {
+    setOpenDialog(false)
+  }, [])
   return (
     <AppBar position='fixed' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Toolbar>
@@ -24,7 +41,7 @@ export const HeaderLayout = () => {
         >
           <Box display='flex' sx={{ alignItems: 'center' }}>
             <IconButton size='large' edge='start' color='inherit' aria-label='menu' onClick={onClickMenuButton}>
-              <Menu />
+              <MenuIcon />
             </IconButton>
             <Drawer
               anchor='left'
@@ -36,7 +53,30 @@ export const HeaderLayout = () => {
             </Drawer>
             <Typography>Qmatta</Typography>
           </Box>
-          <Avatar />
+          <Button onClick={() => setOpenDialog(true)}>
+            <Avatar />
+          </Button>
+          <Menu
+            open={openDialog}
+            onClose={handleCloseDialog}
+            anchorOrigin={{
+              horizontal: 'right',
+              vertical: 'top',
+            }}
+          >
+            <Typography sx={{ py: '16px', textAlign: 'center' }}>アカウント情報</Typography>
+            <Divider />
+            <MenuItem>
+              <Link href='/account'>
+                <Button fullWidth sx={{ color: 'text.primary' }}>
+                  <Avatar />
+                  <Typography color='text.primary' sx={{ mx: '12px' }}>
+                    マイページ
+                  </Typography>
+                </Button>
+              </Link>
+            </MenuItem>
+          </Menu>
         </Box>
       </Toolbar>
     </AppBar>
