@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useState } from 'react'
-import { fetchQmaMessage } from '~/pages/api/fetch'
+import { fetchQmaMessage, postQmaMessage } from '~/pages/api/fetch'
 
 import { QmaPagePresenter } from './presenter'
 
@@ -35,7 +35,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           // チャットバルーンを表示
           setIsShowChatBaloon(true)
           // バックエンドからクマのセリフを取得する
-          const data = await fetchQmaMessage()
+          const data = await postQmaMessage('6332924a0c15d205ec196f66', dialogue)
           setQmaMessage(data)
         }
         break
