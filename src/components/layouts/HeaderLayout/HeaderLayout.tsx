@@ -64,12 +64,11 @@ export const HeaderLayout = () => {
               vertical: 'top',
             }}
           >
-            <Typography sx={{ py: '16px', textAlign: 'center' }}>アカウント情報</Typography>
+            <Typography sx={{ py: '12px', textAlign: 'center' }}>アカウント情報</Typography>
             <Divider />
             <MenuItem>
               <Link href='/account'>
                 <Button fullWidth sx={{ color: 'text.primary' }}>
-                  <Avatar />
                   <Typography color='text.primary' sx={{ mx: '12px' }}>
                     マイページ
                   </Typography>
@@ -79,7 +78,6 @@ export const HeaderLayout = () => {
             <MenuItem>
               <Link href='/account'>
                 <Button fullWidth sx={{ color: 'text.primary' }}>
-                  <Avatar />
                   <Typography color='text.primary' sx={{ mx: '12px' }}>
                     ログイン
                   </Typography>
