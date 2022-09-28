@@ -1,6 +1,8 @@
 import { Chat, TagFaces } from '@mui/icons-material'
-import { Avatar, Box, IconButton, InputBase } from '@mui/material'
-import { ChangeEvent } from 'react'
+import { Avatar, Box, Divider, IconButton, InputBase, Popover, Typography } from '@mui/material'
+import React, { ChangeEvent } from 'react'
+import numaIcon from 'public/numa.svg'
+import sukkiriIcon from 'public/sukkiri.png'
 
 export type QmaFooterProps = {
   onKeydown: (e: string) => void
@@ -9,14 +11,22 @@ export type QmaFooterProps = {
   onChangeDialogue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   onClickDialogueButton: () => void
   dialogue: string
+  openStampPop: boolean
+  handleCloseStampPop: () => void
+  handleOpenStampPop: (event: React.MouseEvent<HTMLButtonElement>) => void
+  stampAnchorEl: HTMLButtonElement | null
 }
 
 export const QmaFooter: React.FC<QmaFooterProps> = ({
   dialogue,
   endComposition,
+  handleCloseStampPop,
+  handleOpenStampPop,
   onChangeDialogue,
   onClickDialogueButton,
   onKeydown,
+  openStampPop,
+  stampAnchorEl,
   startComposition,
 }) => {
   return (
@@ -41,11 +51,36 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
         }}
       >
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: '12px', width: '100%' }}>
-          <IconButton color='primary' aria-label='dialogue'>
+          <IconButton color='primary' aria-label='dialogue' onClick={(e) => handleOpenStampPop(e)}>
             <Avatar sx={{ bgcolor: 'icon.pink' }}>
               <TagFaces />
             </Avatar>
           </IconButton>
+          <Popover
+            open={openStampPop}
+            onClose={handleCloseStampPop}
+            anchorEl={stampAnchorEl}
+            anchorOrigin={{
+              horizontal: 'left',
+              vertical: 'top',
+            }}
+            transformOrigin={{
+              horizontal: 'left',
+              vertical: 'bottom',
+            }}
+          >
+            <Box sx={{ p: '12px' }}>
+              <Typography sx={{ fontWeight: 'bold', pb: '8px', textAlign: 'center' }}>スタンプ一覧</Typography>
+              <Divider sx={{ mb: '12px' }} />
+              <IconButton>
+                <Avatar src={numaIcon.src} />
+              </IconButton>
+              <IconButton>
+                <Avatar src={sukkiriIcon.src} />
+              </IconButton>
+            </Box>
+          </Popover>
+
           <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
             <Avatar sx={{ bgcolor: 'icon.blue' }}>
               <Chat />

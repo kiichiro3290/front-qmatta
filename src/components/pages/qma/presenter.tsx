@@ -29,14 +29,22 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   qmaMessage,
   startComposition,
 }) => {
+  const [isShowDialogue, setIsShowDialogue] = useState<boolean>(true)
+  const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(null)
+
   useEffect(() => {
     console.log(qmaMessage)
   }, [])
 
-  const [isShowDialogue, setIsShowDialogue] = useState<boolean>(true)
-
   const onClickDialogueButton = useCallback(() => {
     setIsShowDialogue((flag) => !flag)
+  }, [])
+
+  const handleCloseStampPop = useCallback(() => {
+    setStampAnchorEl(null)
+  }, [])
+  const handleOpenStampPop = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    setStampAnchorEl(event.currentTarget)
   }, [])
 
   return (
@@ -113,6 +121,10 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         onChangeDialogue={onChangeDialogue}
         dialogue={dialogue}
         onClickDialogueButton={onClickDialogueButton}
+        openStampPop={Boolean(stampAnchorEl)}
+        handleCloseStampPop={handleCloseStampPop}
+        handleOpenStampPop={handleOpenStampPop}
+        stampAnchorEl={stampAnchorEl}
       />
     </Box>
   )
