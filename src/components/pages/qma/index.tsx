@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useState } from 'react'
-import { postQmaMessage } from '~/pages/api/fetch'
+import { postQmaMessage } from '~/pages/api/bear'
 
 import { QmaPagePresenter } from './presenter'
 
