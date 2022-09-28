@@ -76,6 +76,16 @@ export const HeaderLayout = () => {
                 </Button>
               </Link>
             </MenuItem>
+            <MenuItem>
+              <Link href='/account'>
+                <Button fullWidth sx={{ color: 'text.primary' }}>
+                  <Avatar />
+                  <Typography color='text.primary' sx={{ mx: '12px' }}>
+                    ログイン
+                  </Typography>
+                </Button>
+              </Link>
+            </MenuItem>
           </Menu>
         </Box>
       </Toolbar>
