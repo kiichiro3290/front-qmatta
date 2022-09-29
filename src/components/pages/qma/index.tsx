@@ -25,6 +25,8 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
   const endComposition = () => setComposition(false)
   // クマのセリフの受け皿
   const [qmaMessage, setQmaMessage] = useState<string>('')
+  // クマの口が開いているかどうか
+  const [isOpenBearMouth, setIsOpenBearMouth] = useState<boolean>(false)
 
   const onKeydown = async (key: string) => {
     switch (key) {
@@ -40,6 +42,8 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           setDialogue('')
           // チャットバルーンを表示
           setIsShowChatBaloon(true)
+          // 画像を変更
+          setIsOpenBearMouth((isOpen) => !isOpen)
           // バックエンドからクマのセリフを取得する
           const userId = '6332924a0c15d205ec196f66'
           const data = await postQmaMessage(userId, dialogue)
@@ -91,6 +95,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
       dialogues={dialogues}
       messageHistory={messageHistory}
       communityList={communityList}
+      isOpenBearMouth={isOpenBearMouth}
     />
   )
 }

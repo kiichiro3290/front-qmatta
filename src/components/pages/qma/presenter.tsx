@@ -1,12 +1,13 @@
 import { ChevronLeftRounded } from '@mui/icons-material'
 import { Box, Divider, Drawer, IconButton, Typography } from '@mui/material'
 import Image from 'next/image'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useState } from 'react'
 import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 
 import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
-import qmaImg from 'public/quma.png'
+import bear2Img from 'public/bear2.png'
+import bearImg from 'public/quma.png'
 
 export type QmaPagePresenterProps = {
   qmaMessage: string
@@ -19,6 +20,7 @@ export type QmaPagePresenterProps = {
   dialogues: string[]
   messageHistory: string[]
   communityList: string[]
+  isOpenBearMouth: boolean
 }
 
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
@@ -26,6 +28,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   dialogue,
   dialogues,
   endComposition,
+  isOpenBearMouth,
   isShowChatBaloon,
   messageHistory,
   onChangeDialogue,
@@ -111,7 +114,11 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
             zIndex: 12,
           }}
         >
-          <Image src={qmaImg.src} width='800px' height='800px' alt='qma' />
+          {isOpenBearMouth ? (
+            <Image src={bear2Img.src} width='800px' height='800px' alt='qma' />
+          ) : (
+            <Image src={bearImg.src} width='800px' height='800px' alt='qma2' />
+          )}
         </Box>
       </Box>
       <QmaFooter
