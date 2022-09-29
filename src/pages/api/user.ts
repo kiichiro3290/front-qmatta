@@ -16,3 +16,12 @@ export const getMessageHistory = async (userId: string): Promise<string[]> => {
   const result = await axios.get(`${url}/bear/history/${userId}`)
   return result.data.message
 }
+
+// 自分が加入しているコミュニティの一覧を取得する: GET
+// (userId: string) => comunity_name: string[]
+export const getCommunityList = async (userId: string): Promise<string[]> => {
+  const result = await axios.get(`${url}/user/community/${userId}`)
+  const data = []
+  data.push(result.data.communityName)
+  return data
+}

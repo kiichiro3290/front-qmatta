@@ -18,9 +18,11 @@ export type QmaPagePresenterProps = {
   dialogue: string
   dialogues: string[]
   messageHistory: string[]
+  communityList: string[]
 }
 
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
+  communityList,
   dialogue,
   dialogues,
   endComposition,
@@ -47,7 +49,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 
   return (
     <Box>
-      <HeaderLayout />
+      <HeaderLayout communityList={communityList} />
       <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
         <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'flex-start', mt: '80px' }}>
           <IconButton onClick={onClickDialogueButton}>

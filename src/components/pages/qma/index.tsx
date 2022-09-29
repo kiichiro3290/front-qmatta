@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { postQmaMessage } from '~/pages/api/bear'
-import { getMessageHistory } from '~/pages/api/user'
+import { getCommunityList, getMessageHistory } from '~/pages/api/user'
 
 import { QmaPagePresenter } from './presenter'
 
@@ -16,6 +16,9 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
   const [dialogue, setDialogue] = useState<string>('')
   // メッセージをクマに送信するたびに，配列に追加する
   const [dialogues, setDialogues] = useState<string[]>([])
+  // コミュニティ一覧を取得する
+  const [communityList, setCommunityList] = useState<string[]>([])
+
   // エンターキーを押下したか，かな字変換をしたかを制御するための State
   const [composing, setComposition] = useState(false)
   const startComposition = () => setComposition(true)
@@ -61,11 +64,20 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
     const f = async () => {
       const userId = '6332924a0c15d205ec196f66'
       const data = await getMessageHistory(userId)
-      console.log(data)
       setMessageHistory(data)
     }
     f()
   }, [])
+
+  // コミュニティの一覧を取得する
+  useEffect(() => {
+    const f = async () => {
+      const userId = '6332924a0c15d205ec196f66'
+      const data = await getCommunityList(userId)
+      setCommunityList(data)
+    }
+    f()
+  })
 
   return (
     <QmaPagePresenter
@@ -78,6 +90,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
       dialogue={dialogue}
       dialogues={dialogues}
       messageHistory={messageHistory}
+      communityList={communityList}
     />
   )
 }

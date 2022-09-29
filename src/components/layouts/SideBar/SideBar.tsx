@@ -14,10 +14,10 @@ import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 
 export type SideBarProps = {
-  // Todo
+  communityList: string[]
 }
 
-export const SideBar: React.FC<SideBarProps> = () => {
+export const SideBar: React.FC<SideBarProps> = ({ communityList }) => {
   const router = useRouter()
 
   const onClickQmaButton = useCallback(() => {
@@ -26,11 +26,6 @@ export const SideBar: React.FC<SideBarProps> = () => {
   const onClickWorkspaceButton = useCallback((workspaceId: string) => {
     router.push(`/workspace/${workspaceId}`)
   }, [])
-  const workspaces = [
-    { id: 'python', name: 'python', photo: 'url' },
-    { id: 'go', name: 'Go', photo: 'url' },
-    { id: 'flutter', name: 'Flutter', photo: 'url' },
-  ]
   return (
     <Box sx={{ height: '100vh', margin: '0 auto', maxWidth: '320px', pt: '96px', px: '16px', width: '80%' }}>
       <Typography variant='h5' sx={{ fontWeight: 'bold', my: '16px' }}>
@@ -48,14 +43,14 @@ export const SideBar: React.FC<SideBarProps> = () => {
       <Divider />
 
       <MenuList sx={{ my: '20px' }}>
-        {workspaces.map((workspace) => (
-          <MenuItem key={workspace.id} onClick={() => onClickWorkspaceButton(workspace.id)}>
+        {communityList.map((community) => (
+          <MenuItem key={community} onClick={() => onClickWorkspaceButton(community)}>
             <ListItemAvatar>
               <Avatar>
                 <ImageOutlined />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={workspace.name} />
+            <ListItemText primary={community} />
           </MenuItem>
         ))}
         <MenuItem>

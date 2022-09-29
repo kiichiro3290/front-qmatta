@@ -16,7 +16,11 @@ import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { SideBar } from '../SideBar/SideBar'
 
-export const HeaderLayout = () => {
+export type HeaderLayoutProps = {
+  communityList: string[]
+}
+
+export const HeaderLayout: React.FC<HeaderLayoutProps> = ({ communityList }) => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
   const [openDialog, setOpenDialog] = useState(false)
 
@@ -49,7 +53,7 @@ export const HeaderLayout = () => {
               onClose={onCloseMenuButton}
               sx={{ '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '320px' } }}
             >
-              <SideBar />
+              <SideBar communityList={communityList} />
             </Drawer>
             <Typography>Qmatta</Typography>
           </Box>
