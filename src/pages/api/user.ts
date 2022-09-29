@@ -9,3 +9,10 @@ export const sendUserStatus = async (stampId: string, userId: string) => {
   const result = await axios.patch(`${url}/user/status/${userId}`, data)
   return result.data.response
 }
+
+// メッセージの送信履歴を取得する: GET
+// (userId: string) => string[]
+export const getMessageHistory = async (userId: string): Promise<string[]> => {
+  const result = await axios.get(`${url}/bear/history/${userId}`)
+  return result.data.message
+}

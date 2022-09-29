@@ -1,5 +1,6 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { postQmaMessage } from '~/pages/api/bear'
+import { getMessageHistory } from '~/pages/api/user'
 
 import { QmaPagePresenter } from './presenter'
 
@@ -9,6 +10,8 @@ export type QmaPageProps = {
 
 export const QmaPage: React.FC<QmaPageProps> = () => {
   const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(false)
+  // メッセージの送信履歴
+  const [messageHistory, setMessageHistory] = useState<string[]>([])
   // 入力したメッセージの受け皿
   const [dialogue, setDialogue] = useState<string>('')
   // メッセージをクマに送信するたびに，配列に追加する
@@ -35,7 +38,8 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           // チャットバルーンを表示
           setIsShowChatBaloon(true)
           // バックエンドからクマのセリフを取得する
-          const data = await postQmaMessage('6332924a0c15d205ec196f66', dialogue)
+          const userId = '6332924a0c15d205ec196f66'
+          const data = await postQmaMessage(userId, dialogue)
           setQmaMessage(data)
         }
         break
@@ -52,6 +56,17 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
     }
   }, [])
 
+  // メッセージの送信履歴を取得する
+  useEffect(() => {
+    const f = async () => {
+      const userId = '6332924a0c15d205ec196f66'
+      const data = await getMessageHistory(userId)
+      console.log(data)
+      setMessageHistory(data)
+    }
+    f()
+  }, [])
+
   return (
     <QmaPagePresenter
       qmaMessage={qmaMessage}
@@ -62,6 +77,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
       onChangeDialogue={onChangeDialogue}
       dialogue={dialogue}
       dialogues={dialogues}
+      messageHistory={messageHistory}
     />
   )
 }

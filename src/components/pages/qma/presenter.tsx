@@ -17,6 +17,7 @@ export type QmaPagePresenterProps = {
   onChangeDialogue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   dialogue: string
   dialogues: string[]
+  messageHistory: string[]
 }
 
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
@@ -24,6 +25,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   dialogues,
   endComposition,
   isShowChatBaloon,
+  messageHistory,
   onChangeDialogue,
   onKeydown,
   qmaMessage,
@@ -31,10 +33,6 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 }) => {
   const [isShowDialogue, setIsShowDialogue] = useState<boolean>(true)
   const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(null)
-
-  useEffect(() => {
-    console.log(qmaMessage)
-  }, [])
 
   const onClickDialogueButton = useCallback(() => {
     setIsShowDialogue((flag) => !flag)
@@ -60,7 +58,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
           </Typography>
           <Divider />
         </Box>
-        <QmaDialogue dialogues={dialogues} />
+        <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
       </Drawer>
       <Box
         sx={{
