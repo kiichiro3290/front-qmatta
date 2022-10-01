@@ -9,7 +9,7 @@ export type WorkSpacePagePresenterProps = {
 export const WorkSpacePagePresenter: React.FC<WorkSpacePagePresenterProps> = () => {
   return (
     <Box>
-      <HeaderLayout />
+      <HeaderLayout communityList={[]} />
       <Box sx={{ display: 'flex', mt: '96px' }}>
         <Box sx={{ flex: 1, p: '32px' }}>
           <MenuTabs />
