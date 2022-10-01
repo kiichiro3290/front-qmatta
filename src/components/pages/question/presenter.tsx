@@ -9,7 +9,7 @@ export type QuestionPagePresenterProps = {
 export const QuestionPagePresenter: React.FC<QuestionPagePresenterProps> = () => {
   return (
     <Box>
-      <HeaderLayout />
+      <HeaderLayout communityList={[]} />
       <Box sx={{ display: 'flex', mt: '96px' }}>
         <Box sx={{ flex: 1, p: '32px' }}>
           <MenuTabs />

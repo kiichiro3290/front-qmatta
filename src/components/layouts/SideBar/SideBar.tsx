@@ -1,4 +1,4 @@
-import { ImageOutlined } from '@mui/icons-material'
+import { Add, ImageOutlined } from '@mui/icons-material'
 import {
   Avatar,
   Box,
@@ -14,35 +14,26 @@ import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 
 export type SideBarProps = {
-  onCloseSideBar: () => void
+  communityList: string[]
 }
 
-export const SideBar: React.FC<SideBarProps> = ({ onCloseSideBar }) => {
+export const SideBar: React.FC<SideBarProps> = ({ communityList }) => {
   const router = useRouter()
-  const onClickMyPageButton = useCallback(() => {
-    router.push('/account')
-    onCloseSideBar()
-  }, [])
+
   const onClickQmaButton = useCallback(() => {
     router.push('/')
-    onCloseSideBar()
   }, [])
   const onClickWorkspaceButton = useCallback((workspaceId: string) => {
-    router.push(`/record/${workspaceId}`)
-    onCloseSideBar()
+    router.push(`/workspace/${workspaceId}`)
   }, [])
-  const workspaces = [
-    { id: 'aaaa', name: 'python', photo: 'url' },
-    { id: 'bbbb', name: 'Go', photo: 'url' },
-    { id: 'cccc', name: 'Flutter', photo: 'url' },
-  ]
   return (
-    <Box sx={{ height: '100vh', maxWidth: '100%', pt: '96px', px: '16px', width: 320 }}>
-      <Button fullWidth variant='contained' color='secondary' sx={{ my: '8px' }} onClick={onClickQmaButton}>
-        クマに相談する
-      </Button>
-      <Button fullWidth variant='contained' sx={{ my: '8px' }} onClick={onClickMyPageButton}>
-        マイページ
+    <Box sx={{ height: '100vh', margin: '0 auto', maxWidth: '320px', pt: '96px', px: '16px', width: '80%' }}>
+      <Typography variant='h5' sx={{ fontWeight: 'bold', my: '16px' }}>
+        TOP
+      </Typography>
+
+      <Button fullWidth variant='contained' color='primary' sx={{ mb: '24px', mt: '8px' }} onClick={onClickQmaButton}>
+        クマに話しかける
       </Button>
 
       <Typography variant='h5' sx={{ fontWeight: 'bold', my: '16px' }}>
@@ -51,21 +42,24 @@ export const SideBar: React.FC<SideBarProps> = ({ onCloseSideBar }) => {
 
       <Divider />
 
-      <MenuList sx={{ my: '16px' }}>
-        {workspaces.map((workspace) => (
-          <MenuItem key={workspace.id} onClick={() => onClickWorkspaceButton(workspace.id)}>
+      <MenuList sx={{ my: '20px' }}>
+        {communityList.map((community) => (
+          <MenuItem key={community} onClick={() => onClickWorkspaceButton(community)}>
             <ListItemAvatar>
               <Avatar>
                 <ImageOutlined />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={workspace.name} />
+            <ListItemText primary={community} />
           </MenuItem>
         ))}
+        <MenuItem>
+          <Avatar>
+            <Add />
+          </Avatar>
+          <ListItemText primary={'追加する'} sx={{ ml: '16px' }} />
+        </MenuItem>
       </MenuList>
-      <Button fullWidth variant='contained' sx={{ my: '24px' }}>
-        ワークスペースを追加
-      </Button>
     </Box>
   )
 }

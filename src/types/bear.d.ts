@@ -1,0 +1,3 @@
+type UserMessageToBear = {
+  message: string
+}

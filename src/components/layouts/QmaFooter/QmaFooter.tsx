@@ -1,80 +1,104 @@
-import { SpeakerNotes, TagFaces } from '@mui/icons-material'
-import { Avatar, Box, Drawer, IconButton, InputBase } from '@mui/material'
-import { useCallback, useState } from 'react'
-import { QmaDialogue } from '../QmaDialogue/QmaDialogue'
+import { Chat, TagFaces } from '@mui/icons-material'
+import { Avatar, Box, Divider, IconButton, InputBase, Popover, Typography } from '@mui/material'
+import React, { ChangeEvent } from 'react'
+import numaIcon from 'public/numa.svg'
+import sukkiriIcon from 'public/sukkiri.png'
 
 export type QmaFooterProps = {
-  // TODO
+  onKeydown: (e: string) => void
+  startComposition: () => void
+  endComposition: () => void
+  onChangeDialogue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onClickDialogueButton: () => void
+  dialogue: string
+  openStampPop: boolean
+  handleCloseStampPop: () => void
+  handleOpenStampPop: (event: React.MouseEvent<HTMLButtonElement>) => void
+  stampAnchorEl: HTMLButtonElement | null
 }
 
-export const QmaFooter: React.FC<QmaFooterProps> = () => {
-  const [isShowDialogue, setIsShowDialogue] = useState(false)
-  const [dialogues, setDialogues] = useState<string[]>([])
-  const [dialogue, setDialogue] = useState<string>('')
-  const [composing, setComposition] = useState(false)
-  const startComposition = () => setComposition(true)
-  const endComposition = () => setComposition(false)
-  const closeDialogue = () => setIsShowDialogue(false)
-
-  const onKeydown = (key: string) => {
-    switch (key) {
-      case 'Enter':
-        if (composing) {
-          break
-        } else {
-          // エンターキー押下時の処理
-          const newDialogues = dialogues
-          newDialogues.push(dialogue)
-          setDialogues(newDialogues)
-          setDialogue('')
-        }
-        break
-    }
-  }
-  const onClickDialogueButton = useCallback(() => {
-    setIsShowDialogue((flag) => !flag)
-  }, [])
+export const QmaFooter: React.FC<QmaFooterProps> = ({
+  dialogue,
+  endComposition,
+  handleCloseStampPop,
+  handleOpenStampPop,
+  onChangeDialogue,
+  onClickDialogueButton,
+  onKeydown,
+  openStampPop,
+  stampAnchorEl,
+  startComposition,
+}) => {
   return (
     <Box
       sx={{
         bottom: 0,
-        boxShadow: '0px 2px 10px #5e5e5e',
+        left: 0,
         position: 'fixed',
-        py: '48px',
         width: '100%',
-        zIndex: 2,
       }}
     >
-      <Box sx={{ display: 'flex', maxWidth: '800px', mx: 'auto' }}>
+      <Box
+        sx={{
+          border: '1px solid #dddddd',
+          borderRadius: '40px 40px 0px 0px',
+          boxShadow: '0px 0px 10px #dddddd',
+          margin: '0 auto',
+          maxWidth: '560px',
+          pb: '32px',
+          pt: '16px',
+          px: '20px',
+        }}
+      >
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: '12px', width: '100%' }}>
+          <IconButton color='primary' aria-label='dialogue' onClick={(e) => handleOpenStampPop(e)}>
+            <Avatar sx={{ bgcolor: 'icon.pink' }}>
+              <TagFaces />
+            </Avatar>
+          </IconButton>
+          <Popover
+            open={openStampPop}
+            onClose={handleCloseStampPop}
+            anchorEl={stampAnchorEl}
+            anchorOrigin={{
+              horizontal: 'left',
+              vertical: 'top',
+            }}
+            transformOrigin={{
+              horizontal: 'left',
+              vertical: 'bottom',
+            }}
+          >
+            <Box sx={{ p: '12px' }}>
+              <Typography sx={{ fontWeight: 'bold', pb: '8px', textAlign: 'center' }}>スタンプ一覧</Typography>
+              <Divider sx={{ mb: '12px' }} />
+              <IconButton>
+                <Avatar src={numaIcon.src} />
+              </IconButton>
+              <IconButton>
+                <Avatar src={sukkiriIcon.src} />
+              </IconButton>
+            </Box>
+          </Popover>
+
+          <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
+            <Avatar sx={{ bgcolor: 'icon.blue' }}>
+              <Chat />
+            </Avatar>
+          </IconButton>
+        </Box>
         <InputBase
-          placeholder='クマに相談しよう！'
+          placeholder='クマに話しかける...'
           color='primary'
-          sx={{ borderBottom: '2px solid black', fontSize: '36px', mx: '12px', px: '24px' }}
-          fullWidth
+          sx={{ backgroundColor: 'grey.100', borderRadius: '4px', fontSize: '24px', px: '12px', py: '16px' }}
           value={dialogue}
-          onChange={(e) => {
-            setDialogue(e.target.value)
-          }}
+          fullWidth
+          onChange={(e) => onChangeDialogue(e)}
           onCompositionEnd={endComposition}
           onCompositionStart={startComposition}
           onKeyDown={(e) => onKeydown(e.key)}
-          endAdornment={
-            <IconButton color='primary' aria-label='dialogue'>
-              <Avatar sx={{ bgcolor: 'secondary.main' }}>
-                <TagFaces />
-              </Avatar>
-            </IconButton>
-          }
         />
-        <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
-          <Avatar sx={{ bgcolor: 'primary.main' }}>
-            <SpeakerNotes />
-          </Avatar>
-        </IconButton>
       </Box>
-      <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
-        <QmaDialogue dialogues={dialogues} closeDialogue={closeDialogue} />
-      </Drawer>
     </Box>
   )
 }

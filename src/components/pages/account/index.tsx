@@ -1,9 +1,5 @@
 import { AccountPagePresenter } from './presenter'
 
-export type AccountPageProps = {
-  //
-}
-
-export const AccountPage: React.FC<AccountPageProps> = () => {
+export const AccountPage: React.FC = () => {
   return <AccountPagePresenter />
 }
