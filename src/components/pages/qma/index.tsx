@@ -45,7 +45,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           // 画像を変更
           setIsOpenBearMouth((isOpen) => !isOpen)
           // バックエンドからクマのセリフを取得する
-          const userId = '6332924a0c15d205ec196f66'
+          const userId = '6337d95220ca491584c6aef1'
           const data = await postQmaMessage(userId, dialogue)
           setQmaMessage(data)
         }
@@ -66,7 +66,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
   // メッセージの送信履歴を取得する
   useEffect(() => {
     const f = async () => {
-      const userId = '6332924a0c15d205ec196f66'
+      const userId = '6337d95220ca491584c6aef1'
       const data = await getMessageHistory(userId)
       setMessageHistory(data)
     }
@@ -76,7 +76,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
   // コミュニティの一覧を取得する
   useEffect(() => {
     const f = async () => {
-      const userId = '6332924a0c15d205ec196f66'
+      const userId = '6337d95220ca491584c6aef1'
       const data = await getCommunityList(userId)
       setCommunityList(data)
     }
