@@ -16,11 +16,12 @@ export const QmaDialogue: React.FC<QmaDialogueProps> = ({ dialogues, messageHist
       <Typography variant='h5' sx={{ pt: '12px' }}>
         過去の会話
       </Typography>
-      {messageHistory.map((dialogue, index) => (
-        <Box key={index} sx={{ backgroundColor: 'grey.100', borderRadius: '16px', my: '20px', p: '12px 24px' }}>
-          <Typography sx={{ fontSize: '16px' }}>{dialogue}</Typography>
-        </Box>
-      ))}
+      {messageHistory &&
+        messageHistory.map((dialogue, index) => (
+          <Box key={index} sx={{ backgroundColor: 'grey.100', borderRadius: '16px', my: '20px', p: '12px 24px' }}>
+            <Typography sx={{ fontSize: '16px' }}>{dialogue}</Typography>
+          </Box>
+        ))}
     </Box>
   )
 }

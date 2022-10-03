@@ -37,7 +37,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
         } else {
           // エンターキー押下時の処理
           const newDialogues = dialogues
-          newDialogues.push(dialogue)
+          newDialogues.unshift(dialogue)
           setDialogues(newDialogues)
           setDialogue('')
           // チャットバルーンを表示
@@ -45,7 +45,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           // 画像を変更
           setIsOpenBearMouth((isOpen) => !isOpen)
           // バックエンドからクマのセリフを取得する
-          const userId = '6337d95220ca491584c6aef1'
+          const userId = '633a87204fb8b2bca8efe5f4'
           const data = await postQmaMessage(userId, dialogue)
           setQmaMessage(data)
         }
@@ -66,7 +66,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
   // メッセージの送信履歴を取得する
   useEffect(() => {
     const f = async () => {
-      const userId = '6337d95220ca491584c6aef1'
+      const userId = '633a87204fb8b2bca8efe5f4'
       const data = await getMessageHistory(userId)
       setMessageHistory(data)
     }
@@ -76,7 +76,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
   // コミュニティの一覧を取得する
   useEffect(() => {
     const f = async () => {
-      const userId = '6337d95220ca491584c6aef1'
+      const userId = '633a87204fb8b2bca8efe5f4'
       const data = await getCommunityList(userId)
       setCommunityList(data)
     }
