@@ -1,5 +1,5 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { getQmaMessage } from '~/pages/api/bear'
+import { getAIQmaMessage, postQmaMessage } from '~/pages/api/bear'
 
 import { getCommunityList, getMessageHistory } from '~/pages/api/user'
 
@@ -37,18 +37,29 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           break
         } else {
           // エンターキー押下時の処理
-          const newDialogues = dialogues
-          newDialogues.unshift(dialogue)
-          setDialogues(newDialogues)
+          //会話ログを更新
+          if (dialogue != '') {
+            const newDialogues = dialogues
+            newDialogues.unshift(dialogue)
+            setDialogues(newDialogues)
+          }
+          // メッセージをリセット
           setDialogue('')
           // チャットバルーンを表示
           setIsShowChatBaloon(true)
           // 画像を変更
           setIsOpenBearMouth((isOpen) => !isOpen)
-          // バックエンドからクマのセリフを取得する
-          const userId = '633a87204fb8b2bca8efe5f4'
-          const data = await getQmaMessage(userId, dialogue)
-          setQmaMessage(data)
+          // クマのセリフを更新する
+          if (dialogue == '') {
+            setQmaMessage('困ったことがあったら教えて')
+          } else {
+            // バックエンドからクマのセリフを取得する
+            const userId = '633a87204fb8b2bca8efe5f4'
+            const data = await postQmaMessage(userId, dialogue)
+            // AIによる返答を取得する
+            // const data = await getAIQmaMessage(userId, dialogue)
+            setQmaMessage(data)
+          }
         }
         break
     }
