@@ -88,7 +88,7 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
           </IconButton>
         </Box>
         <InputBase
-          placeholder='クマに話しかける...'
+          placeholder='コンパイル通らない...😂'
           color='primary'
           sx={{ backgroundColor: 'grey.100', borderRadius: '4px', fontSize: '24px', px: '12px', py: '16px' }}
           value={dialogue}
