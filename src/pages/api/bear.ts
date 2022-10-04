@@ -12,13 +12,17 @@ export const fetchQmaMessage = async () => {
   return data
 }
 
+// クマのメッセージを取得する & メッセージをDBに保存: POST
+// (userID: string, message: string) => message: string
+export const postQmaMessage = async (userId: string, message: string): Promise<string> => {
+  const data: UserMessageToBear = { message }
+  const result = await axios.post(`${url}/bear/${userId}`, data)
+  return result.data.response
+}
 // meboのapiを叩いて，返答を取得する
 // 無料版で800messages/month, ¥2800/monthで10000messages/month
 // (userID: string, message: string) => message: string
-export const getQmaMessage = async (userId: string, message: string): Promise<string> => {
-  if (message == '') {
-    return '困ったことがあったら教えて'
-  }
+export const getAIQmaMessage = async (userId: string, message: string): Promise<string> => {
   const data = {
     agent_id: '6804034f-7bf4-4291-9c1d-b3e786887ae41839c82164f1a9',
     api_key: '64d60c35-9735-442b-8579-f50443c4aa031839ca21cb5e5',
