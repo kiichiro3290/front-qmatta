@@ -10,7 +10,7 @@ export type QmaPageProps = {
 }
 
 export const QmaPage: React.FC<QmaPageProps> = () => {
-  const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(false)
+  const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
   // メッセージの送信履歴
   const [messageHistory, setMessageHistory] = useState<string[]>([])
   // 入力したメッセージの受け皿
@@ -25,7 +25,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
   const startComposition = () => setComposition(true)
   const endComposition = () => setComposition(false)
   // クマのセリフの受け皿
-  const [qmaMessage, setQmaMessage] = useState<string>('')
+  const [qmaMessage, setQmaMessage] = useState<string>('困ったことがあったら教えて')
   // クマの口が開いているかどうか
   const [isOpenBearMouth, setIsOpenBearMouth] = useState<boolean>(false)
 
