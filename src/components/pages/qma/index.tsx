@@ -37,22 +37,19 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           break
         } else {
           // エンターキー押下時の処理
-          //会話ログを更新
-          if (dialogue != '') {
+          // 入力が空の時
+          if (dialogue == '') {
+            // クマが入力を促す
+            setQmaMessage('困ったことがあったら教えて')
+          }
+          // 入力がある時
+          else {
+            //会話ログを更新
             const newDialogues = dialogues
             newDialogues.unshift(dialogue)
             setDialogues(newDialogues)
-          }
-          // メッセージをリセット
-          setDialogue('')
-          // チャットバルーンを表示
-          setIsShowChatBaloon(true)
-          // 画像を変更
-          setIsOpenBearMouth((isOpen) => !isOpen)
-          // クマのセリフを更新する
-          if (dialogue == '') {
-            setQmaMessage('困ったことがあったら教えて')
-          } else {
+            // メッセージをリセット
+            setDialogue('')
             // バックエンドからクマのセリフを取得する
             const userId = '633a87204fb8b2bca8efe5f4'
             const data = await postQmaMessage(userId, dialogue)
@@ -60,6 +57,10 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
             // const data = await getAIQmaMessage(userId, dialogue)
             setQmaMessage(data)
           }
+          // 画像を変更
+          setIsOpenBearMouth((isOpen) => !isOpen)
+          // チャットバルーンを表示
+          setIsShowChatBaloon(true)
         }
         break
     }
