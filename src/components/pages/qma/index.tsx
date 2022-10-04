@@ -1,5 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { postQmaMessage } from '~/pages/api/bear'
+import { getQmaMessage } from '~/pages/api/bear'
+
 import { getCommunityList, getMessageHistory } from '~/pages/api/user'
 
 import { QmaPagePresenter } from './presenter'
@@ -46,7 +47,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           setIsOpenBearMouth((isOpen) => !isOpen)
           // バックエンドからクマのセリフを取得する
           const userId = '633a87204fb8b2bca8efe5f4'
-          const data = await postQmaMessage(userId, dialogue)
+          const data = await getQmaMessage(userId, dialogue)
           setQmaMessage(data)
         }
         break
@@ -57,6 +58,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
   const onChangeDialogue = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (dialogue === '') {
       setIsShowChatBaloon(false)
+      setQmaMessage('...')
       setDialogue(e.target.value)
     } else {
       setDialogue(e.target.value)
