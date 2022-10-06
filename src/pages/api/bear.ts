@@ -4,6 +4,7 @@ import axios from 'axios'
 // import useSWR from 'swr'
 
 const url = process.env.NEXT_PUBLIC_BASE_URL ?? ''
+const mebo_url = process.env.NEXT_PUBLIC_MEBO_URL ?? ''
 
 // クマのメッセージを取得する（簡易版）: GET
 // () => message: string
@@ -18,4 +19,18 @@ export const postQmaMessage = async (userId: string, message: string): Promise<s
   const data: UserMessageToBear = { message }
   const result = await axios.post(`${url}/bear/${userId}`, data)
   return result.data.response
+}
+// meboのapiを叩いて，返答を取得する
+// 無料版で800messages/month, ¥2800/monthで10000messages/month
+// (userID: string, message: string) => message: string
+export const getAIQmaMessage = async (userId: string, message: string): Promise<string> => {
+  const data = {
+    agent_id: process.env.NEXT_PUBLIC_MEBO_AGENT_ID,
+    api_key: process.env.NEXT_PUBLIC_MEBO_API_KEY,
+    uid: userId,
+    utterance: message,
+  }
+  const result = await axios.post(mebo_url, data)
+  const answer = result.data.bestResponse.utterance
+  return answer
 }
