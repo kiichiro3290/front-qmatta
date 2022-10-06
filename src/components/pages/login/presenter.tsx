@@ -1,16 +1,6 @@
-import {
-  Alert,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Snackbar,
-  Typography,
-} from '@mui/material'
+import { Alert, Box, Button, Snackbar, Typography } from '@mui/material'
 import Link from 'next/link'
+import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/PasswordAuthForm'
 
 export type LogInPagePresenterProps = {
@@ -29,6 +19,7 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
   const iconSrc = '/kosenLab.svg'
   return (
     <Box>
+      <HeaderLayout communityList={[]} />
       <Box sx={{ maxWidth: '540px', mt: '64px', mx: 'auto', p: '48px', textAlign: 'center' }}>
         <Box component='img' alt='' src={iconSrc} sx={{ display: 'block', mx: 'auto', width: { sm: 200, xs: 140 } }} />
         <Typography variant='inherit' component='h2' sx={{ my: '16px' }}>

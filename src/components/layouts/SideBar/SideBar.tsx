@@ -43,16 +43,17 @@ export const SideBar: React.FC<SideBarProps> = ({ communityList }) => {
       <Divider />
 
       <MenuList sx={{ my: '20px' }}>
-        {communityList.map((community) => (
-          <MenuItem key={community} onClick={() => onClickWorkspaceButton(community)}>
-            <ListItemAvatar>
-              <Avatar>
-                <ImageOutlined />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={community} />
-          </MenuItem>
-        ))}
+        {communityList &&
+          communityList.map((community) => (
+            <MenuItem key={community} onClick={() => onClickWorkspaceButton(community)}>
+              <ListItemAvatar>
+                <Avatar>
+                  <ImageOutlined />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={community} />
+            </MenuItem>
+          ))}
         <MenuItem>
           <Avatar>
             <Add />
