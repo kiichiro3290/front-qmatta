@@ -1,4 +1,5 @@
 import { Alert, Box, Snackbar, Typography } from '@mui/material'
+import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/PasswordAuthForm'
 
 export type SignUpPagePresenterProps = {
@@ -17,6 +18,7 @@ export const SignUpPagePresenter: React.FC<SignUpPagePresenterProps> = ({
   const iconSrc = '/kosenLab.svg'
   return (
     <Box>
+      <HeaderLayout communityList={[]} />
       <Box sx={{ maxWidth: '540px', mt: '64px', mx: 'auto', p: '48px', textAlign: 'center' }}>
         <Box
           component='img'
@@ -25,7 +27,7 @@ export const SignUpPagePresenter: React.FC<SignUpPagePresenterProps> = ({
           sx={{ display: 'block', mb: '36px', mx: 'auto', width: { sm: 200, xs: 140 } }}
         />
         <Typography variant='inherit' component='h2' sx={{ my: '16px' }}>
-          新規登録してインターン / バイトを探す
+          アカウント新規登録
         </Typography>
         <Box>
           <Snackbar
