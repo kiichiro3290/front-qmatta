@@ -95,7 +95,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
       setCommunityList(data)
     }
     f()
-  })
+  }, [])
 
   return (
     <QmaPagePresenter
