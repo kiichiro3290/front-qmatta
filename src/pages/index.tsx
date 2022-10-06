@@ -6,8 +6,8 @@ const Home: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Qmatta作成予定地</title>
-        <meta name='description' content='qmatta 作成予定地' />
+        <title>Qmatta</title>
+        <meta name='description' content='qmatta' />
         <link rel='icon' href='/quma2.png' />
       </Head>
       <QmaPage />
