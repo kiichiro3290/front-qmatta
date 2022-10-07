@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAIQmaMessage, postQmaMessage } from '~/pages/api/bear'
+import { fetchQmaMessage, getAIQmaMessage, postQmaMessage } from '~/pages/api/bear'
 import { getCommunityList, getMessageHistory, logInUser } from '~/pages/api/user'
 import { AppDispatch } from '~/store'
 import { fetchUserDataState } from '~/store/user/actions'
@@ -60,11 +60,16 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
             setDialogues(newDialogues)
             // メッセージをリセット
             setDialogue('')
-            // バックエンドからクマのセリフを取得する
-            const data = await postQmaMessage(userId ?? '', dialogue)
-            // AIによる返答を取得する
-            // const data = await getAIQmaMessage(userId, dialogue)
-            setQmaMessage(data)
+            if (isLoggedIn && userId) {
+              // バックエンドからクマのセリフを取得する
+              // const data = await postQmaMessage(userId, dialogue)
+              // AIによる返答を取得する
+              const data = await getAIQmaMessage(userId, dialogue)
+              setQmaMessage(data)
+            } else {
+              const data = await fetchQmaMessage()
+              setQmaMessage(data)
+            }
           }
           // 画像を変更
           setIsOpenBearMouth((isOpen) => !isOpen)
