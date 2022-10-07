@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import { CommunityPage } from '~/components/pages/community'
 
-const WorkSpace: NextPage = () => {
+const Community: NextPage = () => {
   return <CommunityPage />
 }
 
-export default WorkSpace
+export default Community
