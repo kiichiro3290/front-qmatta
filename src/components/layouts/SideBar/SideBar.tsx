@@ -23,8 +23,8 @@ export const SideBar: React.FC<SideBarProps> = ({ communityList }) => {
   const onClickQmaButton = useCallback(() => {
     router.push('/')
   }, [])
-  const onClickWorkspaceButton = useCallback((workspaceId: string) => {
-    router.push(`/workspace/${workspaceId}`)
+  const onClickWorkspaceButton = useCallback((communityId: string) => {
+    router.push(`/communities/${communityId}`)
   }, [])
   return (
     <Box sx={{ height: '100vh', margin: '0 auto', maxWidth: '320px', pt: '96px', px: '16px', width: '80%' }}>
