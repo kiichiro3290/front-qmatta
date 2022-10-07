@@ -1,7 +1,11 @@
+import { useRouter } from 'next/router'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { getAIQmaMessage, postQmaMessage } from '~/pages/api/bear'
-
-import { getCommunityList, getMessageHistory } from '~/pages/api/user'
+import { getCommunityList, getMessageHistory, logInUser } from '~/pages/api/user'
+import { AppDispatch } from '~/store'
+import { fetchUserDataState } from '~/store/user/actions'
+import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
 
 import { QmaPagePresenter } from './presenter'
 
@@ -10,6 +14,12 @@ export type QmaPageProps = {
 }
 
 export const QmaPage: React.FC<QmaPageProps> = () => {
+  const router = useRouter()
+  const dispatch: AppDispatch = useDispatch()
+  // reduxで管理している状態
+  const isLoggedIn = useSelector(selectIsLoggedIn)
+  const userId = useSelector(selectUserId)
+
   const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
   // メッセージの送信履歴
   const [messageHistory, setMessageHistory] = useState<string[]>([])
@@ -51,8 +61,7 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
             // メッセージをリセット
             setDialogue('')
             // バックエンドからクマのセリフを取得する
-            const userId = '633a87204fb8b2bca8efe5f4'
-            const data = await postQmaMessage(userId, dialogue)
+            const data = await postQmaMessage(userId ?? '', dialogue)
             // AIによる返答を取得する
             // const data = await getAIQmaMessage(userId, dialogue)
             setQmaMessage(data)
@@ -77,25 +86,49 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
     }
   }, [])
 
-  // メッセージの送信履歴を取得する
+  // 認証状態を確認する
   useEffect(() => {
     const f = async () => {
-      const userId = '633a87204fb8b2bca8efe5f4'
-      const data = await getMessageHistory(userId)
-      setMessageHistory(data)
+      // localstrage
+      const email = localStorage.getItem('email')
+      const password = localStorage.getItem('password')
+      console.log('local', email, password)
+      // メールアドレスとパスワードを認証する
+      if (email && password) {
+        const result = await logInUser(email, password)
+        if (result.result) {
+          localStorage.setItem('email', email)
+          localStorage.setItem('password', password)
+          dispatch(fetchUserDataState(result.user))
+          router.push('/')
+          return
+        }
+      }
     }
     f()
   }, [])
 
+  // メッセージの送信履歴を取得する
+  useEffect(() => {
+    const f = async () => {
+      if (userId) {
+        const data = await getMessageHistory(userId)
+        setMessageHistory(data)
+      }
+    }
+    f()
+  }, [isLoggedIn])
+
   // コミュニティの一覧を取得する
   useEffect(() => {
     const f = async () => {
-      const userId = '633a87204fb8b2bca8efe5f4'
-      const data = await getCommunityList(userId)
-      setCommunityList(data)
+      if (userId) {
+        const data = await getCommunityList(userId)
+        setCommunityList(data)
+      }
     }
     f()
-  }, [])
+  }, [isLoggedIn])
 
   return (
     <QmaPagePresenter
