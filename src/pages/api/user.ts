@@ -21,7 +21,30 @@ export const getMessageHistory = async (userId: string): Promise<string[]> => {
 // (userId: string) => comunity_name: string[]
 export const getCommunityList = async (userId: string): Promise<string[]> => {
   const result = await axios.get(`${url}/user/community/${userId}`)
-  const data = []
-  data.push(result.data.communityName)
-  return data
+  const communityList = result.data.communityName
+  return communityList
+}
+
+// ユーザの新規登録
+// (emailAddress: string, password: string) => { result: boolean, msg: string }
+export const signUpUser = async (emailAddress: string, password: string) => {
+  const body = {
+    emailAddress,
+    password,
+  }
+  const response = await axios.post(`${url}/signup`, body)
+  const data = response.data
+  return { msg: data.msg, result: data.result }
+}
+
+// ユーザの認証
+// (emailAddress: string, password: string) => { result: boolean, user: User }
+export const logInUser = async (emailAddress: string, password: string) => {
+  const body = {
+    emailAddress,
+    password,
+  }
+  const response = await axios.post(`${url}/login`, body)
+  const data = response.data
+  return { result: data.result, user: data.user }
 }
