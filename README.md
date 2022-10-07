@@ -1,4 +1,7 @@
 ## Qmatta とは
+
+![image](https://user-images.githubusercontent.com/80093134/194593649-e5a5ee43-77cf-4ab3-a460-c09d98c07fa5.png)
+
 ベアプログラミングをアプリ上で実現するサービスです．
 
 ### ベアプログラミングとは
