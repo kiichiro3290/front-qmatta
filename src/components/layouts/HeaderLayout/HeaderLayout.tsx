@@ -80,7 +80,7 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({ communityList }) => 
               </Link>
             </MenuItem>
             <MenuItem>
-              <Link href='/account'>
+              <Link href='/login'>
                 <Button fullWidth sx={{ color: 'text.primary' }}>
                   <Typography color='text.primary' sx={{ mx: '12px' }}>
                     ログイン
