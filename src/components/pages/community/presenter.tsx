@@ -2,11 +2,11 @@ import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 import { MenuTabs } from '~/components/layouts/MenuTabs/Menutabs'
 
-export type WorkSpacePagePresenterProps = {
-  workspaceId: string | string[] | undefined
+export type CommunityPagePresenterProps = {
+  communityId: string
 }
 
-export const WorkSpacePagePresenter: React.FC<WorkSpacePagePresenterProps> = () => {
+export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = () => {
   return (
     <Box>
       <HeaderLayout communityList={[]} />
