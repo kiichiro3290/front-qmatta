@@ -58,8 +58,12 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
             const newDialogues = dialogues
             newDialogues.unshift(dialogue)
             setDialogues(newDialogues)
+            // チャットバルーンを表示
+            setIsShowChatBaloon(true)
             // メッセージをリセット
             setDialogue('')
+            // AI 思考時間
+            setQmaMessage('...')
             if (isLoggedIn && userId) {
               // バックエンドからクマのセリフを取得する
               // const data = await postQmaMessage(userId, dialogue)
@@ -73,8 +77,6 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
           }
           // 画像を変更
           setIsOpenBearMouth((isOpen) => !isOpen)
-          // チャットバルーンを表示
-          setIsShowChatBaloon(true)
         }
         break
     }
@@ -82,13 +84,8 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
 
   // 文字を入力したとき
   const onChangeDialogue = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (dialogue === '') {
-      setIsShowChatBaloon(false)
-      setQmaMessage('...')
-      setDialogue(e.target.value)
-    } else {
-      setDialogue(e.target.value)
-    }
+    setIsShowChatBaloon(false)
+    setDialogue(e.target.value)
   }, [])
 
   // 認証状態を確認する
