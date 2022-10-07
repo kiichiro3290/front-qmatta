@@ -92,7 +92,6 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
       // localstrage
       const email = localStorage.getItem('email')
       const password = localStorage.getItem('password')
-      console.log('local', email, password)
       // メールアドレスとパスワードを認証する
       if (email && password) {
         const result = await logInUser(email, password)
