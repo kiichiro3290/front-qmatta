@@ -63,13 +63,15 @@ export const QmaPage: React.FC = () => {
             if (isLoggedIn && userId) {
               try {
                 // バックエンドからクマのセリフを取得する
-                // const data = await postQmaMessage(userId, dialogue)
+                const data = await postQmaMessage(userId, dialogue)
                 // AIによる返答を取得する
-                const data = await getAIQmaMessage(userId, dialogue)
+                // const data = await getAIQmaMessage(userId, dialogue)
                 setQmaMessage(data)
               } catch (e) {
+                console.log(e)
+                setQmaMessage('')
                 // エラーが出た時は，適当なメッセージを返す
-                const data = await fetchQmaMessage()
+                const data = await postQmaMessage(userId, dialogue)
                 setQmaMessage(data)
               }
             } else {
