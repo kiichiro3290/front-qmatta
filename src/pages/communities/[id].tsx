@@ -2,7 +2,11 @@ import type { NextPage } from 'next'
 import { CommunityPage } from '~/components/pages/community'
 
 const Community: NextPage = () => {
-  return <CommunityPage />
+  return (
+    <>
+      <CommunityPage />
+    </>
+  )
 }
 
 export default Community

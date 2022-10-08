@@ -27,7 +27,7 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = () 
               質問タイトル
             </Typography>
             <TextField fullWidth placeholder='Leave a title' sx={[{ mb: '16px' }, { ckgroundColor: '#eeeeee' }]} />
-            <Typography variant='subtitle1' sx={{ mb: '12px' }}>
+            <Typography variant='subtitle1' sx={{ mb: '16px' }}>
               質問内容
             </Typography>
             <TextField

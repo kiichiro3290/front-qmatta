@@ -9,11 +9,7 @@ import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
 
 import { QmaPagePresenter } from './presenter'
 
-export type QmaPageProps = {
-  // TODO
-}
-
-export const QmaPage: React.FC<QmaPageProps> = () => {
+export const QmaPage: React.FC = () => {
   const router = useRouter()
   const dispatch: AppDispatch = useDispatch()
   // reduxで管理している状態
@@ -65,12 +61,19 @@ export const QmaPage: React.FC<QmaPageProps> = () => {
             // AI 思考時間
             setQmaMessage('...')
             if (isLoggedIn && userId) {
-              // バックエンドからクマのセリフを取得する
-              // const data = await postQmaMessage(userId, dialogue)
-              // AIによる返答を取得する
-              const data = await getAIQmaMessage(userId, dialogue)
-              setQmaMessage(data)
+              try {
+                // バックエンドからクマのセリフを取得する
+                const data = await postQmaMessage(userId, dialogue)
+                // AIによる返答を取得する
+                // const data = await getAIQmaMessage(userId, dialogue)
+                setQmaMessage(data)
+              } catch (e) {
+                // エラーが出た時は，適当なメッセージを返す
+                const data = await fetchQmaMessage()
+                setQmaMessage(data)
+              }
             } else {
+              // ログインしていない時は，適当なメッセージを返す
               const data = await fetchQmaMessage()
               setQmaMessage(data)
             }
