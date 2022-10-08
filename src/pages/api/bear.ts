@@ -9,8 +9,8 @@ const mebo_url = process.env.NEXT_PUBLIC_MEBO_URL ?? ''
 // クマのメッセージを取得する（簡易版）: GET
 // () => message: string
 export const fetchQmaMessage = async () => {
-  const data = await axios.get(url).then((res) => res.data)
-  return data
+  const data = await axios.get(`${url}/bear`).then((res) => res.data)
+  return data.response
 }
 
 // クマのメッセージを取得する & メッセージをDBに保存: POST
