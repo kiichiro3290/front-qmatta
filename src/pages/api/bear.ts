@@ -1,7 +1,11 @@
-import axios from 'axios'
 // swr はデータ取得専用
 // https://www.sukerou.com/2019/05/axios.html
 // import useSWR from 'swr'
+
+import axios from 'axios'
+axios.defaults.baseURL = 'https://qmatta.vercel.app/'
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
 
 const url = process.env.NEXT_PUBLIC_BASE_URL ?? ''
 const mebo_url = process.env.NEXT_PUBLIC_MEBO_URL ?? ''
