@@ -1,5 +1,6 @@
-import { Alert, Box, Snackbar, Typography } from '@mui/material'
 import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/PasswordAuthForm'
+
+import { Alert, Box, Snackbar, Typography } from '@mui/material'
 
 export type SignUpPagePresenterProps = {
   onClickSignUpButton: (email: string, password: string) => void
@@ -25,23 +26,23 @@ export const SignUpPagePresenter: React.FC<SignUpPagePresenterProps> = ({
           textAlign: 'center',
         }}
       >
-        <Typography variant='inherit' component='h2' sx={{ my: '16px' }}>
+        <Typography component='h2' sx={{ my: '16px' }} variant='inherit'>
           アカウント新規登録
         </Typography>
         <Box>
           <Snackbar
-            open={isOpenSnackbar}
-            autoHideDuration={2000}
-            onClose={handleCloseSnackbar}
             anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+            autoHideDuration={2000}
+            open={isOpenSnackbar}
             sx={{ top: { md: 180, sm: 180, xs: 160 } }}
+            onClose={handleCloseSnackbar}
           >
             <Alert severity='error'>{snackbarMessage}</Alert>
           </Snackbar>
         </Box>
         <PasswordAuthForm
-          onClickSubmitButton={onClickSignUpButton}
           buttonText='新規登録する'
+          onClickSubmitButton={onClickSignUpButton}
         />
       </Box>
     </Box>

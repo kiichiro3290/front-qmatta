@@ -1,7 +1,8 @@
-import { Box, Divider, Typography } from '@mui/material'
-import { Fragment } from 'react'
 import { DialogueTextContainer } from '~/components/uiParts/DialogueTextContainer/DialogueTextContainer'
 import { lightTheme } from '~/theme'
+
+import { Box, Divider, Typography } from '@mui/material'
+import { Fragment } from 'react'
 
 export type QmaDialogueProps = {
   dialogues: string[]
@@ -24,7 +25,7 @@ export const QmaDialogue: React.FC<QmaDialogueProps> = ({
 
       <Divider sx={{ mt: lightTheme.spacing(2) }} />
 
-      <Typography variant='h5' sx={{ pt: lightTheme.spacing(2) }}>
+      <Typography sx={{ pt: lightTheme.spacing(2) }} variant='h5'>
         過去の会話
       </Typography>
 

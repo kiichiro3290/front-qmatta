@@ -1,6 +1,7 @@
+import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/PasswordAuthForm'
+
 import { Alert, Box, Button, Snackbar, Typography } from '@mui/material'
 import Link from 'next/link'
-import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/PasswordAuthForm'
 
 export type LogInPagePresenterProps = {
   onClickLoginButton: (email: string, password: string) => void
@@ -26,12 +27,12 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
           textAlign: 'center',
         }}
       >
-        <Typography variant='inherit' component='h2' sx={{ my: '16px' }}>
+        <Typography component='h2' sx={{ my: '16px' }} variant='inherit'>
           ログインする
         </Typography>
         <PasswordAuthForm
-          onClickSubmitButton={onClickLoginButton}
           buttonText='ログイン'
+          onClickSubmitButton={onClickLoginButton}
         />
         <Box display='flex' flexDirection='column' sx={{ mt: '12px' }}>
           <Link href='/resetPassword'>
@@ -45,11 +46,11 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
         </Box>
 
         <Snackbar
-          open={isOpenSnackbar}
-          autoHideDuration={2000}
-          onClose={handleCloseSnackbar}
           anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+          autoHideDuration={2000}
+          open={isOpenSnackbar}
           sx={{ top: { md: 180, sm: 180, xs: 160 } }}
+          onClose={handleCloseSnackbar}
         >
           <Alert severity='error'>{snackbarMessage}</Alert>
         </Snackbar>

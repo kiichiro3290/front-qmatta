@@ -1,17 +1,9 @@
-import { Chat, TagFaces } from '@mui/icons-material'
-import {
-  Avatar,
-  Box,
-  Container,
-  Divider,
-  IconButton,
-  InputBase,
-  Popover,
-  Typography,
-} from '@mui/material'
-import React, { ChangeEvent } from 'react'
 import { StampMenu } from '~/components/uiParts/StampMenu/StampMenu'
 import { lightTheme } from '~/theme'
+
+import { Chat, TagFaces } from '@mui/icons-material'
+import { Avatar, Box, Container, IconButton, InputBase } from '@mui/material'
+import { ChangeEvent } from 'react'
 
 export type QmaFooterProps = {
   onKeydown: (e: string) => void
@@ -72,8 +64,8 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
         }}
       >
         <IconButton
-          color='primary'
           aria-label='dialogue'
+          color='primary'
           onClick={(e) => handleOpenStampPop(e)}
         >
           <Avatar sx={{ bgcolor: 'icon.pink' }}>
@@ -83,14 +75,14 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
 
         {/** スタンプボタン */}
         <StampMenu
-          stampAnchorEl={stampAnchorEl}
-          openStampPop={openStampPop}
           handleCloseStampPop={handleCloseStampPop}
+          openStampPop={openStampPop}
+          stampAnchorEl={stampAnchorEl}
         />
 
         <IconButton
-          color='primary'
           aria-label='dialogue'
+          color='primary'
           onClick={onClickDialogueButton}
         >
           <Avatar sx={{ bgcolor: 'icon.blue' }}>
@@ -100,8 +92,8 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
       </Box>
 
       <InputBase
-        placeholder='コンパイル通らない...😂'
         color='primary'
+        placeholder='コンパイル通らない...😂'
         sx={{
           backgroundColor: lightTheme.palette.grey[200],
           borderRadius: '4px',

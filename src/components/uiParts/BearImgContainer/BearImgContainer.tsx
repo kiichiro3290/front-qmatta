@@ -16,7 +16,7 @@ export const BearImgContainer: React.FC<BearImgContainerProps> = ({
         width: { sm: '400px', xs: '200px' },
       }}
     >
-      <Image src={imgSrc} width='800px' height='800px' alt='qma' />
+      <Image alt='qma' height='800px' src={imgSrc} width='800px' />
     </Box>
   )
 }

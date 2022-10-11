@@ -1,5 +1,6 @@
-import { Box } from '@mui/material'
 import { lightTheme } from '~/theme'
+
+import { Box } from '@mui/material'
 
 type BearChatBalloonProps = {
   qmaMessage: string

@@ -1,3 +1,11 @@
+import bear2Img from 'public/bear2.png'
+import bearImg from 'public/quma.png'
+import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
+import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
+import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
+import { BearImgContainer } from '~/components/uiParts/BearImgContainer/BearImgContainer'
+import { lightTheme } from '~/theme'
+
 import { ChevronLeftRounded } from '@mui/icons-material'
 import {
   Box,
@@ -7,15 +15,7 @@ import {
   IconButton,
   Typography,
 } from '@mui/material'
-
 import { ChangeEvent, useCallback, useState } from 'react'
-import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
-import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
-import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
-import { BearImgContainer } from '~/components/uiParts/BearImgContainer/BearImgContainer'
-import { lightTheme } from '~/theme'
-import bear2Img from 'public/bear2.png'
-import bearImg from 'public/quma.png'
 
 export type QmaPagePresenterProps = {
   qmaMessage: string
@@ -65,7 +65,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 
   return (
     <Box>
-      <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
+      <Drawer anchor='right' open={isShowDialogue} variant='persistent'>
         <Box
           sx={{
             alignItems: 'center',
@@ -78,7 +78,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
             <ChevronLeftRounded />
           </IconButton>
 
-          <Typography component='h1' variant='h5' sx={{ textAlign: 'center' }}>
+          <Typography component='h1' sx={{ textAlign: 'center' }} variant='h5'>
             会話ログ
           </Typography>
 
@@ -112,16 +112,16 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
       </Container>
 
       <QmaFooter
-        onKeydown={onKeydown}
-        startComposition={startComposition}
-        endComposition={endComposition}
-        onChangeDialogue={onChangeDialogue}
         dialogue={dialogue}
-        onClickDialogueButton={onClickDialogueButton}
-        openStampPop={Boolean(stampAnchorEl)}
+        endComposition={endComposition}
         handleCloseStampPop={handleCloseStampPop}
         handleOpenStampPop={handleOpenStampPop}
+        openStampPop={Boolean(stampAnchorEl)}
         stampAnchorEl={stampAnchorEl}
+        startComposition={startComposition}
+        onChangeDialogue={onChangeDialogue}
+        onClickDialogueButton={onClickDialogueButton}
+        onKeydown={onKeydown}
       />
     </Box>
   )

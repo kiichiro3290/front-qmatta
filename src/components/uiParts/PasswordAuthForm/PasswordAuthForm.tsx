@@ -17,7 +17,10 @@ import * as yup from 'yup'
 
 // yup でバリデーションを行うためのスキーマ
 const signUpSchema = yup.object({
-  email: yup.string().email('無効なメールアドレスです。').required('メールアドレスは必須項目です。'),
+  email: yup
+    .string()
+    .email('無効なメールアドレスです。')
+    .required('メールアドレスは必須項目です。'),
   password: yup
     .string()
     .required('パスワードは必須項目です。')
@@ -32,7 +35,10 @@ export type PasswordAuthFormProps = {
   buttonText: string
 }
 
-export const PasswordAuthForm: React.FC<PasswordAuthFormProps> = ({ buttonText, onClickSubmitButton }) => {
+export const PasswordAuthForm: React.FC<PasswordAuthFormProps> = ({
+  buttonText,
+  onClickSubmitButton,
+}) => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const { control, handleSubmit } = useForm<Inputs>({
     defaultValues: {
@@ -49,48 +55,56 @@ export const PasswordAuthForm: React.FC<PasswordAuthFormProps> = ({ buttonText, 
     <Box>
       <Box component='form' noValidate onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name='email'
           control={control}
+          name='email'
           render={({ field, fieldState }) => (
             <TextField
               {...field}
-              type='text'
-              fullWidth
-              label='メールアドレス'
               error={fieldState.error !== undefined}
               helperText={fieldState.error?.message}
+              label='メールアドレス'
               sx={{
-                '& .MuiFormHelperText-root': { bgcolor: 'background.default', m: 0, pt: 1, px: 1 },
+                '& .MuiFormHelperText-root': {
+                  bgcolor: 'background.default',
+                  m: 0,
+                  pt: 1,
+                  px: 1,
+                },
                 bgcolor: 'white',
                 my: '16px',
               }}
+              type='text'
+              fullWidth
             />
           )}
         />
         <Controller
-          name='password'
           control={control}
+          name='password'
           render={({ field, fieldState }) => (
             <FormControl
+              error={fieldState.error != undefined}
               sx={{ bgcolor: 'background.default', my: '16px' }}
               variant='outlined'
               fullWidth
-              error={fieldState.error != undefined}
             >
               <InputLabel>{'パスワード'}</InputLabel>
               <OutlinedInput
                 fullWidth
                 {...field}
-                label='パスワード'
-                type={showPassword ? 'text' : 'password'}
                 endAdornment={
                   <InputAdornment position='end'>
-                    <IconButton onClick={() => setShowPassword((state) => !state)} edge='end'>
+                    <IconButton
+                      edge='end'
+                      onClick={() => setShowPassword((state) => !state)}
+                    >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 }
+                label='パスワード'
                 sx={{ bgcolor: 'white' }}
+                type={showPassword ? 'text' : 'password'}
               />
               <FormHelperText>
                 {fieldState.error != undefined
@@ -100,7 +114,7 @@ export const PasswordAuthForm: React.FC<PasswordAuthFormProps> = ({ buttonText, 
             </FormControl>
           )}
         />
-        <Button fullWidth variant='contained' type='submit'>
+        <Button type='submit' variant='contained' fullWidth>
           {buttonText}
         </Button>
       </Box>

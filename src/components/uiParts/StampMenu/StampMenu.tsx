@@ -1,3 +1,7 @@
+import numaIcon from 'public/numa.svg'
+import sukkiriIcon from 'public/sukkiri.png'
+import { lightTheme } from '~/theme'
+
 import {
   Avatar,
   Box,
@@ -6,10 +10,6 @@ import {
   Popover,
   Typography,
 } from '@mui/material'
-import { lightTheme } from '~/theme'
-
-import numaIcon from 'public/numa.svg'
-import sukkiriIcon from 'public/sukkiri.png'
 
 type StampMenuProps = {
   openStampPop: boolean
@@ -24,17 +24,17 @@ export const StampMenu: React.FC<StampMenuProps> = ({
 }) => {
   return (
     <Popover
-      open={openStampPop}
-      onClose={handleCloseStampPop}
       anchorEl={stampAnchorEl}
       anchorOrigin={{
         horizontal: 'left',
         vertical: 'top',
       }}
+      open={openStampPop}
       transformOrigin={{
         horizontal: 'left',
         vertical: 'bottom',
       }}
+      onClose={handleCloseStampPop}
     >
       <Box sx={{ p: lightTheme.spacing(2) }}>
         <Typography

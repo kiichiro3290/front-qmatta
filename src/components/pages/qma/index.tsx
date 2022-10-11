@@ -1,9 +1,8 @@
-import { useRouter } from 'next/router'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { QmaPagePresenter } from './presenter'
+
 import {
   fetchQmaMessage,
-  getAIQmaMessage,
+  // getAIQmaMessage,
   postQmaMessage,
 } from '~/pages/api/bear'
 import { getMessageHistory, logInUser } from '~/pages/api/user'
@@ -11,7 +10,9 @@ import { AppDispatch } from '~/store'
 import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
 import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
 
-import { QmaPagePresenter } from './presenter'
+import { useRouter } from 'next/router'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 export const QmaPage: React.FC = () => {
   const router = useRouter()
@@ -27,8 +28,6 @@ export const QmaPage: React.FC = () => {
   const [dialogue, setDialogue] = useState<string>('')
   // メッセージをクマに送信するたびに，配列に追加する
   const [dialogues, setDialogues] = useState<string[]>([])
-  // コミュニティ一覧を取得する
-  const [communityList, setCommunityList] = useState<string[]>([])
 
   // エンターキーを押下したか，かな字変換をしたかを制御するための State
   const [composing, setComposition] = useState(false)
@@ -145,16 +144,16 @@ export const QmaPage: React.FC = () => {
 
   return (
     <QmaPagePresenter
-      qmaMessage={qmaMessage}
-      isShowChatBaloon={isShowChatBaloon}
-      onKeydown={onKeydown}
-      startComposition={startComposition}
-      endComposition={endComposition}
-      onChangeDialogue={onChangeDialogue}
       dialogue={dialogue}
       dialogues={dialogues}
-      messageHistory={messageHistory}
+      endComposition={endComposition}
       isOpenBearMouth={isOpenBearMouth}
+      isShowChatBaloon={isShowChatBaloon}
+      messageHistory={messageHistory}
+      qmaMessage={qmaMessage}
+      startComposition={startComposition}
+      onChangeDialogue={onChangeDialogue}
+      onKeydown={onKeydown}
     />
   )
 }

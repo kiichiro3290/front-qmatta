@@ -1,11 +1,13 @@
+import { Header } from '../uiParts/Header/Header'
+
+import { store } from '~/store'
+import { lightTheme } from '~/theme'
+import { GetLayout } from '~/types/next'
+
 import { ThemeProvider } from '@emotion/react'
 import { Box, CssBaseline } from '@mui/material'
 import { FC, ReactNode } from 'react'
 import { Provider } from 'react-redux'
-import { store } from '~/store'
-import { lightTheme } from '~/theme'
-import { GetLayout } from '~/types/next'
-import { Header } from '../uiParts/Header/Header'
 
 type BaseLayoutProps = {
   children: ReactNode

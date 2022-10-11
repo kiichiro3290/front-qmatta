@@ -1,5 +1,6 @@
-import { Box, Typography } from '@mui/material'
 import { lightTheme } from '~/theme'
+
+import { Box, Typography } from '@mui/material'
 
 type DialogueTextContainerProps = {
   dialogue: string

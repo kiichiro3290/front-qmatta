@@ -1,3 +1,7 @@
+import { SideBar } from '../../layouts/SideBar/SideBar'
+
+import { selectCommunityList } from '~/store/user/userSlice'
+
 import { Menu as MenuIcon } from '@mui/icons-material'
 import {
   AppBar,
@@ -15,8 +19,6 @@ import {
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { selectCommunityList } from '~/store/user/userSlice'
-import { SideBar } from '../../layouts/SideBar/SideBar'
 
 export const Header: React.FC = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
@@ -43,16 +45,16 @@ export const Header: React.FC = () => {
       <Toolbar>
         <Box
           display='flex'
-          width='100%'
           flexDirection='row'
           sx={{ alignItems: 'center', justifyContent: 'space-between' }}
+          width='100%'
         >
           <Box display='flex' sx={{ alignItems: 'center' }}>
             <IconButton
-              size='large'
-              edge='start'
-              color='inherit'
               aria-label='menu'
+              color='inherit'
+              edge='start'
+              size='large'
               onClick={onClickMenuButton}
             >
               <MenuIcon />
@@ -60,13 +62,13 @@ export const Header: React.FC = () => {
             <Drawer
               anchor='left'
               open={isShowSideBar}
-              onClose={onCloseMenuButton}
               sx={{
                 '& .MuiDrawer-paper': {
                   boxSizing: 'border-box',
                   width: '320px',
                 },
               }}
+              onClose={onCloseMenuButton}
             >
               <SideBar communityList={communityList} />
             </Drawer>
@@ -76,12 +78,12 @@ export const Header: React.FC = () => {
             <Avatar />
           </Button>
           <Menu
-            open={openDialog}
-            onClose={handleCloseDialog}
             anchorOrigin={{
               horizontal: 'right',
               vertical: 'top',
             }}
+            open={openDialog}
+            onClose={handleCloseDialog}
           >
             <Typography sx={{ py: '12px', textAlign: 'center' }}>
               アカウント情報
@@ -89,7 +91,7 @@ export const Header: React.FC = () => {
             <Divider />
             <MenuItem>
               <Link href='/account'>
-                <Button fullWidth sx={{ color: 'text.primary' }}>
+                <Button sx={{ color: 'text.primary' }} fullWidth>
                   <Typography color='text.primary' sx={{ mx: '12px' }}>
                     マイページ
                   </Typography>
@@ -98,7 +100,7 @@ export const Header: React.FC = () => {
             </MenuItem>
             <MenuItem>
               <Link href='/login'>
-                <Button fullWidth sx={{ color: 'text.primary' }}>
+                <Button sx={{ color: 'text.primary' }} fullWidth>
                   <Typography color='text.primary' sx={{ mx: '12px' }}>
                     ログイン
                   </Typography>

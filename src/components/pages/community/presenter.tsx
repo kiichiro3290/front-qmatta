@@ -1,5 +1,6 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
 import { MenuTabs } from '~/components/layouts/MenuTabs/Menutabs'
+
+import { Box, Button, TextField, Typography } from '@mui/material'
 
 export type CommunityPagePresenterProps = {
   communityId: string
@@ -24,7 +25,7 @@ export const CommunityPagePresenter: React.FC<
           <MenuTabs />
         </Box>
         <Box sx={{ height: '100%', width: '100%' }}>
-          <Typography variant='h5' sx={{ mb: '12px' }}>
+          <Typography sx={{ mb: '12px' }} variant='h5'>
             質問する
           </Typography>
           <Box
@@ -37,22 +38,20 @@ export const CommunityPagePresenter: React.FC<
               },
             ]}
           >
-            <Typography variant='subtitle1' sx={{ mb: '12px' }}>
+            <Typography sx={{ mb: '12px' }} variant='subtitle1'>
               質問タイトル
             </Typography>
             <TextField
-              fullWidth
               placeholder='Leave a title'
               sx={[{ mb: '16px' }, { ckgroundColor: '#eeeeee' }]}
+              fullWidth
             />
-            <Typography variant='subtitle1' sx={{ mb: '16px' }}>
+            <Typography sx={{ mb: '16px' }} variant='subtitle1'>
               質問内容
             </Typography>
             <TextField
-              fullWidth
-              multiline
-              rows={8}
               placeholder='Leave a comment'
+              rows={8}
               sx={[
                 {
                   maxHeight: '400px',
@@ -62,6 +61,8 @@ export const CommunityPagePresenter: React.FC<
                 },
                 { ckgroundColor: '#eeeeee' },
               ]}
+              fullWidth
+              multiline
             />
             <Button variant='contained' fullWidth>
               質問を投稿する

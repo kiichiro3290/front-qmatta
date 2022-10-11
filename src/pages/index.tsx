@@ -1,15 +1,16 @@
-import Head from 'next/head'
 import { getBaseLayout } from '~/components/layouts/base'
 import { QmaPage } from '~/components/pages/qma'
 import { NextPageWithLayout } from '~/types/next'
+
+import Head from 'next/head'
 
 const Home: NextPageWithLayout = () => {
   return (
     <div>
       <Head>
         <title>Qmatta</title>
-        <meta name='description' content='qmatta' />
-        <link rel='icon' href='/quma2.png' />
+        <meta content='qmatta' name='description' />
+        <link href='/quma2.png' rel='icon' />
       </Head>
       <QmaPage />
     </div>

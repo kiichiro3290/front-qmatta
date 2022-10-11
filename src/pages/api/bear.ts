@@ -12,7 +12,10 @@ export const fetchQmaMessage = async () => {
 
 // クマのメッセージを取得する & メッセージをDBに保存: POST
 // (userID: string, message: string) => message: string
-export const postQmaMessage = async (userId: string, message: string): Promise<string> => {
+export const postQmaMessage = async (
+  userId: string,
+  message: string
+): Promise<string> => {
   const data: UserMessageToBear = { message }
   const result = await qmattaClient()
     .post(`/bear/${userId}`, data)
@@ -24,7 +27,10 @@ export const postQmaMessage = async (userId: string, message: string): Promise<s
 // meboのapiを叩いて，返答を取得する
 // 無料版で800messages/month, ¥2800/monthで10000messages/month
 // (userID: string, message: string) => message: string
-export const getAIQmaMessage = async (userId: string, message: string): Promise<string> => {
+export const getAIQmaMessage = async (
+  userId: string,
+  message: string
+): Promise<string> => {
   const data = {
     agent_id: process.env.NEXT_PUBLIC_MEBO_AGENT_ID,
     api_key: process.env.NEXT_PUBLIC_MEBO_API_KEY,

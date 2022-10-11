@@ -1,10 +1,25 @@
-import { Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import {
+  Chip,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material'
 
 type Props = {
   // TODO
 }
 
-function createData(name: string, datetime: string, priority: string, carbs: number, status: string) {
+function createData(
+  name: string,
+  datetime: string,
+  priority: string,
+  carbs: number,
+  status: string
+) {
   const statusChip = <StatusChip statusType={status} />
   const priorityChip = <PriorityChip priorityType={priority} />
   return { carbs, datetime, name, priorityChip, statusChip }
@@ -32,7 +47,7 @@ const rows = [
 export const QuestionList: React.FC<Props> = () => {
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table aria-label='simple table' sx={{ minWidth: 650 }}>
         <TableHead>
           <TableRow>
             <TableCell>質問タイトル</TableCell>
@@ -44,7 +59,10 @@ export const QuestionList: React.FC<Props> = () => {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
               <TableCell component='th' scope='row'>
                 {row.name}
               </TableCell>

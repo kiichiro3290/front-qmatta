@@ -1,5 +1,6 @@
-import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 import { MenuTabs } from '~/components/layouts/MenuTabs/Menutabs'
+
+import { Box, Button, Paper, TextField, Typography } from '@mui/material'
 
 export type QuestionPagePresenterProps = {
   //
@@ -17,7 +18,7 @@ export const QuestionPagePresenter: React.FC<
         <Box sx={{ flex: 1, p: '32px' }}>
           <Typography>質問する</Typography>
           <Paper sx={{ height: '100%', p: '16px', position: 'relative' }}>
-            <TextField fullWidth multiline sx={{ mb: '32px' }}></TextField>
+            <TextField sx={{ mb: '32px' }} fullWidth multiline></TextField>
             <Box
               sx={{
                 bottom: '0px',

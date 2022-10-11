@@ -1,6 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { RootState } from '~/store'
 import { fetchCommunityList, fetchUserDataState } from './actions'
+
+import { RootState } from '~/store'
+
+import { createSlice } from '@reduxjs/toolkit'
 
 // ユーザの初期状態
 export type InitialUserStateType = {

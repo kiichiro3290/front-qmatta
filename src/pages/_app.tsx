@@ -1,5 +1,6 @@
-import { Fragment } from 'react'
 import { AppPropsWithLayout } from '~/types/next'
+
+import { Fragment } from 'react'
 
 const MyApp: React.FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
   const getLayout =

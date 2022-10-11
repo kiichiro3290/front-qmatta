@@ -27,16 +27,31 @@ export const SideBar: React.FC<SideBarProps> = ({ communityList }) => {
     router.push(`/communities/${communityId}`)
   }, [])
   return (
-    <Box sx={{ height: '100vh', margin: '0 auto', maxWidth: '320px', pt: '96px', px: '16px', width: '80%' }}>
-      <Typography variant='h5' sx={{ fontWeight: 'bold', my: '16px' }}>
+    <Box
+      sx={{
+        height: '100vh',
+        margin: '0 auto',
+        maxWidth: '320px',
+        pt: '96px',
+        px: '16px',
+        width: '80%',
+      }}
+    >
+      <Typography sx={{ fontWeight: 'bold', my: '16px' }} variant='h5'>
         TOP
       </Typography>
 
-      <Button fullWidth variant='contained' color='primary' sx={{ mb: '24px', mt: '8px' }} onClick={onClickQmaButton}>
+      <Button
+        color='primary'
+        sx={{ mb: '24px', mt: '8px' }}
+        variant='contained'
+        fullWidth
+        onClick={onClickQmaButton}
+      >
         クマに話しかける
       </Button>
 
-      <Typography variant='h5' sx={{ fontWeight: 'bold', my: '16px' }}>
+      <Typography sx={{ fontWeight: 'bold', my: '16px' }} variant='h5'>
         ワークスペース
       </Typography>
 
@@ -45,7 +60,10 @@ export const SideBar: React.FC<SideBarProps> = ({ communityList }) => {
       <MenuList sx={{ my: '20px' }}>
         {communityList &&
           communityList.map((community) => (
-            <MenuItem key={community} onClick={() => onClickWorkspaceButton(community)}>
+            <MenuItem
+              key={community}
+              onClick={() => onClickWorkspaceButton(community)}
+            >
               <ListItemAvatar>
                 <Avatar>
                   <ImageOutlined />

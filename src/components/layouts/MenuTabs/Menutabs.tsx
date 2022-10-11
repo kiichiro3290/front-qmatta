@@ -1,8 +1,9 @@
+import { QuestionList } from '../QuestionList/QuestionList'
+
 import { Box, Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
 import * as React from 'react'
-import { QuestionList } from '../QuestionList/QuestionList'
 
 export type MenuTabsProps = {
   //
@@ -21,7 +22,11 @@ type TabPanelProps = {
   value: number
 }
 
-export const TabPanel: React.FC<TabPanelProps> = ({ children, index, value }) => {
+export const TabPanel: React.FC<TabPanelProps> = ({
+  children,
+  index,
+  value,
+}) => {
   return <Box>{value === index && <Box>{children}</Box>}</Box>
 }
 
@@ -42,16 +47,16 @@ export const MenuTabs: React.FC<MenuTabsProps> = () => {
         </Tabs>
       </Box>
 
-      <TabPanel value={value} index={0}>
+      <TabPanel index={0} value={value}>
         <QuestionList />
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel index={1} value={value}>
         <Typography>みんなの状況</Typography>
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel index={2} value={value}>
         <Typography>資料</Typography>
       </TabPanel>
-      <TabPanel value={value} index={3}>
+      <TabPanel index={3} value={value}>
         <Typography>くま記録</Typography>
       </TabPanel>
     </Box>
