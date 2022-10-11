@@ -1,8 +1,9 @@
-import type { NextPage } from 'next'
 import Head from 'next/head'
+import { getBaseLayout } from '~/components/layouts/base'
 import { QmaPage } from '~/components/pages/qma'
+import { NextPageWithLayout } from '~/types/next'
 
-const Home: NextPage = () => {
+const Home: NextPageWithLayout = () => {
   return (
     <div>
       <Head>
@@ -14,5 +15,7 @@ const Home: NextPage = () => {
     </div>
   )
 }
+
+Home.getLayout = getBaseLayout
 
 export default Home
