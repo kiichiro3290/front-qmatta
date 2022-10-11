@@ -8,7 +8,6 @@ import {
   Typography,
 } from '@mui/material'
 
-import Image from 'next/image'
 import { ChangeEvent, useCallback, useState } from 'react'
 import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
@@ -78,13 +77,11 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
           <IconButton onClick={onClickDialogueButton}>
             <ChevronLeftRounded />
           </IconButton>
-          <Typography
-            component='h1'
-            variant='subtitle1'
-            sx={{ fontSize: '24px', textAlign: 'center' }}
-          >
+
+          <Typography component='h1' variant='h5' sx={{ textAlign: 'center' }}>
             会話ログ
           </Typography>
+
           <Divider />
         </Box>
         <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
@@ -107,21 +104,11 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         )}
 
         {/** クマの画像部分 */}
-        <Box
-          sx={{
-            display: 'flex',
-            height: '400px',
-            margin: '0 auto',
-            width: '400px',
-            zIndex: 12,
-          }}
-        >
-          {isOpenBearMouth ? (
-            <BearImgContainer imgSrc={bear2Img.src} />
-          ) : (
-            <BearImgContainer imgSrc={bearImg.src} />
-          )}
-        </Box>
+        {isOpenBearMouth ? (
+          <BearImgContainer imgSrc={bear2Img.src} />
+        ) : (
+          <BearImgContainer imgSrc={bearImg.src} />
+        )}
       </Container>
 
       <QmaFooter
