@@ -1,19 +1,14 @@
-import { CssBaseline } from '@mui/material'
-import { ThemeProvider } from '@mui/material/styles'
-import type { AppProps } from 'next/app'
-import { Provider } from 'react-redux'
-import { store } from '~/store'
-import { defaultTheme } from '~/styles/themes/theme'
+import { Fragment } from 'react'
+import { AppPropsWithLayout } from '~/types/next'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <Provider store={store}>
-      <ThemeProvider theme={defaultTheme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </Provider>
-  )
+const MyApp: React.FC<AppPropsWithLayout> = ({ Component, pageProps }) => {
+  const getLayout =
+    Component.getLayout ||
+    ((page) => {
+      return page
+    })
+
+  return <Fragment>{getLayout(<Component {...pageProps} />)}</Fragment>
 }
 
 export default MyApp

@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchQmaMessage, getAIQmaMessage, postQmaMessage } from '~/pages/api/bear'
-import { getCommunityList, getMessageHistory, logInUser } from '~/pages/api/user'
+import {
+  fetchQmaMessage,
+  getAIQmaMessage,
+  postQmaMessage,
+} from '~/pages/api/bear'
+import { getMessageHistory, logInUser } from '~/pages/api/user'
 import { AppDispatch } from '~/store'
-import { fetchUserDataState } from '~/store/user/actions'
+import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
 import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
 
 import { QmaPagePresenter } from './presenter'
@@ -31,7 +35,8 @@ export const QmaPage: React.FC = () => {
   const startComposition = () => setComposition(true)
   const endComposition = () => setComposition(false)
   // クマのセリフの受け皿
-  const [qmaMessage, setQmaMessage] = useState<string>('困ったことがあったら教えて')
+  const [qmaMessage, setQmaMessage] =
+    useState<string>('困ったことがあったら教えて')
   // クマの口が開いているかどうか
   const [isOpenBearMouth, setIsOpenBearMouth] = useState<boolean>(false)
 
@@ -88,10 +93,13 @@ export const QmaPage: React.FC = () => {
   }
 
   // 文字を入力したとき
-  const onChangeDialogue = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setIsShowChatBaloon(false)
-    setDialogue(e.target.value)
-  }, [])
+  const onChangeDialogue = useCallback(
+    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setIsShowChatBaloon(false)
+      setDialogue(e.target.value)
+    },
+    []
+  )
 
   // 認証状態を確認する
   useEffect(() => {
@@ -129,8 +137,7 @@ export const QmaPage: React.FC = () => {
   useEffect(() => {
     const f = async () => {
       if (userId) {
-        const data = await getCommunityList(userId)
-        setCommunityList(data)
+        dispatch(fetchCommunityList(userId))
       }
     }
     f()
@@ -147,7 +154,6 @@ export const QmaPage: React.FC = () => {
       dialogue={dialogue}
       dialogues={dialogues}
       messageHistory={messageHistory}
-      communityList={communityList}
       isOpenBearMouth={isOpenBearMouth}
     />
   )

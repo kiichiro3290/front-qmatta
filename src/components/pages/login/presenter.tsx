@@ -1,6 +1,5 @@
 import { Alert, Box, Button, Snackbar, Typography } from '@mui/material'
 import Link from 'next/link'
-import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/PasswordAuthForm'
 
 export type LogInPagePresenterProps = {
@@ -18,15 +17,27 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
 }) => {
   return (
     <Box>
-      <HeaderLayout communityList={[]} />
-      <Box sx={{ maxWidth: '540px', mt: '64px', mx: 'auto', p: '48px', textAlign: 'center' }}>
+      <Box
+        sx={{
+          maxWidth: '540px',
+          mt: '64px',
+          mx: 'auto',
+          p: '48px',
+          textAlign: 'center',
+        }}
+      >
         <Typography variant='inherit' component='h2' sx={{ my: '16px' }}>
           ログインする
         </Typography>
-        <PasswordAuthForm onClickSubmitButton={onClickLoginButton} buttonText='ログイン' />
+        <PasswordAuthForm
+          onClickSubmitButton={onClickLoginButton}
+          buttonText='ログイン'
+        />
         <Box display='flex' flexDirection='column' sx={{ mt: '12px' }}>
           <Link href='/resetPassword'>
-            <Button sx={{ justifyContent: 'left' }}>パスワードを忘れた方はこちら</Button>
+            <Button sx={{ justifyContent: 'left' }}>
+              パスワードを忘れた方はこちら
+            </Button>
           </Link>
           <Link href='/signup'>
             <Button sx={{ justifyContent: 'left' }}>新規登録はこちら</Button>

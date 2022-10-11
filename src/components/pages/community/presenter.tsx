@@ -1,17 +1,24 @@
 import { Box, Button, TextField, Typography } from '@mui/material'
-import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 import { MenuTabs } from '~/components/layouts/MenuTabs/Menutabs'
 
 export type CommunityPagePresenterProps = {
   communityId: string
 }
 
-export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = () => {
+export const CommunityPagePresenter: React.FC<
+  CommunityPagePresenterProps
+> = () => {
   return (
     <Box>
-      <HeaderLayout communityList={[]} />
       <Box
-        sx={{ display: 'grid', gap: '24px', gridTemplateColumns: '1fr 1fr', height: '100vh', mt: '96px', p: '24px' }}
+        sx={{
+          display: 'grid',
+          gap: '24px',
+          gridTemplateColumns: '1fr 1fr',
+          height: '100vh',
+          mt: '96px',
+          p: '24px',
+        }}
       >
         <Box sx={{ height: '100%' }}>
           <MenuTabs />
@@ -21,12 +28,23 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = () 
             質問する
           </Typography>
           <Box
-            sx={[{ p: '16px' }, { backgroundColor: 'white', borderRadius: '6px', boxShadow: '1px 1px 4px #dddddd' }]}
+            sx={[
+              { p: '16px' },
+              {
+                backgroundColor: 'white',
+                borderRadius: '6px',
+                boxShadow: '1px 1px 4px #dddddd',
+              },
+            ]}
           >
             <Typography variant='subtitle1' sx={{ mb: '12px' }}>
               質問タイトル
             </Typography>
-            <TextField fullWidth placeholder='Leave a title' sx={[{ mb: '16px' }, { ckgroundColor: '#eeeeee' }]} />
+            <TextField
+              fullWidth
+              placeholder='Leave a title'
+              sx={[{ mb: '16px' }, { ckgroundColor: '#eeeeee' }]}
+            />
             <Typography variant='subtitle1' sx={{ mb: '16px' }}>
               質問内容
             </Typography>
@@ -36,7 +54,12 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = () 
               rows={8}
               placeholder='Leave a comment'
               sx={[
-                { maxHeight: '400px', mb: '32px', minHeight: '200px', overflow: 'scroll' },
+                {
+                  maxHeight: '400px',
+                  mb: '32px',
+                  minHeight: '200px',
+                  overflow: 'scroll',
+                },
                 { ckgroundColor: '#eeeeee' },
               ]}
             />

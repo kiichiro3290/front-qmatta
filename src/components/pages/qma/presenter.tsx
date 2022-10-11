@@ -2,7 +2,6 @@ import { ChevronLeftRounded } from '@mui/icons-material'
 import { Box, Divider, Drawer, IconButton, Typography } from '@mui/material'
 import Image from 'next/image'
 import { ChangeEvent, useCallback, useState } from 'react'
-import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 
 import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
@@ -15,16 +14,16 @@ export type QmaPagePresenterProps = {
   onKeydown: (e: string) => void
   startComposition: () => void
   endComposition: () => void
-  onChangeDialogue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onChangeDialogue: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void
   dialogue: string
   dialogues: string[]
   messageHistory: string[]
-  communityList: string[]
   isOpenBearMouth: boolean
 }
 
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
-  communityList,
   dialogue,
   dialogues,
   endComposition,
@@ -37,7 +36,9 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   startComposition,
 }) => {
   const [isShowDialogue, setIsShowDialogue] = useState<boolean>(true)
-  const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(null)
+  const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(
+    null
+  )
 
   const onClickDialogueButton = useCallback(() => {
     setIsShowDialogue((flag) => !flag)
@@ -46,19 +47,32 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   const handleCloseStampPop = useCallback(() => {
     setStampAnchorEl(null)
   }, [])
-  const handleOpenStampPop = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setStampAnchorEl(event.currentTarget)
-  }, [])
+  const handleOpenStampPop = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setStampAnchorEl(event.currentTarget)
+    },
+    []
+  )
 
   return (
     <Box>
-      <HeaderLayout communityList={communityList} />
       <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
-        <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'flex-start', mt: '80px' }}>
+        <Box
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            mt: '80px',
+          }}
+        >
           <IconButton onClick={onClickDialogueButton}>
             <ChevronLeftRounded />
           </IconButton>
-          <Typography component='h1' variant='subtitle1' sx={{ fontSize: '24px', textAlign: 'center' }}>
+          <Typography
+            component='h1'
+            variant='subtitle1'
+            sx={{ fontSize: '24px', textAlign: 'center' }}
+          >
             会話ログ
           </Typography>
           <Divider />
