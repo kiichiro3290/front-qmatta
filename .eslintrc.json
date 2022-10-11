@@ -2,12 +2,12 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "import", "sort"],
   "extends": [
-    "next",
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
     "plugin:import/recommended",
-    "plugin:sort/recommended"
+    "plugin:sort/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
   ]
 }
