@@ -13,14 +13,16 @@ export const QmaDialogue: React.FC<QmaDialogueProps> = ({
   messageHistory,
 }) => {
   return (
-    <Box sx={{ px: '20px', width: { sm: '400px', xs: '280px' } }}>
+    <Box
+      sx={{ px: lightTheme.spacing(2), width: { sm: '400px', xs: '280px' } }}
+    >
       {dialogues.map((dialogue, index) => (
         <Fragment key={index}>
           <DialogueTextContainer dialogue={dialogue} />
         </Fragment>
       ))}
 
-      <Divider />
+      <Divider sx={{ mt: lightTheme.spacing(2) }} />
 
       <Typography variant='h5' sx={{ pt: lightTheme.spacing(2) }}>
         過去の会話
