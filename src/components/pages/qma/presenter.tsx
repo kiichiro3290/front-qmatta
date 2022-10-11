@@ -1,11 +1,20 @@
 import { ChevronLeftRounded } from '@mui/icons-material'
-import { Box, Divider, Drawer, IconButton, Typography } from '@mui/material'
+import {
+  Box,
+  Container,
+  Divider,
+  Drawer,
+  IconButton,
+  Typography,
+} from '@mui/material'
 
 import Image from 'next/image'
 import { ChangeEvent, useCallback, useState } from 'react'
 import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
 import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
+import { BearImgContainer } from '~/components/uiParts/BearImgContainer/BearImgContainer'
+import { lightTheme } from '~/theme'
 import bear2Img from 'public/bear2.png'
 import bearImg from 'public/quma.png'
 
@@ -36,7 +45,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   qmaMessage,
   startComposition,
 }) => {
-  const [isShowDialogue, setIsShowDialogue] = useState<boolean>(true)
+  const [isShowDialogue, setIsShowDialogue] = useState<boolean>(false)
   const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(
     null
   )
@@ -80,14 +89,15 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         </Box>
         <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
       </Drawer>
-      <Box
+
+      <Container
         sx={{
           display: 'flex',
           m: '0 auto',
-          maxWidth: '1000px',
+          maxWidth: 'lg',
           position: 'relative',
-          pt: '96px',
-          px: '24px',
+          pt: lightTheme.spacing(12),
+          px: lightTheme.spacing(3),
         }}
       >
         {isShowChatBaloon ? (
@@ -95,6 +105,8 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         ) : (
           <Box></Box>
         )}
+
+        {/** クマの画像部分 */}
         <Box
           sx={{
             display: 'flex',
@@ -105,12 +117,13 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
           }}
         >
           {isOpenBearMouth ? (
-            <Image src={bear2Img.src} width='800px' height='800px' alt='qma' />
+            <BearImgContainer imgSrc={bear2Img.src} />
           ) : (
-            <Image src={bearImg.src} width='800px' height='800px' alt='qma2' />
+            <BearImgContainer imgSrc={bearImg.src} />
           )}
         </Box>
-      </Box>
+      </Container>
+
       <QmaFooter
         onKeydown={onKeydown}
         startComposition={startComposition}
