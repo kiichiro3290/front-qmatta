@@ -1,18 +1,12 @@
-import axios from 'axios'
-
-const url = process.env.NEXT_PUBLIC_BASE_URL ?? ''
-const mebo_url = process.env.NEXT_PUBLIC_MEBO_URL ?? ''
-
-//リクエストに付加するヘッダーの定義
-const headers = {
-  'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json',
-}
-
 // クマのメッセージを取得する（簡易版）: GET
+
+import { meboClient, qmattaClient } from './client'
+
 // () => message: string
 export const fetchQmaMessage = async () => {
-  const data = await axios.get(`${url}/bear`, { headers: headers }).then((res) => res.data.response)
+  const data = await qmattaClient()
+    .get('bear')
+    .then((res) => res.data.response)
   return data
 }
 
@@ -20,8 +14,8 @@ export const fetchQmaMessage = async () => {
 // (userID: string, message: string) => message: string
 export const postQmaMessage = async (userId: string, message: string): Promise<string> => {
   const data: UserMessageToBear = { message }
-  const result = await axios
-    .post(`${url}/bear/${userId}`, data, { headers: headers })
+  const result = await qmattaClient()
+    .post(`/bear/${userId}`, data)
     .then((res) => res.data.response)
     .catch((e) => console.log(e))
   return result
@@ -37,7 +31,7 @@ export const getAIQmaMessage = async (userId: string, message: string): Promise<
     uid: userId,
     utterance: message,
   }
-  const result = await axios.post(mebo_url, data, { headers: headers })
+  const result = await meboClient().post('', data)
   const answer = result.data.bestResponse.utterance
   return answer
 }

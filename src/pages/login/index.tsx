@@ -1,8 +1,15 @@
-import type { NextPage } from 'next'
+import { getBaseLayout } from '~/components/layouts/base'
 import { LogInPage } from '~/components/pages/login'
+import { NextPageWithLayout } from '~/types/next'
 
-const Login: NextPage = () => {
-  return <LogInPage />
+const Login: NextPageWithLayout = () => {
+  return (
+    <>
+      <LogInPage />
+    </>
+  )
 }
+
+Login.getLayout = getBaseLayout
 
 export default Login

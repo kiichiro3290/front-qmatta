@@ -14,15 +14,16 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
-import { SideBar } from '../SideBar/SideBar'
+import { useSelector } from 'react-redux'
+import { selectCommunityList } from '~/store/user/userSlice'
+import { SideBar } from '../../layouts/SideBar/SideBar'
 
-export type HeaderLayoutProps = {
-  communityList: string[]
-}
-
-export const HeaderLayout: React.FC<HeaderLayoutProps> = ({ communityList }) => {
+export const Header: React.FC = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
   const [openDialog, setOpenDialog] = useState(false)
+
+  // reduxで管理しているstate
+  const communityList = useSelector(selectCommunityList)
 
   const onClickMenuButton = useCallback(() => {
     setIsShowSideBar(true)
@@ -35,7 +36,10 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({ communityList }) => 
     setOpenDialog(false)
   }, [])
   return (
-    <AppBar position='fixed' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+    <AppBar
+      position='fixed'
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <Toolbar>
         <Box
           display='flex'
@@ -44,14 +48,25 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({ communityList }) => 
           sx={{ alignItems: 'center', justifyContent: 'space-between' }}
         >
           <Box display='flex' sx={{ alignItems: 'center' }}>
-            <IconButton size='large' edge='start' color='inherit' aria-label='menu' onClick={onClickMenuButton}>
+            <IconButton
+              size='large'
+              edge='start'
+              color='inherit'
+              aria-label='menu'
+              onClick={onClickMenuButton}
+            >
               <MenuIcon />
             </IconButton>
             <Drawer
               anchor='left'
               open={isShowSideBar}
               onClose={onCloseMenuButton}
-              sx={{ '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '320px' } }}
+              sx={{
+                '& .MuiDrawer-paper': {
+                  boxSizing: 'border-box',
+                  width: '320px',
+                },
+              }}
             >
               <SideBar communityList={communityList} />
             </Drawer>
@@ -68,7 +83,9 @@ export const HeaderLayout: React.FC<HeaderLayoutProps> = ({ communityList }) => 
               vertical: 'top',
             }}
           >
-            <Typography sx={{ py: '12px', textAlign: 'center' }}>アカウント情報</Typography>
+            <Typography sx={{ py: '12px', textAlign: 'center' }}>
+              アカウント情報
+            </Typography>
             <Divider />
             <MenuItem>
               <Link href='/account'>

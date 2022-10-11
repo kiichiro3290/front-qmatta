@@ -1,11 +1,19 @@
 import { ChevronLeftRounded } from '@mui/icons-material'
-import { Box, Divider, Drawer, IconButton, Typography } from '@mui/material'
-import Image from 'next/image'
-import { ChangeEvent, useCallback, useState } from 'react'
-import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
+import {
+  Box,
+  Container,
+  Divider,
+  Drawer,
+  IconButton,
+  Typography,
+} from '@mui/material'
 
+import { ChangeEvent, useCallback, useState } from 'react'
 import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
+import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
+import { BearImgContainer } from '~/components/uiParts/BearImgContainer/BearImgContainer'
+import { lightTheme } from '~/theme'
 import bear2Img from 'public/bear2.png'
 import bearImg from 'public/quma.png'
 
@@ -15,16 +23,16 @@ export type QmaPagePresenterProps = {
   onKeydown: (e: string) => void
   startComposition: () => void
   endComposition: () => void
-  onChangeDialogue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onChangeDialogue: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void
   dialogue: string
   dialogues: string[]
   messageHistory: string[]
-  communityList: string[]
   isOpenBearMouth: boolean
 }
 
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
-  communityList,
   dialogue,
   dialogues,
   endComposition,
@@ -36,8 +44,10 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   qmaMessage,
   startComposition,
 }) => {
-  const [isShowDialogue, setIsShowDialogue] = useState<boolean>(true)
-  const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(null)
+  const [isShowDialogue, setIsShowDialogue] = useState<boolean>(false)
+  const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(
+    null
+  )
 
   const onClickDialogueButton = useCallback(() => {
     setIsShowDialogue((flag) => !flag)
@@ -46,81 +56,61 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   const handleCloseStampPop = useCallback(() => {
     setStampAnchorEl(null)
   }, [])
-  const handleOpenStampPop = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setStampAnchorEl(event.currentTarget)
-  }, [])
+  const handleOpenStampPop = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setStampAnchorEl(event.currentTarget)
+    },
+    []
+  )
 
   return (
     <Box>
-      <HeaderLayout communityList={communityList} />
       <Drawer variant='persistent' anchor='right' open={isShowDialogue}>
-        <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'flex-start', mt: '80px' }}>
+        <Box
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            mt: '80px',
+          }}
+        >
           <IconButton onClick={onClickDialogueButton}>
             <ChevronLeftRounded />
           </IconButton>
-          <Typography component='h1' variant='subtitle1' sx={{ fontSize: '24px', textAlign: 'center' }}>
+
+          <Typography component='h1' variant='h5' sx={{ textAlign: 'center' }}>
             会話ログ
           </Typography>
+
           <Divider />
         </Box>
         <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
       </Drawer>
-      <Box
+
+      <Container
         sx={{
           display: 'flex',
           m: '0 auto',
-          maxWidth: '1000px',
+          maxWidth: 'lg',
           position: 'relative',
-          pt: '96px',
-          px: '24px',
+          pt: lightTheme.spacing(12),
+          px: lightTheme.spacing(3),
         }}
       >
         {isShowChatBaloon ? (
-          <Box
-            sx={{
-              '&::before': {
-                border: '36px solid transparent',
-                borderLeft: '80px solid #e5e5e5',
-                content: '""',
-                display: 'block',
-                left: '64%',
-                position: 'absolute',
-                top: '88%',
-                transform: 'rotate(50deg)',
-              },
-              backgroundColor: 'grey.100',
-              borderRadius: '4px',
-              display: 'block',
-              height: '120px',
-              left: 0,
-              p: '12px',
-              position: 'absolute',
-              visibility: 'visible',
-              width: '280px',
-              zIndex: 10,
-            }}
-          >
-            {qmaMessage}
-          </Box>
+          <BearChatBalloon qmaMessage={qmaMessage} />
         ) : (
           <Box></Box>
         )}
-        <Box
-          sx={{
-            display: 'flex',
-            height: '400px',
-            margin: '0 auto',
-            width: '400px',
-            zIndex: 12,
-          }}
-        >
-          {isOpenBearMouth ? (
-            <Image src={bear2Img.src} width='800px' height='800px' alt='qma' />
-          ) : (
-            <Image src={bearImg.src} width='800px' height='800px' alt='qma2' />
-          )}
-        </Box>
-      </Box>
+
+        {/** クマの画像部分 */}
+        {isOpenBearMouth ? (
+          <BearImgContainer imgSrc={bear2Img.src} />
+        ) : (
+          <BearImgContainer imgSrc={bearImg.src} />
+        )}
+      </Container>
+
       <QmaFooter
         onKeydown={onKeydown}
         startComposition={startComposition}

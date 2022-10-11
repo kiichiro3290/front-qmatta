@@ -1,5 +1,4 @@
 import { Alert, Box, Snackbar, Typography } from '@mui/material'
-import { HeaderLayout } from '~/components/layouts/HeaderLayout/HeaderLayout'
 import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/PasswordAuthForm'
 
 export type SignUpPagePresenterProps = {
@@ -17,8 +16,15 @@ export const SignUpPagePresenter: React.FC<SignUpPagePresenterProps> = ({
 }) => {
   return (
     <Box>
-      <HeaderLayout communityList={[]} />
-      <Box sx={{ maxWidth: '540px', mt: '64px', mx: 'auto', p: '48px', textAlign: 'center' }}>
+      <Box
+        sx={{
+          maxWidth: '540px',
+          mt: '64px',
+          mx: 'auto',
+          p: '48px',
+          textAlign: 'center',
+        }}
+      >
         <Typography variant='inherit' component='h2' sx={{ my: '16px' }}>
           アカウント新規登録
         </Typography>
@@ -33,7 +39,10 @@ export const SignUpPagePresenter: React.FC<SignUpPagePresenterProps> = ({
             <Alert severity='error'>{snackbarMessage}</Alert>
           </Snackbar>
         </Box>
-        <PasswordAuthForm onClickSubmitButton={onClickSignUpButton} buttonText='新規登録する' />
+        <PasswordAuthForm
+          onClickSubmitButton={onClickSignUpButton}
+          buttonText='新規登録する'
+        />
       </Box>
     </Box>
   )
