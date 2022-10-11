@@ -1,6 +1,15 @@
 import { Chat, TagFaces } from '@mui/icons-material'
-import { Avatar, Box, Divider, IconButton, InputBase, Popover, Typography } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Divider,
+  IconButton,
+  InputBase,
+  Popover,
+  Typography,
+} from '@mui/material'
 import React, { ChangeEvent } from 'react'
+import { lightTheme } from '~/theme'
 import numaIcon from 'public/numa.svg'
 import sukkiriIcon from 'public/sukkiri.png'
 
@@ -8,7 +17,9 @@ export type QmaFooterProps = {
   onKeydown: (e: string) => void
   startComposition: () => void
   endComposition: () => void
-  onChangeDialogue: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  onChangeDialogue: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void
   onClickDialogueButton: () => void
   dialogue: string
   openStampPop: boolean
@@ -50,8 +61,19 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
           px: '20px',
         }}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: '12px', width: '100%' }}>
-          <IconButton color='primary' aria-label='dialogue' onClick={(e) => handleOpenStampPop(e)}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            mb: '12px',
+            width: '100%',
+          }}
+        >
+          <IconButton
+            color='primary'
+            aria-label='dialogue'
+            onClick={(e) => handleOpenStampPop(e)}
+          >
             <Avatar sx={{ bgcolor: 'icon.pink' }}>
               <TagFaces />
             </Avatar>
@@ -70,7 +92,11 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
             }}
           >
             <Box sx={{ p: '12px' }}>
-              <Typography sx={{ fontWeight: 'bold', pb: '8px', textAlign: 'center' }}>スタンプ一覧</Typography>
+              <Typography
+                sx={{ fontWeight: 'bold', pb: '8px', textAlign: 'center' }}
+              >
+                スタンプ一覧
+              </Typography>
               <Divider sx={{ mb: '12px' }} />
               <IconButton>
                 <Avatar src={numaIcon.src} />
@@ -81,7 +107,11 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
             </Box>
           </Popover>
 
-          <IconButton color='primary' aria-label='dialogue' onClick={onClickDialogueButton}>
+          <IconButton
+            color='primary'
+            aria-label='dialogue'
+            onClick={onClickDialogueButton}
+          >
             <Avatar sx={{ bgcolor: 'icon.blue' }}>
               <Chat />
             </Avatar>
@@ -90,7 +120,12 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
         <InputBase
           placeholder='コンパイル通らない...😂'
           color='primary'
-          sx={{ backgroundColor: 'grey.100', borderRadius: '4px', fontSize: '24px', px: '12px', py: '16px' }}
+          sx={{
+            backgroundColor: lightTheme.palette.grey[200],
+            borderRadius: '4px',
+            fontSize: lightTheme.typography.subtitle1,
+            p: lightTheme.spacing(2),
+          }}
           value={dialogue}
           fullWidth
           onChange={(e) => onChangeDialogue(e)}

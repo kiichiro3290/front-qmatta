@@ -1,10 +1,11 @@
 import { ChevronLeftRounded } from '@mui/icons-material'
 import { Box, Divider, Drawer, IconButton, Typography } from '@mui/material'
+
 import Image from 'next/image'
 import { ChangeEvent, useCallback, useState } from 'react'
-
 import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
+import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
 import bear2Img from 'public/bear2.png'
 import bearImg from 'public/quma.png'
 
@@ -90,32 +91,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         }}
       >
         {isShowChatBaloon ? (
-          <Box
-            sx={{
-              '&::before': {
-                border: '36px solid transparent',
-                borderLeft: '80px solid #e5e5e5',
-                content: '""',
-                display: 'block',
-                left: '64%',
-                position: 'absolute',
-                top: '88%',
-                transform: 'rotate(50deg)',
-              },
-              backgroundColor: 'grey.100',
-              borderRadius: '4px',
-              display: 'block',
-              height: '120px',
-              left: 0,
-              p: '12px',
-              position: 'absolute',
-              visibility: 'visible',
-              width: '280px',
-              zIndex: 10,
-            }}
-          >
-            {qmaMessage}
-          </Box>
+          <BearChatBalloon qmaMessage={qmaMessage} />
         ) : (
           <Box></Box>
         )}
