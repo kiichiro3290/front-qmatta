@@ -7,7 +7,7 @@ export const qmattaClient = (): AxiosInstance => {
     baseURL: process.env.NEXT_PUBLIC_BASE_URL,
     headers: {
       'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest',
+      //   'X-Requested-With': 'XMLHttpRequest',  >> バックエンドでこのHeaderオプションが許可されていなかった
     },
     responseType: 'json',
   })
