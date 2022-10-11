@@ -2,6 +2,7 @@ import { Chat, TagFaces } from '@mui/icons-material'
 import {
   Avatar,
   Box,
+  Container,
   Divider,
   IconButton,
   InputBase,
@@ -9,9 +10,8 @@ import {
   Typography,
 } from '@mui/material'
 import React, { ChangeEvent } from 'react'
+import { StampMenu } from '~/components/uiParts/StampMenu/StampMenu'
 import { lightTheme } from '~/theme'
-import numaIcon from 'public/numa.svg'
-import sukkiriIcon from 'public/sukkiri.png'
 
 export type QmaFooterProps = {
   onKeydown: (e: string) => void
@@ -41,99 +41,80 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
   startComposition,
 }) => {
   return (
-    <Box
-      sx={{
-        bottom: 0,
-        left: 0,
-        position: 'fixed',
-        width: '100%',
-      }}
+    <Container
+      maxWidth='sm'
+      sx={[
+        {
+          bottom: 0,
+          left: '50%',
+          position: 'fixed',
+          transform: 'translate(-50%, 0)',
+          zIndex: lightTheme.zIndex.modal,
+        },
+        {
+          backgroundColor: lightTheme.palette.background.paper,
+          border: `1px solid ${lightTheme.palette.grey[100]}`,
+          borderRadius: '40px 40px 0px 0px',
+          boxShadow: `0px 0px 10px ${lightTheme.palette.grey[400]}`,
+        },
+        {
+          pb: lightTheme.spacing(4),
+          pt: lightTheme.spacing(2),
+          px: lightTheme.spacing(3),
+        },
+      ]}
     >
       <Box
         sx={{
-          border: '1px solid #dddddd',
-          borderRadius: '40px 40px 0px 0px',
-          boxShadow: '0px 0px 10px #dddddd',
-          margin: '0 auto',
-          maxWidth: '560px',
-          pb: '32px',
-          pt: '16px',
-          px: '20px',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          mb: lightTheme.spacing(2),
         }}
       >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            mb: '12px',
-            width: '100%',
-          }}
-        >
-          <IconButton
-            color='primary'
-            aria-label='dialogue'
-            onClick={(e) => handleOpenStampPop(e)}
-          >
-            <Avatar sx={{ bgcolor: 'icon.pink' }}>
-              <TagFaces />
-            </Avatar>
-          </IconButton>
-          <Popover
-            open={openStampPop}
-            onClose={handleCloseStampPop}
-            anchorEl={stampAnchorEl}
-            anchorOrigin={{
-              horizontal: 'left',
-              vertical: 'top',
-            }}
-            transformOrigin={{
-              horizontal: 'left',
-              vertical: 'bottom',
-            }}
-          >
-            <Box sx={{ p: '12px' }}>
-              <Typography
-                sx={{ fontWeight: 'bold', pb: '8px', textAlign: 'center' }}
-              >
-                スタンプ一覧
-              </Typography>
-              <Divider sx={{ mb: '12px' }} />
-              <IconButton>
-                <Avatar src={numaIcon.src} />
-              </IconButton>
-              <IconButton>
-                <Avatar src={sukkiriIcon.src} />
-              </IconButton>
-            </Box>
-          </Popover>
-
-          <IconButton
-            color='primary'
-            aria-label='dialogue'
-            onClick={onClickDialogueButton}
-          >
-            <Avatar sx={{ bgcolor: 'icon.blue' }}>
-              <Chat />
-            </Avatar>
-          </IconButton>
-        </Box>
-        <InputBase
-          placeholder='コンパイル通らない...😂'
+        <IconButton
           color='primary'
-          sx={{
-            backgroundColor: lightTheme.palette.grey[200],
-            borderRadius: '4px',
-            fontSize: lightTheme.typography.subtitle1,
-            p: lightTheme.spacing(2),
-          }}
-          value={dialogue}
-          fullWidth
-          onChange={(e) => onChangeDialogue(e)}
-          onCompositionEnd={endComposition}
-          onCompositionStart={startComposition}
-          onKeyDown={(e) => onKeydown(e.key)}
+          aria-label='dialogue'
+          onClick={(e) => handleOpenStampPop(e)}
+        >
+          <Avatar sx={{ bgcolor: 'icon.pink' }}>
+            <TagFaces />
+          </Avatar>
+        </IconButton>
+
+        {/** スタンプボタン */}
+        <StampMenu
+          stampAnchorEl={stampAnchorEl}
+          openStampPop={openStampPop}
+          handleCloseStampPop={handleCloseStampPop}
         />
+
+        <IconButton
+          color='primary'
+          aria-label='dialogue'
+          onClick={onClickDialogueButton}
+        >
+          <Avatar sx={{ bgcolor: 'icon.blue' }}>
+            <Chat />
+          </Avatar>
+        </IconButton>
       </Box>
-    </Box>
+
+      <InputBase
+        placeholder='コンパイル通らない...😂'
+        color='primary'
+        sx={{
+          backgroundColor: lightTheme.palette.grey[200],
+          borderRadius: '4px',
+          fontSize: lightTheme.typography.subtitle1,
+          p: lightTheme.spacing(2),
+        }}
+        value={dialogue}
+        fullWidth
+        onChange={(e) => onChangeDialogue(e)}
+        onCompositionEnd={endComposition}
+        onCompositionStart={startComposition}
+        onKeyDown={(e) => onKeydown(e.key)}
+      />
+    </Container>
   )
 }
