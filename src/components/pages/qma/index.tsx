@@ -60,7 +60,7 @@ export const QmaPage: React.FC = () => {
             // メッセージをリセット
             setDialogue('')
             // AI 思考時間
-            setQmaMessage('...')
+            setQmaMessage('考え中...')
             if (isLoggedIn && userId) {
               try {
                 // バックエンドからクマのセリフを取得する
