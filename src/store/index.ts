@@ -1,5 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { themeReducer } from './theme/themeSlice'
 import { userReducer } from './user/userSlice'
+
+import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
@@ -12,6 +14,7 @@ export const store = configureStore({
     }),
   reducer: {
     user: userReducer,
+    theme: themeReducer,
   },
 })
 
