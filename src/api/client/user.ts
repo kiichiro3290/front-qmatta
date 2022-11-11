@@ -1,6 +1,7 @@
-import { qmattaClient } from './client'
-
 // スタンプを送信する: PATCH
+
+import { qmattaClient } from '.'
+
 // (stampId: string?, userId: string) => { 返り値が謎 }
 export const sendUserStatus = async (stampId: string, userId: string) => {
   const data = { stampId }

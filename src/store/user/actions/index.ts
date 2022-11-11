@@ -1,4 +1,4 @@
-import { getCommunityList } from '~/pages/api/user'
+import { getCommunityList } from '~/api/client/user'
 
 import { createAsyncThunk } from '@reduxjs/toolkit'
 

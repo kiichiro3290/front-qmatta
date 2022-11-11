@@ -1,11 +1,8 @@
 import { QmaPagePresenter } from './presenter'
 
-import {
-  fetchQmaMessage,
-  // getAIQmaMessage,
-  postQmaMessage,
-} from '~/pages/api/bear'
-import { getMessageHistory, logInUser } from '~/pages/api/user'
+import { postQmaMessage, fetchQmaMessage } from '~/api/client/bear'
+import { meboApi } from '~/api/client/mebo'
+import { logInUser, getMessageHistory } from '~/api/client/user'
 import { AppDispatch } from '~/store'
 import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
 import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
@@ -67,9 +64,9 @@ export const QmaPage: React.FC = () => {
             if (isLoggedIn && userId) {
               try {
                 // バックエンドからクマのセリフを取得する
-                const data = await postQmaMessage(userId, dialogue)
+                // const data = await postQmaMessage(userId, dialogue)
                 // AIによる返答を取得する
-                // const data = await getAIQmaMessage(userId, dialogue)
+                const data = await meboApi.getMeboMessage(userId, dialogue)
                 setQmaMessage(data)
               } catch (e) {
                 console.log(e)

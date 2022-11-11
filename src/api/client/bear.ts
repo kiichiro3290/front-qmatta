@@ -1,6 +1,6 @@
 // クマのメッセージを取得する（簡易版）: GET
 
-import { meboClient, qmattaClient } from './client'
+import { qmattaClient } from '.'
 
 // () => message: string
 export const fetchQmaMessage = async () => {
@@ -22,22 +22,4 @@ export const postQmaMessage = async (
     .then((res) => res.data.response)
     .catch((e) => console.log(e))
   return result
-}
-
-// meboのapiを叩いて，返答を取得する
-// 無料版で800messages/month, ¥2800/monthで10000messages/month
-// (userID: string, message: string) => message: string
-export const getAIQmaMessage = async (
-  userId: string,
-  message: string
-): Promise<string> => {
-  const data = {
-    agent_id: process.env.NEXT_PUBLIC_MEBO_AGENT_ID,
-    api_key: process.env.NEXT_PUBLIC_MEBO_API_KEY,
-    uid: userId,
-    utterance: message,
-  }
-  const result = await meboClient().post('', data)
-  const answer = result.data.bestResponse.utterance
-  return answer
 }
