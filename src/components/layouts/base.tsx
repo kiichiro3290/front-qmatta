@@ -40,6 +40,7 @@ const Layout: FC<BaseLayoutProps> = ({ children }) => {
       <CssBaseline />
       <Box>
         <Header />
+        <Box sx={{ mt: theme.spacing(8) }} />
         {children}
       </Box>
     </ThemeProvider>

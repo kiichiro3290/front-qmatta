@@ -32,6 +32,6 @@ export const themeReducer = themeSlice.reducer
 export const { setMode } = themeSlice.actions
 
 // Selecter→状態を取り出す
-export const selectTheme = (state: RootState) => () =>
+export const selectTheme = (state: RootState) =>
   state.theme.mode === 'light' ? lightTheme : darkTheme
 export const selectMode = (state: RootState) => state.theme.mode

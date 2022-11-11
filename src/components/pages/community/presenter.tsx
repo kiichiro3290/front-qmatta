@@ -1,6 +1,8 @@
 import { MenuTabs } from '~/components/layouts/MenuTabs/Menutabs'
+import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Box, Button, TextField, Typography } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 export type CommunityPagePresenterProps = {
   communityId: string
@@ -9,6 +11,7 @@ export type CommunityPagePresenterProps = {
 export const CommunityPagePresenter: React.FC<
   CommunityPagePresenterProps
 > = () => {
+  const theme = useSelector(selectTheme)
   return (
     <Box
       sx={{
@@ -16,8 +19,7 @@ export const CommunityPagePresenter: React.FC<
         gap: '24px',
         gridTemplateColumns: '1fr 1fr',
         height: '100vh',
-        mt: '96px',
-        p: '24px',
+        p: theme.spacing(4),
       }}
     >
       <Box sx={{ height: '100%' }}>
