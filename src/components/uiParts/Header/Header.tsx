@@ -30,7 +30,12 @@ export const Header: React.FC = () => {
   const onClickMenuButton = useCallback(() => {
     setIsShowSideBar(true)
   }, [])
+
   const onCloseMenuButton = useCallback(() => {
+    setIsShowSideBar(false)
+  }, [])
+
+  const closeSideBar = useCallback(() => {
     setIsShowSideBar(false)
   }, [])
 
@@ -70,7 +75,10 @@ export const Header: React.FC = () => {
               }}
               onClose={onCloseMenuButton}
             >
-              <SideBar communityList={communityList} />
+              <SideBar
+                closeSideBar={closeSideBar}
+                communityList={communityList}
+              />
             </Drawer>
             <Typography>Qmatta</Typography>
           </Box>

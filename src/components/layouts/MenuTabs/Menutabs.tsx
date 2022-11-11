@@ -1,4 +1,4 @@
-import { QuestionList } from '../QuestionList/QuestionList'
+import { QuestionList } from '../../papers/QuestionList/QuestionList'
 
 import { Box, Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
