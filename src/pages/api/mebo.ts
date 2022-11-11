@@ -11,8 +11,11 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'GET') {
+    const userId = req.query.userId as string
+    const dialogue = req.query.dialogue as string
+
     ;(async () => {
-      const answer = await getAIQmaMessage(req.body.userId, req.body.message)
+      const answer = await getAIQmaMessage(userId, dialogue)
       return res.status(200).json({ answer })
     })()
   } else {
