@@ -1,5 +1,6 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
 import { getCommunityList } from '~/pages/api/user'
+
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
 // ログイン成功時に走る関数
 export const fetchUserDataState = createAsyncThunk(
