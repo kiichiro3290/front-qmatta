@@ -1,7 +1,7 @@
 // meboのapiを叩いて，返答を取得する
 // 無料版で800messages/month, ¥2800/monthで10000messages/month
 
-import { meboClient } from '../client'
+import { meboClient } from '..'
 
 // (userID: string, message: string) => message: string
 export const getAIQmaMessage = async (
