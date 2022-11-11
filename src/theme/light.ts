@@ -1,6 +1,6 @@
-import { createTheme } from '@mui/material/styles'
-
 import { baseTheme } from './base'
+
+import { createTheme } from '@mui/material/styles'
 
 export const lightTheme = createTheme({
   ...baseTheme,
