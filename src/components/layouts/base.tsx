@@ -1,13 +1,13 @@
 import { Header } from '../uiParts/Header/Header'
 
 import { store } from '~/store'
-import { lightTheme } from '~/theme'
+import { selectTheme, setMode } from '~/store/theme/themeSlice'
 import { GetLayout } from '~/types/next'
 
 import { ThemeProvider } from '@emotion/react'
-import { Box, CssBaseline } from '@mui/material'
-import { FC, ReactNode } from 'react'
-import { Provider } from 'react-redux'
+import { Box, CssBaseline, useMediaQuery } from '@mui/material'
+import { FC, ReactNode, useEffect } from 'react'
+import { Provider, useDispatch, useSelector } from 'react-redux'
 
 type BaseLayoutProps = {
   children: ReactNode
@@ -26,11 +26,21 @@ const BaseLayout: FC<BaseLayoutProps> = (props) => {
 }
 
 const Layout: FC<BaseLayoutProps> = ({ children }) => {
+  const dispatch = useDispatch()
+  const theme = useSelector(selectTheme)
+
+  // デバイスのモードを取得する
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+  useEffect(() => {
+    dispatch(setMode(prefersDarkMode ? 'dark' : 'light'))
+  }, [prefersDarkMode])
+
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box>
         <Header />
+        <Box sx={{ mt: theme.spacing(8) }} />
         {children}
       </Box>
     </ThemeProvider>

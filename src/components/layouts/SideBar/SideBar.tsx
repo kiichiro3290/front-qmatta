@@ -15,16 +15,22 @@ import { useCallback } from 'react'
 
 export type SideBarProps = {
   communityList: string[]
+  closeSideBar: () => void
 }
 
-export const SideBar: React.FC<SideBarProps> = ({ communityList }) => {
+export const SideBar: React.FC<SideBarProps> = ({
+  communityList,
+  closeSideBar,
+}) => {
   const router = useRouter()
 
   const onClickQmaButton = useCallback(() => {
     router.push('/')
+    closeSideBar()
   }, [])
   const onClickWorkspaceButton = useCallback((communityId: string) => {
     router.push(`/communities/${communityId}`)
+    closeSideBar()
   }, [])
   return (
     <Box
@@ -58,6 +64,14 @@ export const SideBar: React.FC<SideBarProps> = ({ communityList }) => {
       <Divider />
 
       <MenuList sx={{ my: '20px' }}>
+        <MenuItem onClick={() => onClickWorkspaceButton('programming')}>
+          <ListItemAvatar>
+            <Avatar>
+              <ImageOutlined />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary={'プログラミング'} />
+        </MenuItem>
         {communityList &&
           communityList.map((community) => (
             <MenuItem

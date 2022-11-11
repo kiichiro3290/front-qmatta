@@ -1,10 +1,11 @@
 import bear2Img from 'public/bear2.png'
+import qmattaBoard from 'public/qmatta-board.png'
 import bearImg from 'public/quma.png'
 import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
 import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
 import { BearImgContainer } from '~/components/uiParts/BearImgContainer/BearImgContainer'
-import { lightTheme } from '~/theme'
+import { selectTheme } from '~/store/theme/themeSlice'
 
 import { ChevronLeftRounded } from '@mui/icons-material'
 import {
@@ -15,7 +16,9 @@ import {
   IconButton,
   Typography,
 } from '@mui/material'
+import Image from 'next/image'
 import { ChangeEvent, useCallback, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 export type QmaPagePresenterProps = {
   qmaMessage: string
@@ -48,6 +51,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(
     null
   )
+  const theme = useSelector(selectTheme)
 
   const onClickDialogueButton = useCallback(() => {
     setIsShowDialogue((flag) => !flag)
@@ -65,6 +69,16 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 
   return (
     <Box>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: theme.spacing(4),
+          width: '100%',
+          textAlign: 'center',
+        }}
+      >
+        <Image alt='qmatta' height={100} src={qmattaBoard} width={320} />
+      </Box>
       <Drawer anchor='right' open={isShowDialogue} variant='persistent'>
         <Box
           sx={{
@@ -93,8 +107,8 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
           m: '0 auto',
           maxWidth: 'lg',
           position: 'relative',
-          pt: lightTheme.spacing(12),
-          px: lightTheme.spacing(3),
+          pt: theme.spacing(16),
+          px: theme.spacing(3),
         }}
       >
         {isShowChatBaloon ? (

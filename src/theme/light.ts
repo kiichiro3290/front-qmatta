@@ -6,7 +6,7 @@ export const lightTheme = createTheme({
   ...baseTheme,
   palette: {
     background: {
-      default: '#F7FAFF',
+      default: '#f9f3e9',
       paper: '#FFFFFF',
     },
     icon: {

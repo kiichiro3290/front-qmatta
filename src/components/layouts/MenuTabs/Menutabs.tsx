@@ -1,4 +1,4 @@
-import { QuestionList } from '../QuestionList/QuestionList'
+import { QuestionList } from '../../papers/QuestionList/QuestionList'
 
 import { Box, Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
@@ -38,14 +38,12 @@ export const MenuTabs: React.FC<MenuTabsProps> = () => {
   }
   return (
     <Box>
-      <Box>
-        <Tabs value={value} onChange={handleChange}>
-          <Tab label='質問' {...tabProps(0)} />
-          <Tab label='みんなの状況' {...tabProps(1)} />
-          <Tab label='資料' {...tabProps(2)} />
-          <Tab label='くま記録' {...tabProps(3)} />
-        </Tabs>
-      </Box>
+      <Tabs value={value} onChange={handleChange}>
+        <Tab label='質問' {...tabProps(0)} />
+        <Tab label='みんなの状況' {...tabProps(1)} />
+        <Tab label='資料' {...tabProps(2)} />
+        <Tab label='くま記録' {...tabProps(3)} />
+      </Tabs>
 
       <TabPanel index={0} value={value}>
         <QuestionList />

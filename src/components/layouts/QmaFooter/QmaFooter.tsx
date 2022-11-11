@@ -1,9 +1,10 @@
 import { StampMenu } from '~/components/uiParts/StampMenu/StampMenu'
-import { lightTheme } from '~/theme'
+import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Chat, TagFaces } from '@mui/icons-material'
 import { Avatar, Box, Container, IconButton, InputBase } from '@mui/material'
 import { ChangeEvent } from 'react'
+import { useSelector } from 'react-redux'
 
 export type QmaFooterProps = {
   onKeydown: (e: string) => void
@@ -32,6 +33,7 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
   stampAnchorEl,
   startComposition,
 }) => {
+  const theme = useSelector(selectTheme)
   return (
     <Container
       maxWidth='sm'
@@ -41,18 +43,18 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
           left: '50%',
           position: 'fixed',
           transform: 'translate(-50%, 0)',
-          zIndex: lightTheme.zIndex.modal,
+          zIndex: theme.zIndex.drawer,
         },
         {
-          backgroundColor: lightTheme.palette.background.paper,
-          border: `1px solid ${lightTheme.palette.grey[100]}`,
+          backgroundColor: theme.palette.background.paper,
+          border: `1px solid ${theme.palette.grey[100]}`,
           borderRadius: '40px 40px 0px 0px',
-          boxShadow: `0px 0px 10px ${lightTheme.palette.grey[400]}`,
+          boxShadow: `0px 0px 10px ${theme.palette.grey[400]}`,
         },
         {
-          pb: lightTheme.spacing(4),
-          pt: lightTheme.spacing(2),
-          px: lightTheme.spacing(3),
+          pb: theme.spacing(4),
+          pt: theme.spacing(2),
+          px: theme.spacing(3),
         },
       ]}
     >
@@ -60,7 +62,7 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
-          mb: lightTheme.spacing(2),
+          mb: theme.spacing(2),
         }}
       >
         <IconButton
@@ -95,10 +97,10 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
         color='primary'
         placeholder='コンパイル通らない...😂'
         sx={{
-          backgroundColor: lightTheme.palette.grey[200],
+          backgroundColor: theme.palette.grey[200],
           borderRadius: '4px',
-          fontSize: lightTheme.typography.subtitle1,
-          p: lightTheme.spacing(2),
+          fontSize: theme.typography.subtitle1,
+          p: theme.spacing(2),
         }}
         value={dialogue}
         fullWidth
