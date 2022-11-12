@@ -20,7 +20,10 @@ export const QmaPage: React.FC = () => {
 
   const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
   // メッセージの送信履歴
-  const [messageHistory, setMessageHistory] = useState<string[]>([])
+  const [messageHistory, setMessageHistory] = useState<MessageHistory>({
+    messages: [],
+    dates: [],
+  })
   // 入力したメッセージの受け皿
   const [dialogue, setDialogue] = useState<string>('')
   // メッセージをクマに送信するたびに，配列に追加する
@@ -123,6 +126,7 @@ export const QmaPage: React.FC = () => {
     const f = async () => {
       if (userId) {
         const data = await getMessageHistory(userId)
+        console.log(data)
         setMessageHistory(data)
       }
     }

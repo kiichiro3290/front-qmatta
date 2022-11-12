@@ -11,9 +11,22 @@ export const sendUserStatus = async (stampId: string, userId: string) => {
 
 // メッセージの送信履歴を取得する: GET
 // (userId: string) => string[]
-export const getMessageHistory = async (userId: string): Promise<string[]> => {
+export const getMessageHistory = async (
+  userId: string
+): Promise<MessageHistory> => {
   const result = await qmattaClient().get(`bear/history/${userId}`)
-  return result.data.message
+  const data: ResMessageHistory = result.data
+
+  const dates = result.data.date.map((raw: string) => {
+    return new Date(raw)
+  })
+
+  const res = {
+    messages: data.message,
+    dates: dates,
+  }
+
+  return res
 }
 
 // 自分が加入しているコミュニティの一覧を取得する: GET

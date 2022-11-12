@@ -31,7 +31,7 @@ export type QmaPagePresenterProps = {
   ) => void
   dialogue: string
   dialogues: string[]
-  messageHistory: string[]
+  messageHistory: MessageHistory
   isOpenBearMouth: boolean
 }
 
@@ -79,13 +79,15 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
       >
         <Image alt='qmatta' height={100} src={qmattaBoard} width={320} />
       </Box>
+
       <Drawer anchor='right' open={isShowDialogue} variant='persistent'>
         <Box
           sx={{
             alignItems: 'center',
             display: 'flex',
             justifyContent: 'flex-start',
-            mt: '80px',
+            mt: theme.spacing(6),
+            px: theme.spacing(3),
           }}
         >
           <IconButton onClick={onClickDialogueButton}>
