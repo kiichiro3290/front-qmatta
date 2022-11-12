@@ -7,11 +7,12 @@ import { useSelector } from 'react-redux'
 
 export type CommunityPagePresenterProps = {
   communityId: string
+  questions: Question[]
 }
 
-export const CommunityPagePresenter: React.FC<
-  CommunityPagePresenterProps
-> = () => {
+export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
+  questions,
+}) => {
   const theme = useSelector(selectTheme)
   return (
     <Box
@@ -24,7 +25,7 @@ export const CommunityPagePresenter: React.FC<
       }}
     >
       <Box sx={{ height: '100%' }}>
-        <MenuTabs />
+        <MenuTabs questions={questions} />
       </Box>
 
       <Box sx={{ height: '100%', width: '100%' }}>
