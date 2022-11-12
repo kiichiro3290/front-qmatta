@@ -1,8 +1,8 @@
 import { QmaPagePresenter } from './presenter'
 
-import { postQmaMessage, fetchQmaMessage } from '~/api/client/bear'
+import { postQmaMessage, fetchQmaMessage } from '~/api/client/back/bear'
+import { logInUser, getMessageHistory } from '~/api/client/back/user'
 import { meboApi } from '~/api/client/mebo'
-import { logInUser, getMessageHistory } from '~/api/client/user'
 import { AppDispatch } from '~/store'
 import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
 import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'

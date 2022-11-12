@@ -1,6 +1,6 @@
 import { LogInPagePresenter } from './presenter'
 
-import { logInUser } from '~/api/client/user'
+import { logInUser } from '~/api/client/back/user'
 import { AppDispatch } from '~/store'
 import { fetchUserDataState } from '~/store/user/actions'
 

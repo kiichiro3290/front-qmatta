@@ -1,6 +1,6 @@
 // クマのメッセージを取得する（簡易版）: GET
 
-import { qmattaClient } from '.'
+import { qmattaClient } from '..'
 
 // () => message: string
 export const fetchQmaMessage = async () => {

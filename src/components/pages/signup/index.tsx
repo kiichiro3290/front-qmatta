@@ -1,6 +1,6 @@
 import { SignUpPagePresenter } from './presenter'
 
-import { signUpUser } from '~/api/client/user'
+import { signUpUser } from '~/api/client/back/user'
 
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
