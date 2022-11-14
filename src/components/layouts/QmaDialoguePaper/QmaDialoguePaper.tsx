@@ -19,16 +19,19 @@ export const QmaDialoguePaper: React.FC<QmaDialoguePaperProps> = ({
     <Box
       sx={{
         backgroundColor: theme.palette.background.paper,
-        p: theme.spacing(4),
+        py: theme.spacing(4),
         height: '80vh',
         borderRadius: '4px',
         boxShadow: theme.shadows[1],
       }}
     >
-      <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
+      <Typography
+        sx={{ mb: theme.spacing(2), px: theme.spacing(4) }}
+        variant='h5'
+      >
         くま記録
       </Typography>
-      <Box sx={{ height: '95%', overflowY: 'scroll' }}>
+      <Box sx={{ height: '95%', overflowY: 'scroll', px: theme.spacing(4) }}>
         <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
       </Box>
     </Box>
