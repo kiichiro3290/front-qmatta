@@ -16,7 +16,7 @@ export const QmaDialogue: React.FC<QmaDialogueProps> = ({
 }) => {
   const theme = useSelector(selectTheme)
   return (
-    <Box sx={{ px: theme.spacing(2), width: { sm: '400px', xs: '280px' } }}>
+    <Box>
       {dialogues.map((dialogue, index) => (
         <Fragment key={index}>
           <DialogueTextContainer dialogue={dialogue} />

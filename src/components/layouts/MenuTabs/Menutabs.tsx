@@ -1,5 +1,5 @@
 import { QuestionList } from '../../papers/QuestionList/QuestionList'
-import { QmaDialogue } from '../QmaDialogue/QmaDialogue'
+import { QmaDialoguePaper } from '../QmaDialoguePaper/QmaDialoguePaper'
 
 import { Box, Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
@@ -60,7 +60,8 @@ export const MenuTabs: React.FC<MenuTabsProps> = ({
       </TabPanel>
 
       <TabPanel index={2} value={value}>
-        <QmaDialogue
+        <QmaDialoguePaper
+          // TODO: クマページで入力したメッセージを redux で管理する
           dialogues={['おはよう', 'こんにちは', 'こんばんは']}
           messageHistory={messageHistory}
         />

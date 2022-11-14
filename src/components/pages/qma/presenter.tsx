@@ -1,7 +1,7 @@
 import bear2Img from 'public/bear2.png'
 import qmattaBoard from 'public/qmatta-board.png'
 import bearImg from 'public/quma.png'
-import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
+import { QmaDialogueDrawer } from '~/components/layouts/QmaDialogueDrawer/QmaDialogueDrawer'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
 import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
 import { BearImgContainer } from '~/components/uiParts/BearImgContainer/BearImgContainer'
@@ -100,7 +100,10 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 
           <Divider />
         </Box>
-        <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
+        <QmaDialogueDrawer
+          dialogues={dialogues}
+          messageHistory={messageHistory}
+        />
       </Drawer>
 
       <Container
