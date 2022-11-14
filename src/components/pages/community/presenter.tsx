@@ -8,10 +8,12 @@ import { useSelector } from 'react-redux'
 export type CommunityPagePresenterProps = {
   communityId: string
   questions: Question[]
+  messageHistory: MessageHistory
 }
 
 export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
   questions,
+  messageHistory,
 }) => {
   const theme = useSelector(selectTheme)
   return (
@@ -25,7 +27,7 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
       }}
     >
       <Box sx={{ height: '100%' }}>
-        <MenuTabs questions={questions} />
+        <MenuTabs messageHistory={messageHistory} questions={questions} />
       </Box>
 
       <Box sx={{ height: '100%', width: '100%' }}>

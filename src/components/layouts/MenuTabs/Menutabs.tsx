@@ -1,4 +1,5 @@
 import { QuestionList } from '../../papers/QuestionList/QuestionList'
+import { QmaDialogue } from '../QmaDialogue/QmaDialogue'
 
 import { Box, Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
@@ -7,6 +8,7 @@ import * as React from 'react'
 
 export type MenuTabsProps = {
   questions: Question[]
+  messageHistory: MessageHistory
 }
 
 function tabProps(index: number) {
@@ -30,7 +32,10 @@ export const TabPanel: React.FC<TabPanelProps> = ({
   return <Box>{value === index && <Box>{children}</Box>}</Box>
 }
 
-export const MenuTabs: React.FC<MenuTabsProps> = ({ questions }) => {
+export const MenuTabs: React.FC<MenuTabsProps> = ({
+  questions,
+  messageHistory,
+}) => {
   const [value, setValue] = useState(0)
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -55,7 +60,10 @@ export const MenuTabs: React.FC<MenuTabsProps> = ({ questions }) => {
       </TabPanel>
 
       <TabPanel index={2} value={value}>
-        <Typography>くま記録</Typography>
+        <QmaDialogue
+          dialogues={['おはよう', 'こんにちは', 'こんばんは']}
+          messageHistory={messageHistory}
+        />
       </TabPanel>
 
       {/* <TabPanel index={3} value={value}>
