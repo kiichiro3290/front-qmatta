@@ -9,6 +9,10 @@ export const darkTheme = createTheme({
       default: '#22272D',
       paper: '#2D333A',
     },
+    icon: {
+      blue: '#304ffe',
+      pink: '#FF5C57',
+    },
     mode: 'dark',
     primary: {
       contrastText: '#FFFFFF',
