@@ -1,7 +1,7 @@
 import bear2Img from 'public/bear2.png'
 import qmattaBoard from 'public/qmatta-board.png'
 import bearImg from 'public/quma.png'
-import { QmaDialogue } from '~/components/layouts/QmaDialogue/QmaDialogue'
+import { QmaDialogueDrawer } from '~/components/layouts/QmaDialogueDrawer/QmaDialogueDrawer'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
 import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
 import { BearImgContainer } from '~/components/uiParts/BearImgContainer/BearImgContainer'
@@ -31,7 +31,7 @@ export type QmaPagePresenterProps = {
   ) => void
   dialogue: string
   dialogues: string[]
-  messageHistory: string[]
+  messageHistory: MessageHistory
   isOpenBearMouth: boolean
 }
 
@@ -79,13 +79,15 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
       >
         <Image alt='qmatta' height={100} src={qmattaBoard} width={320} />
       </Box>
+
       <Drawer anchor='right' open={isShowDialogue} variant='persistent'>
         <Box
           sx={{
             alignItems: 'center',
             display: 'flex',
             justifyContent: 'flex-start',
-            mt: '80px',
+            mt: theme.spacing(6),
+            px: theme.spacing(3),
           }}
         >
           <IconButton onClick={onClickDialogueButton}>
@@ -98,7 +100,10 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 
           <Divider />
         </Box>
-        <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
+        <QmaDialogueDrawer
+          dialogues={dialogues}
+          messageHistory={messageHistory}
+        />
       </Drawer>
 
       <Container

@@ -94,10 +94,10 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
       </Box>
 
       <InputBase
-        color='primary'
         placeholder='コンパイル通らない...😂'
         sx={{
-          backgroundColor: theme.palette.grey[200],
+          color: theme.palette.text.primary,
+          backgroundColor: theme.palette.background.default,
           borderRadius: '4px',
           fontSize: theme.typography.subtitle1,
           p: theme.spacing(2),

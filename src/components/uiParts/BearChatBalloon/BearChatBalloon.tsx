@@ -1,6 +1,7 @@
-import { lightTheme } from '~/theme'
+import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Box } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 type BearChatBalloonProps = {
   qmaMessage: string
@@ -8,13 +9,14 @@ type BearChatBalloonProps = {
 export const BearChatBalloon: React.FC<BearChatBalloonProps> = ({
   qmaMessage,
 }) => {
+  const theme = useSelector(selectTheme)
   return (
     <Box
       sx={[
         {
           '&::before': {
             border: '36px solid transparent',
-            borderLeft: `80px solid ${lightTheme.palette.background.paper}`,
+            borderLeft: `80px solid ${theme.palette.background.paper}`,
             content: '""',
             display: 'block',
             left: { sm: '64%', xs: '24%' },
@@ -22,25 +24,25 @@ export const BearChatBalloon: React.FC<BearChatBalloonProps> = ({
             top: '88%',
             transform: 'rotate(50deg)',
           },
-          backgroundColor: lightTheme.palette.background.paper,
+          backgroundColor: theme.palette.background.paper,
           borderRadius: '4px',
           display: 'block',
-          filter: `drop-shadow(0px 2px 2px ${lightTheme.palette.grey[400]})`,
+          filter: `drop-shadow(0px 2px 2px ${theme.palette.grey[400]})`,
           height: '120px',
-          p: lightTheme.spacing(3),
+          p: theme.spacing(3),
           position: 'absolute',
           width: '280px',
-          zIndex: lightTheme.zIndex.speedDial,
+          zIndex: theme.zIndex.speedDial,
         },
         {
           left: {
-            lg: lightTheme.spacing(20),
-            md: lightTheme.spacing(8),
-            xs: lightTheme.spacing(2),
+            lg: theme.spacing(20),
+            md: theme.spacing(8),
+            xs: theme.spacing(2),
           },
         },
         {
-          boxShadow: `1px 0px 10px ${lightTheme.palette.grey[400]}`,
+          boxShadow: `1px 0px 10px ${theme.palette.grey[400]}`,
         },
       ]}
     >

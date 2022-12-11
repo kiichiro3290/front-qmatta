@@ -1,39 +1,52 @@
 import { DialogueTextContainer } from '~/components/uiParts/DialogueTextContainer/DialogueTextContainer'
-import { lightTheme } from '~/theme'
+import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Box, Divider, Typography } from '@mui/material'
-import { Fragment } from 'react'
+import { useSelector } from 'react-redux'
 
 export type QmaDialogueProps = {
   dialogues: string[]
-  messageHistory: string[]
+  messageHistory: MessageHistory
 }
 
 export const QmaDialogue: React.FC<QmaDialogueProps> = ({
   dialogues,
   messageHistory,
 }) => {
+  const theme = useSelector(selectTheme)
   return (
-    <Box
-      sx={{ px: lightTheme.spacing(2), width: { sm: '400px', xs: '280px' } }}
-    >
+    <Box>
       {dialogues.map((dialogue, index) => (
-        <Fragment key={index}>
+        <Box key={index} sx={{ display: 'flex', gap: theme.spacing(2) }}>
           <DialogueTextContainer dialogue={dialogue} />
-        </Fragment>
+        </Box>
       ))}
 
-      <Divider sx={{ mt: lightTheme.spacing(2) }} />
+      <Divider sx={{ mt: theme.spacing(2) }} />
 
-      <Typography sx={{ pt: lightTheme.spacing(2) }} variant='h5'>
+      <Typography
+        sx={{ pt: theme.spacing(2), mb: theme.spacing(1) }}
+        variant='h5'
+      >
         過去の会話
       </Typography>
 
-      {messageHistory &&
-        messageHistory.map((dialogue, index) => (
-          <Fragment key={index}>
+      {messageHistory.messages &&
+        messageHistory.messages.map((dialogue, index) => (
+          <Box key={index} sx={{ display: 'flex', gap: theme.spacing(2) }}>
             <DialogueTextContainer dialogue={dialogue} />
-          </Fragment>
+            <Typography
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              variant='body2'
+            >
+              {messageHistory.dates[index]
+                .toLocaleTimeString('ja-JP')
+                .toString()}
+            </Typography>
+          </Box>
         ))}
     </Box>
   )

@@ -1,6 +1,6 @@
 import numaIcon from 'public/numa.svg'
 import sukkiriIcon from 'public/sukkiri.png'
-import { lightTheme } from '~/theme'
+import { selectTheme } from '~/store/theme/themeSlice'
 
 import {
   Avatar,
@@ -10,6 +10,7 @@ import {
   Popover,
   Typography,
 } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 type StampMenuProps = {
   openStampPop: boolean
@@ -22,6 +23,7 @@ export const StampMenu: React.FC<StampMenuProps> = ({
   openStampPop,
   stampAnchorEl,
 }) => {
+  const theme = useSelector(selectTheme)
   return (
     <Popover
       anchorEl={stampAnchorEl}
@@ -36,17 +38,17 @@ export const StampMenu: React.FC<StampMenuProps> = ({
       }}
       onClose={handleCloseStampPop}
     >
-      <Box sx={{ p: lightTheme.spacing(2) }}>
+      <Box sx={{ p: theme.spacing(2) }}>
         <Typography
           sx={{
             fontWeight: 'bold',
-            pb: lightTheme.spacing(1),
+            pb: theme.spacing(1),
             textAlign: 'center',
           }}
         >
           スタンプ一覧
         </Typography>
-        <Divider sx={{ mb: lightTheme.spacing(2) }} />
+        <Divider sx={{ mb: theme.spacing(2) }} />
         <IconButton>
           <Avatar src={numaIcon.src} />
         </IconButton>

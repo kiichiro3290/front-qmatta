@@ -37,7 +37,7 @@ export const InputQuestionPaper: React.FC = () => {
         fullWidth
         multiline
       />
-      <Button variant='contained' fullWidth>
+      <Button variant='outlined' fullWidth>
         質問を投稿する
       </Button>
     </Box>

@@ -1,6 +1,7 @@
-import { lightTheme } from '~/theme'
+import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Box, Typography } from '@mui/material'
+import { useSelector } from 'react-redux'
 
 type DialogueTextContainerProps = {
   dialogue: string
@@ -9,14 +10,16 @@ type DialogueTextContainerProps = {
 export const DialogueTextContainer: React.FC<DialogueTextContainerProps> = ({
   dialogue,
 }) => {
+  const theme = useSelector(selectTheme)
   return (
     <Box
       sx={{
-        backgroundColor: lightTheme.palette.grey[100],
+        backgroundColor: theme.palette.background.default,
         borderRadius: '16px',
-        my: lightTheme.spacing(2),
-        px: lightTheme.spacing(2),
-        py: lightTheme.spacing(2),
+        my: theme.spacing(1),
+        px: theme.spacing(2),
+        py: theme.spacing(1.5),
+        width: '100%',
       }}
     >
       <Typography variant='inherit'>{dialogue}</Typography>
