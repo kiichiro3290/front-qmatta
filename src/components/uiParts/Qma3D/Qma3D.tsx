@@ -25,7 +25,10 @@ const Scene = () => {
   )
 }
 
-export const Qma3DPage = () => {
+export const Qma3D: React.FC = () => {
+  // TODO: cameraの位置
+  // TODO: shadower
+  // TODO: canvasの大きさのレスポンシブ
   return (
     <Canvas camera={{ position: [100, 100, 800], fov: 50 }} shadows>
       <Suspense fallback={null}>

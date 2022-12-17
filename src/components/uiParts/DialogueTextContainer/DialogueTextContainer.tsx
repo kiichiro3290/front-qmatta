@@ -13,6 +13,7 @@ export const DialogueTextContainer: React.FC<DialogueTextContainerProps> = ({
   const theme = useSelector(selectTheme)
   return (
     <Box
+      component='div'
       sx={{
         backgroundColor: theme.palette.background.default,
         borderRadius: '16px',
