@@ -1,10 +1,8 @@
-import bear2Img from 'public/bear2.png'
 import qmattaBoard from 'public/qmatta-board.png'
-import bearImg from 'public/quma.png'
 import { QmaDialogueDrawer } from '~/components/layouts/QmaDialogueDrawer/QmaDialogueDrawer'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
 import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
-import { BearImgContainer } from '~/components/uiParts/BearImgContainer/BearImgContainer'
+import { Qma3D } from '~/components/uiParts/Qma3D/Qma3D'
 import { selectTheme } from '~/store/theme/themeSlice'
 
 import { ChevronLeftRounded } from '@mui/icons-material'
@@ -17,7 +15,7 @@ import {
   Typography,
 } from '@mui/material'
 import Image from 'next/image'
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, Fragment, useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export type QmaPagePresenterProps = {
@@ -32,14 +30,14 @@ export type QmaPagePresenterProps = {
   dialogue: string
   dialogues: string[]
   messageHistory: MessageHistory
-  isOpenBearMouth: boolean
+  isOpenBearMouth?: boolean
 }
 
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   dialogue,
   dialogues,
   endComposition,
-  isOpenBearMouth,
+  // isOpenBearMouth,
   isShowChatBaloon,
   messageHistory,
   onChangeDialogue,
@@ -68,13 +66,14 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   )
 
   return (
-    <Box>
+    <Fragment>
       <Box
+        component='div'
         sx={{
           position: 'absolute',
           top: theme.spacing(4),
-          width: '100%',
           textAlign: 'center',
+          width: '100%',
         }}
       >
         <Image alt='qmatta' height={100} src={qmattaBoard} width={320} />
@@ -82,6 +81,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 
       <Drawer anchor='right' open={isShowDialogue} variant='persistent'>
         <Box
+          component='div'
           sx={{
             alignItems: 'center',
             display: 'flex',
@@ -106,28 +106,23 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         />
       </Drawer>
 
+      {isShowChatBaloon ? (
+        <BearChatBalloon qmaMessage={qmaMessage} />
+      ) : (
+        <Fragment />
+      )}
+
       <Container
         sx={{
           display: 'flex',
           m: '0 auto',
           maxWidth: 'lg',
           position: 'relative',
-          pt: theme.spacing(16),
-          px: theme.spacing(3),
+          alignItems: 'center',
+          height: '70vh',
         }}
       >
-        {isShowChatBaloon ? (
-          <BearChatBalloon qmaMessage={qmaMessage} />
-        ) : (
-          <Box></Box>
-        )}
-
-        {/** クマの画像部分 */}
-        {isOpenBearMouth ? (
-          <BearImgContainer imgSrc={bear2Img.src} />
-        ) : (
-          <BearImgContainer imgSrc={bearImg.src} />
-        )}
+        <Qma3D />
       </Container>
 
       <QmaFooter
@@ -142,6 +137,6 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         onClickDialogueButton={onClickDialogueButton}
         onKeydown={onKeydown}
       />
-    </Box>
+    </Fragment>
   )
 }

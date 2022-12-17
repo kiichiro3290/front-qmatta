@@ -12,6 +12,7 @@ export const BearChatBalloon: React.FC<BearChatBalloonProps> = ({
   const theme = useSelector(selectTheme)
   return (
     <Box
+      component='div'
       sx={[
         {
           '&::before': {
@@ -21,22 +22,30 @@ export const BearChatBalloon: React.FC<BearChatBalloonProps> = ({
             display: 'block',
             left: { sm: '64%', xs: '24%' },
             position: 'absolute',
-            top: '88%',
+            top: '84%',
             transform: 'rotate(50deg)',
           },
           backgroundColor: theme.palette.background.paper,
-          borderRadius: '4px',
+          borderRadius: '32px',
           display: 'block',
           filter: `drop-shadow(0px 2px 2px ${theme.palette.grey[400]})`,
-          height: '120px',
+          height: '160px',
           p: theme.spacing(3),
           position: 'absolute',
-          width: '280px',
+          top: {
+            lg: theme.spacing(22),
+            xs: theme.spacing(12),
+          },
+          width: {
+            lg: '300px',
+            md: '280px',
+            xs: '300px',
+          },
           zIndex: theme.zIndex.speedDial,
         },
         {
           left: {
-            lg: theme.spacing(20),
+            lg: theme.spacing(34),
             md: theme.spacing(8),
             xs: theme.spacing(2),
           },
