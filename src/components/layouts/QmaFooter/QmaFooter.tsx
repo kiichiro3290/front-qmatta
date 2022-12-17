@@ -45,7 +45,7 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
         zIndex: theme.zIndex.drawer,
         backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.grey[100]}`,
-        borderRadius: '40px 40px 0px 0px',
+        borderRadius: '32px 32px 0px 0px',
         boxShadow: `0px 0px 10px ${theme.palette.grey[400]}`,
         pb: theme.spacing(4),
         pt: theme.spacing(2),

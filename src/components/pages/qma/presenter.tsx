@@ -106,6 +106,12 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         />
       </Drawer>
 
+      {isShowChatBaloon ? (
+        <BearChatBalloon qmaMessage={qmaMessage} />
+      ) : (
+        <Fragment />
+      )}
+
       <Container
         sx={{
           display: 'flex',
@@ -116,12 +122,6 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
           height: '70vh',
         }}
       >
-        {isShowChatBaloon ? (
-          <BearChatBalloon qmaMessage={qmaMessage} />
-        ) : (
-          <Fragment />
-        )}
-
         <Qma3D />
       </Container>
 
