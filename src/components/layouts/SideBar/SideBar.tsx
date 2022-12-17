@@ -41,6 +41,7 @@ export const SideBar: React.FC<SideBarProps> = ({
 
   return (
     <Box
+      component='div'
       sx={{
         height: '100vh',
         margin: '0 auto',
@@ -50,6 +51,7 @@ export const SideBar: React.FC<SideBarProps> = ({
       }}
     >
       <Box
+        component='div'
         sx={{
           textAlign: 'end',
           position: 'absolute',
