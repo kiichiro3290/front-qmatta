@@ -53,6 +53,7 @@ export const Header: React.FC = () => {
       }}
     >
       <Box
+        component='div'
         display='flex'
         flexDirection='row'
         height={theme.spacing(12)}
@@ -64,7 +65,7 @@ export const Header: React.FC = () => {
         }}
         width='100%'
       >
-        <Box display='flex' sx={{ alignItems: 'center' }}>
+        <Box component='div' sx={{ display: 'flex', alignItems: 'center' }}>
           <IconButton
             aria-label='menu'
             color='inherit'
@@ -98,6 +99,7 @@ export const Header: React.FC = () => {
         </Box>
 
         <Box
+          component='div'
           sx={{
             backgroundColor: theme.palette.background.paper,
             borderRadius: '4px',
