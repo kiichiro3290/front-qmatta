@@ -1,5 +1,5 @@
 import { MenuTabs } from '~/components/layouts/MenuTabs/Menutabs'
-import { InputQuestionPaper } from '~/components/papers/InputQuestionPaper'
+import { InputQuestionPaper } from '~/components/papers/InputQuestionPaper/InputQuestionPaper'
 import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Box, Typography } from '@mui/material'
