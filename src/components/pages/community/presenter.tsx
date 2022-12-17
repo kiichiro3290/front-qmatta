@@ -2,10 +2,10 @@ import { useCommunityMenu } from '~/components/hooks/useCommunityMenu'
 import { QmaDialoguePaper } from '~/components/layouts/QmaDialoguePaper/QmaDialoguePaper'
 import { InputQuestionPaper } from '~/components/papers/InputQuestionPaper/InputQuestionPaper'
 import { CommunityMenuItemButton } from '~/components/uiParts/CommunityMenuItemButton/CommunityMenuItemButton'
+import { QuestionCardList } from '~/components/uiParts/QuestionCardList/QuestionCardList'
 import { selectTheme } from '~/store/theme/themeSlice'
 
-import { Box, Typography } from '@mui/material'
-import { Fragment } from 'react'
+import { Box, Container, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 export type CommunityPagePresenterProps = {
@@ -30,6 +30,8 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
     showQuestionList,
   } = useCommunityMenu()
 
+  // TODO: レスポンシブ対応
+
   return (
     <Box component='div'>
       <Box component='div' sx={{ mt: theme.spacing(13), ml: theme.spacing(2) }}>
@@ -47,41 +49,46 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
         />
       </Box>
 
-      <Box
-        component='div'
-        sx={{
-          display: 'grid',
-          gap: theme.spacing(4),
-          gridTemplateColumns: '1fr 1fr',
-          height: '100vh',
-          p: theme.spacing(4),
-        }}
-      >
-        {isShowEveryoneStatus && <div>みんなの状況</div>}
-        {isShowQuestionList && <div>質問一覧</div>}
-        {isShowPostQuestion && (
-          <Fragment>
-            <Box component='div' sx={{ height: '100%' }}>
-              <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
-                くま記録
-              </Typography>
-              <QmaDialoguePaper
-                // TODO: クマページで入力したメッセージを redux で管理する
-                dialogues={['おはよう', 'こんにちは', 'こんばんは']}
-                messageHistory={messageHistory}
-              />
-            </Box>
+      {isShowEveryoneStatus && <div>みんなの状況</div>}
 
-            <Box component='div' sx={{ height: '100%', width: '100%' }}>
-              <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
-                質問する
-              </Typography>
+      {isShowQuestionList && (
+        <Container maxWidth='md' sx={{ pt: theme.spacing(4) }}>
+          <Typography sx={{ mb: theme.spacing(6) }} variant='h5'>
+            質問一覧
+          </Typography>
+          <QuestionCardList />
+        </Container>
+      )}
+      {isShowPostQuestion && (
+        <Box
+          component='div'
+          sx={{
+            display: 'grid',
+            gap: theme.spacing(4),
+            gridTemplateColumns: '1fr 1fr',
+            p: theme.spacing(4),
+          }}
+        >
+          <Box component='div' sx={{ height: '100%' }}>
+            <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
+              くま記録
+            </Typography>
+            <QmaDialoguePaper
+              // TODO: クマページで入力したメッセージを redux で管理する
+              dialogues={['おはよう', 'こんにちは', 'こんばんは']}
+              messageHistory={messageHistory}
+            />
+          </Box>
 
-              <InputQuestionPaper />
-            </Box>
-          </Fragment>
-        )}
-      </Box>
+          <Box component='div' sx={{ height: '100%', width: '100%' }}>
+            <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
+              質問する
+            </Typography>
+
+            <InputQuestionPaper />
+          </Box>
+        </Box>
+      )}
     </Box>
   )
 }
