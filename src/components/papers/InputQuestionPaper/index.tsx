@@ -7,6 +7,7 @@ export const InputQuestionPaper: React.FC = () => {
   const theme = useSelector(selectTheme)
   return (
     <Box
+      component='div'
       sx={{
         p: theme.spacing(2),
         backgroundColor: theme.palette.background.paper,

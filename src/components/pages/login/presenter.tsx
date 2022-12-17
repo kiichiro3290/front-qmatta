@@ -2,6 +2,7 @@ import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/Password
 
 import { Alert, Box, Button, Snackbar, Typography } from '@mui/material'
 import Link from 'next/link'
+import { Fragment } from 'react'
 
 export type LogInPagePresenterProps = {
   onClickLoginButton: (email: string, password: string) => void
@@ -17,8 +18,9 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
   snackbarMessage,
 }) => {
   return (
-    <Box>
+    <Fragment>
       <Box
+        component='div'
         sx={{
           maxWidth: '540px',
           mt: '64px',
@@ -34,7 +36,12 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
           buttonText='ログイン'
           onClickSubmitButton={onClickLoginButton}
         />
-        <Box display='flex' flexDirection='column' sx={{ mt: '12px' }}>
+        <Box
+          component='div'
+          display='flex'
+          flexDirection='column'
+          sx={{ mt: '12px' }}
+        >
           <Link href='/resetPassword'>
             <Button sx={{ justifyContent: 'left' }}>
               パスワードを忘れた方はこちら
@@ -55,6 +62,6 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
           <Alert severity='error'>{snackbarMessage}</Alert>
         </Snackbar>
       </Box>
-    </Box>
+    </Fragment>
   )
 }
