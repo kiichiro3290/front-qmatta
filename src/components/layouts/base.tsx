@@ -35,11 +35,14 @@ const Layout: FC<BaseLayoutProps> = ({ children }) => {
     dispatch(setMode(prefersDarkMode ? 'dark' : 'light'))
   }, [prefersDarkMode])
 
+  // TODO: ページのパスからcommunitypageかどうかを判断
+  const isCommunityPage = true
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Fragment>
-        <Header />
+        <Header isCommunityPage={isCommunityPage} />
         <Box component='div' sx={{ mt: theme.spacing(8) }} />
         {children}
       </Fragment>
