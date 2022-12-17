@@ -6,7 +6,7 @@ import { GetLayout } from '~/types/next'
 
 import { ThemeProvider } from '@emotion/react'
 import { Box, CssBaseline, useMediaQuery } from '@mui/material'
-import { FC, ReactNode, useEffect } from 'react'
+import { FC, Fragment, ReactNode, useEffect } from 'react'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 
 type BaseLayoutProps = {
@@ -38,11 +38,11 @@ const Layout: FC<BaseLayoutProps> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box>
+      <Fragment>
         <Header />
-        <Box sx={{ mt: theme.spacing(8) }} />
+        <Box component='div' sx={{ mt: theme.spacing(8) }} />
         {children}
-      </Box>
+      </Fragment>
     </ThemeProvider>
   )
 }

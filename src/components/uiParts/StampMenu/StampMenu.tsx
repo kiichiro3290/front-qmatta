@@ -38,7 +38,7 @@ export const StampMenu: React.FC<StampMenuProps> = ({
       }}
       onClose={handleCloseStampPop}
     >
-      <Box sx={{ p: theme.spacing(2) }}>
+      <Box component='div' sx={{ p: theme.spacing(2) }}>
         <Typography
           sx={{
             fontWeight: 'bold',

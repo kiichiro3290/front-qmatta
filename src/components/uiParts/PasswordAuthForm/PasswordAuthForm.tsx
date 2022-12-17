@@ -11,7 +11,7 @@ import {
   OutlinedInput,
   TextField,
 } from '@mui/material'
-import { useCallback, useState } from 'react'
+import { Fragment, useCallback, useState } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -52,7 +52,7 @@ export const PasswordAuthForm: React.FC<PasswordAuthFormProps> = ({
   }, [])
 
   return (
-    <Box>
+    <Fragment>
       <Box component='form' noValidate onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
@@ -118,6 +118,6 @@ export const PasswordAuthForm: React.FC<PasswordAuthFormProps> = ({
           {buttonText}
         </Button>
       </Box>
-    </Box>
+    </Fragment>
   )
 }

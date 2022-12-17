@@ -17,6 +17,7 @@ export const QmaDialoguePaper: React.FC<QmaDialoguePaperProps> = ({
   const theme = useSelector(selectTheme)
   return (
     <Box
+      component='div'
       sx={{
         backgroundColor: theme.palette.background.paper,
         py: theme.spacing(4),
@@ -31,7 +32,10 @@ export const QmaDialoguePaper: React.FC<QmaDialoguePaperProps> = ({
       >
         くま記録
       </Typography>
-      <Box sx={{ height: '95%', overflowY: 'scroll', px: theme.spacing(4) }}>
+      <Box
+        component='div'
+        sx={{ height: '95%', overflowY: 'scroll', px: theme.spacing(4) }}
+      >
         <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
       </Box>
     </Box>
