@@ -2,7 +2,7 @@ import { QmaDialogue } from '../QmaDialogue/QmaDialogue'
 
 import { selectTheme } from '~/store/theme/themeSlice'
 
-import { Box, Typography } from '@mui/material'
+import { Box } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 type QmaDialoguePaperProps = {
@@ -26,12 +26,6 @@ export const QmaDialoguePaper: React.FC<QmaDialoguePaperProps> = ({
         boxShadow: theme.shadows[1],
       }}
     >
-      <Typography
-        sx={{ mb: theme.spacing(2), px: theme.spacing(4) }}
-        variant='h5'
-      >
-        くま記録
-      </Typography>
       <Box
         component='div'
         sx={{ height: '95%', overflowY: 'scroll', px: theme.spacing(4) }}

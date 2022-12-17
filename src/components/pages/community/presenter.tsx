@@ -1,4 +1,4 @@
-import { MenuTabs } from '~/components/layouts/MenuTabs/Menutabs'
+import { QmaDialoguePaper } from '~/components/layouts/QmaDialoguePaper/QmaDialoguePaper'
 import { InputQuestionPaper } from '~/components/papers/InputQuestionPaper/InputQuestionPaper'
 import { selectTheme } from '~/store/theme/themeSlice'
 
@@ -12,10 +12,13 @@ export type CommunityPagePresenterProps = {
 }
 
 export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
-  questions,
+  // questions,
   messageHistory,
 }) => {
   const theme = useSelector(selectTheme)
+
+  // 今どのページなのかを受け取るhooksを作る
+
   return (
     <Box
       component='div'
@@ -28,14 +31,21 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
       }}
     >
       <Box component='div' sx={{ height: '100%' }}>
-        <MenuTabs messageHistory={messageHistory} questions={questions} />
+        <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
+          くま記録
+        </Typography>
+        <QmaDialoguePaper
+          // TODO: クマページで入力したメッセージを redux で管理する
+          dialogues={['おはよう', 'こんにちは', 'こんばんは']}
+          messageHistory={messageHistory}
+        />
       </Box>
 
       <Box component='div' sx={{ height: '100%', width: '100%' }}>
         <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
           質問する
         </Typography>
-        {/** マークダウン方式にしたいな */}
+
         <InputQuestionPaper />
       </Box>
     </Box>
