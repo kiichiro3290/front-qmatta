@@ -2,7 +2,7 @@ import { StampMenu } from '~/components/uiParts/StampMenu/StampMenu'
 import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Chat, TagFaces } from '@mui/icons-material'
-import { Avatar, Box, Container, IconButton, InputBase } from '@mui/material'
+import { Avatar, Container, IconButton, InputBase } from '@mui/material'
 import { ChangeEvent } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -37,61 +37,55 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
   return (
     <Container
       maxWidth='sm'
-      sx={[
-        {
-          bottom: 0,
-          left: '50%',
-          position: 'fixed',
-          transform: 'translate(-50%, 0)',
-          zIndex: theme.zIndex.drawer,
-        },
-        {
-          backgroundColor: theme.palette.background.paper,
-          border: `1px solid ${theme.palette.grey[100]}`,
-          borderRadius: '40px 40px 0px 0px',
-          boxShadow: `0px 0px 10px ${theme.palette.grey[400]}`,
-        },
-        {
-          pb: theme.spacing(4),
-          pt: theme.spacing(2),
-          px: theme.spacing(3),
-        },
-      ]}
+      sx={{
+        bottom: 0,
+        left: '50%',
+        position: 'fixed',
+        transform: 'translate(-50%, 0)',
+        zIndex: theme.zIndex.drawer,
+        backgroundColor: theme.palette.background.paper,
+        border: `1px solid ${theme.palette.grey[100]}`,
+        borderRadius: '40px 40px 0px 0px',
+        boxShadow: `0px 0px 10px ${theme.palette.grey[400]}`,
+        pb: theme.spacing(4),
+        pt: theme.spacing(2),
+        px: theme.spacing(3),
+      }}
     >
-      <Box
+      {/* <Box
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
           mb: theme.spacing(2),
         }}
+      > */}
+      <IconButton
+        aria-label='dialogue'
+        color='primary'
+        onClick={(e) => handleOpenStampPop(e)}
       >
-        <IconButton
-          aria-label='dialogue'
-          color='primary'
-          onClick={(e) => handleOpenStampPop(e)}
-        >
-          <Avatar sx={{ bgcolor: 'icon.pink' }}>
-            <TagFaces />
-          </Avatar>
-        </IconButton>
+        <Avatar sx={{ bgcolor: 'icon.pink' }}>
+          <TagFaces />
+        </Avatar>
+      </IconButton>
 
-        {/** スタンプボタン */}
-        <StampMenu
-          handleCloseStampPop={handleCloseStampPop}
-          openStampPop={openStampPop}
-          stampAnchorEl={stampAnchorEl}
-        />
+      {/** スタンプボタン */}
+      <StampMenu
+        handleCloseStampPop={handleCloseStampPop}
+        openStampPop={openStampPop}
+        stampAnchorEl={stampAnchorEl}
+      />
 
-        <IconButton
-          aria-label='dialogue'
-          color='primary'
-          onClick={onClickDialogueButton}
-        >
-          <Avatar sx={{ bgcolor: 'icon.blue' }}>
-            <Chat />
-          </Avatar>
-        </IconButton>
-      </Box>
+      <IconButton
+        aria-label='dialogue'
+        color='primary'
+        onClick={onClickDialogueButton}
+      >
+        <Avatar sx={{ bgcolor: 'icon.blue' }}>
+          <Chat />
+        </Avatar>
+      </IconButton>
+      {/* </Box> */}
 
       <InputBase
         placeholder='コンパイル通らない...😂'
@@ -101,6 +95,7 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
           borderRadius: '4px',
           fontSize: theme.typography.subtitle1,
           p: theme.spacing(2),
+          mt: theme.spacing(1),
         }}
         value={dialogue}
         fullWidth

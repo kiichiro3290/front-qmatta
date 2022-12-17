@@ -2,6 +2,7 @@ import { DialogueTextContainer } from '~/components/uiParts/DialogueTextContaine
 import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Box, Divider, Typography } from '@mui/material'
+import { Fragment } from 'react'
 import { useSelector } from 'react-redux'
 
 export type QmaDialogueProps = {
@@ -15,9 +16,9 @@ export const QmaDialogue: React.FC<QmaDialogueProps> = ({
 }) => {
   const theme = useSelector(selectTheme)
   return (
-    <Box>
+    <Fragment>
       {dialogues.map((dialogue, index) => (
-        <Box key={index} sx={{ display: 'flex', gap: theme.spacing(2) }}>
+        <Box key={index} component='div'>
           <DialogueTextContainer dialogue={dialogue} />
         </Box>
       ))}
@@ -33,7 +34,7 @@ export const QmaDialogue: React.FC<QmaDialogueProps> = ({
 
       {messageHistory.messages &&
         messageHistory.messages.map((dialogue, index) => (
-          <Box key={index} sx={{ display: 'flex', gap: theme.spacing(2) }}>
+          <Box key={index} component='div'>
             <DialogueTextContainer dialogue={dialogue} />
             <Typography
               sx={{
@@ -48,6 +49,6 @@ export const QmaDialogue: React.FC<QmaDialogueProps> = ({
             </Typography>
           </Box>
         ))}
-    </Box>
+    </Fragment>
   )
 }

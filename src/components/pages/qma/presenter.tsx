@@ -17,7 +17,7 @@ import {
   Typography,
 } from '@mui/material'
 import Image from 'next/image'
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, Fragment, useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export type QmaPagePresenterProps = {
@@ -68,13 +68,14 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   )
 
   return (
-    <Box>
+    <Fragment>
       <Box
+        component='div'
         sx={{
           position: 'absolute',
           top: theme.spacing(4),
-          width: '100%',
           textAlign: 'center',
+          width: '100%',
         }}
       >
         <Image alt='qmatta' height={100} src={qmattaBoard} width={320} />
@@ -82,6 +83,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 
       <Drawer anchor='right' open={isShowDialogue} variant='persistent'>
         <Box
+          component='div'
           sx={{
             alignItems: 'center',
             display: 'flex',
@@ -119,7 +121,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         {isShowChatBaloon ? (
           <BearChatBalloon qmaMessage={qmaMessage} />
         ) : (
-          <Box></Box>
+          <Fragment />
         )}
 
         {/** クマの画像部分 */}
@@ -142,6 +144,6 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         onClickDialogueButton={onClickDialogueButton}
         onKeydown={onKeydown}
       />
-    </Box>
+    </Fragment>
   )
 }

@@ -1,9 +1,9 @@
 import { QuestionList } from '../../papers/QuestionList/QuestionList'
 import { QmaDialoguePaper } from '../QmaDialoguePaper/QmaDialoguePaper'
 
-import { Box, Tab, Tabs } from '@mui/material'
+import { Tab, Tabs } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import * as React from 'react'
 
 export type MenuTabsProps = {
@@ -29,7 +29,9 @@ export const TabPanel: React.FC<TabPanelProps> = ({
   index,
   value,
 }) => {
-  return <Box>{value === index && <Box>{children}</Box>}</Box>
+  return (
+    <Fragment>{value === index && <Fragment>{children}</Fragment>}</Fragment>
+  )
 }
 
 export const MenuTabs: React.FC<MenuTabsProps> = ({
@@ -42,7 +44,7 @@ export const MenuTabs: React.FC<MenuTabsProps> = ({
     setValue(newValue)
   }
   return (
-    <Box>
+    <Fragment>
       <Tabs value={value} onChange={handleChange}>
         <Tab label='質問' {...tabProps(0)} />
         <Tab label='みんなの状況' {...tabProps(1)} />
@@ -66,10 +68,6 @@ export const MenuTabs: React.FC<MenuTabsProps> = ({
           messageHistory={messageHistory}
         />
       </TabPanel>
-
-      {/* <TabPanel index={3} value={value}>
-        <Typography>資料</Typography>
-      </TabPanel> */}
-    </Box>
+    </Fragment>
   )
 }
