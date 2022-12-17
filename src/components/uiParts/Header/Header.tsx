@@ -1,5 +1,4 @@
 import { SideBar } from '../../layouts/SideBar/SideBar'
-import { CommunityMenuItemButton } from '../CommunityMenuItemButton/CommunityMenuItemButton'
 
 import { selectTheme } from '~/store/theme/themeSlice'
 import { selectCommunityList } from '~/store/user/userSlice'
@@ -18,14 +17,10 @@ import {
   Typography,
 } from '@mui/material'
 import Link from 'next/link'
-import { Fragment, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-type HeaderProps = {
-  isCommunityPage: boolean
-}
-
-export const Header: React.FC<HeaderProps> = ({ isCommunityPage = true }) => {
+export const Header: React.FC = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
   const [openDialog, setOpenDialog] = useState(false)
   const theme = useSelector(selectTheme)
@@ -84,22 +79,6 @@ export const Header: React.FC<HeaderProps> = ({ isCommunityPage = true }) => {
           >
             <MenuIcon />
           </IconButton>
-          {isCommunityPage && (
-            <Fragment>
-              <CommunityMenuItemButton
-                menuTitle={'質問を投稿する'}
-                onClickMenuButton={() => console.log()}
-              />
-              <CommunityMenuItemButton
-                menuTitle={'質問一覧'}
-                onClickMenuButton={() => console.log()}
-              />
-              <CommunityMenuItemButton
-                menuTitle={'みんなの状況'}
-                onClickMenuButton={() => console.log()}
-              />
-            </Fragment>
-          )}
           <Drawer
             anchor='left'
             open={isShowSideBar}
