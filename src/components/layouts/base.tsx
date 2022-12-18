@@ -1,7 +1,8 @@
 import { Header } from '../uiParts/Header/Header'
 
-import { store } from '~/store'
+import { AppDispatch, store } from '~/store'
 import { selectTheme, setMode } from '~/store/theme/themeSlice'
+import { fetchUserDataState } from '~/store/user/actions'
 import { GetLayout } from '~/types/next'
 
 import { ThemeProvider } from '@emotion/react'
@@ -26,7 +27,7 @@ const BaseLayout: FC<BaseLayoutProps> = (props) => {
 }
 
 const Layout: FC<BaseLayoutProps> = ({ children }) => {
-  const dispatch = useDispatch()
+  const dispatch: AppDispatch = useDispatch()
   const theme = useSelector(selectTheme)
 
   // デバイスのモードを取得する
@@ -34,6 +35,11 @@ const Layout: FC<BaseLayoutProps> = ({ children }) => {
   useEffect(() => {
     dispatch(setMode(prefersDarkMode ? 'dark' : 'light'))
   }, [prefersDarkMode])
+
+  // 認証状態を確認する
+  useEffect(() => {
+    dispatch(fetchUserDataState())
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>

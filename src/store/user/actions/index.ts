@@ -6,9 +6,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 export const fetchUserDataState = createAsyncThunk(
   'user/fetchUserDataState',
   async () => {
-    // tokenを元にしてもう一度APIを叩く
     const userData = await getUserInfo()
-    // console.log(userData)
     return userData
   }
 )

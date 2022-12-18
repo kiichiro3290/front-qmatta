@@ -6,7 +6,7 @@ import {
   getMessageHistory,
 } from '~/api/client/back/bear'
 import { AppDispatch } from '~/store'
-import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
+import { fetchCommunityList } from '~/store/user/actions'
 import { selectIsLoggedIn } from '~/store/user/userSlice'
 
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
@@ -94,11 +94,6 @@ export const QmaPage: React.FC = () => {
     },
     []
   )
-
-  // 認証状態を確認する
-  useEffect(() => {
-    dispatch(fetchUserDataState())
-  }, [])
 
   // メッセージの送信履歴を取得する
   useEffect(() => {
