@@ -5,7 +5,6 @@ import { Group } from 'three'
 
 const Scene = () => {
   const fbx = useFBX('/StuffedBear.fbx')
-  console.log(fbx)
   const { ref, actions, names } = useAnimations(fbx.animations)
 
   // 手を振るアクションが 1 に格納されている

@@ -1,3 +1,4 @@
 type UserMessageToBear = {
-  message: string
+  text: string
+  bot: boolean
 }

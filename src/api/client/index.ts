@@ -9,11 +9,8 @@ const qmattaClient = (): AxiosInstance => {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Access-Control-Allow-Headers': 'X-Requested-With',
-      // 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, DELETE, PUT',
-      // 'Access-Control-Allow-Origin': '*',
       Authorization: `Bearer ${token}`,
     },
-    // responseType: 'json',
     // withCredentials: true, // cookieのレスポンスをバックエンドから受け取るため
   })
 }

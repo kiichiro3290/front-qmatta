@@ -2,7 +2,6 @@ import { QmaPagePresenter } from './presenter'
 
 import { postQmaMessage, fetchQmaMessage } from '~/api/client/back/bear'
 import { getMessageHistory } from '~/api/client/back/user'
-import { meboApi } from '~/api/client/mebo'
 import { AppDispatch } from '~/store'
 import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
 import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
@@ -65,21 +64,20 @@ export const QmaPage: React.FC = () => {
             if (isLoggedIn && userId) {
               try {
                 // バックエンドからクマのセリフを取得する
-                // const data = await postQmaMessage(userId, dialogue)
-                // AIによる返答を取得する
-                const data = await meboApi.getMeboMessage(userId, dialogue)
-                setQmaMessage(data)
+                // isChatGPT: true → AIによる返答を取得する
+                const res = await postQmaMessage(dialogue, true)
+                setQmaMessage(res)
               } catch (e) {
                 console.log(e)
                 setQmaMessage('')
                 // エラーが出た時は，適当なメッセージを返す
-                const data = await postQmaMessage(userId, dialogue)
-                setQmaMessage(data)
+                const res = await postQmaMessage(dialogue, false)
+                setQmaMessage(res)
               }
             } else {
               // ログインしていない時は，適当なメッセージを返す
-              const data = await fetchQmaMessage()
-              setQmaMessage(data)
+              const res = await fetchQmaMessage(dialogue, false)
+              setQmaMessage(res)
             }
           }
           // 画像を変更
@@ -110,7 +108,7 @@ export const QmaPage: React.FC = () => {
   useEffect(() => {
     const f = async () => {
       if (userId) {
-        const data = await getMessageHistory(userId)
+        const data = await getMessageHistory()
         console.log(data)
         setMessageHistory(data)
       }
