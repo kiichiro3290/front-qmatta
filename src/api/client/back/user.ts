@@ -1,6 +1,6 @@
 // スタンプを送信する: PATCH
 
-import { qmattaClient } from '..'
+import qmattaClient from '..'
 
 // (stampId: string?, userId: string) => { 返り値が謎 }
 export const sendUserStatus = async (stampId: string, userId: string) => {
@@ -49,14 +49,72 @@ export const signUpUser = async (emailAddress: string, password: string) => {
   return { msg: data.msg, result: data.result }
 }
 
-// ユーザの認証
+// ログイン
 // (emailAddress: string, password: string) => { result: boolean, user: User }
 export const logInUser = async (emailAddress: string, password: string) => {
   const body = {
     emailAddress,
     password,
   }
-  const response = await qmattaClient().post('login', body)
+
+  const response = await qmattaClient().post('login', body, {
+    withCredentials: true,
+  })
+
   const data = response.data
-  return { result: data.result, user: data.user }
+  return {
+    code: data.code,
+    token: data.token,
+    expire: data.expire,
+  }
 }
+
+// ユーザの情報を取得する
+export const getUserInfo = async () => {
+  console.log(qmattaClient().defaults)
+  // const token = localStorage.getItem('token')
+  // console.log(await fetchUser(token!))
+  const response = await qmattaClient().get('user', {
+    withCredentials: false,
+  })
+  const data = response.data
+  return {
+    userName: data.userName,
+    profile: data.profile,
+    status: data.status,
+  }
+}
+
+// function main() {
+//   login()
+//     .then((data) => fetchUser(data.token))
+//     .then((data) => console.log('user', data))
+//     .catch((err) => console.error(err))
+// }
+
+// async function login() {
+//   const res = await fetch('https://qmatta.mydns.jp/login', {
+//     headers: {
+//       'Access-Control-Request-Headers': 'X-Requested-With',
+//       'Content-Type': 'application/json',
+//     },
+//     method: 'POST',
+//     body: JSON.stringify({
+//       emailAddress: 'ddd@gmai.com',
+//       password: 'testtest',
+//     }),
+//   })
+//   return await res.json()
+// }
+
+// async function fetchUser(token: string) {
+//   const res = await fetch('https://qmatta.mydns.jp/user', {
+//     headers: {
+//       'Access-Control-Request-Headers': 'X-Requested-With',
+//       'Content-Type': 'application/json; charset=utf-8',
+//       Authorization: 'Bearer ' + token,
+//     },
+//     method: 'GET',
+//   })
+//   return await res.json()
+// }

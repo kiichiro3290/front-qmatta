@@ -1,7 +1,7 @@
 import { QmaPagePresenter } from './presenter'
 
 import { postQmaMessage, fetchQmaMessage } from '~/api/client/back/bear'
-import { logInUser, getMessageHistory } from '~/api/client/back/user'
+import { getMessageHistory, getUserInfo } from '~/api/client/back/user'
 import { meboApi } from '~/api/client/mebo'
 import { AppDispatch } from '~/store'
 import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
@@ -103,20 +103,11 @@ export const QmaPage: React.FC = () => {
   // 認証状態を確認する
   useEffect(() => {
     const f = async () => {
-      // localstrage
-      const email = localStorage.getItem('email')
-      const password = localStorage.getItem('password')
-      // メールアドレスとパスワードを認証する
-      if (email && password) {
-        const result = await logInUser(email, password)
-        if (result.result) {
-          localStorage.setItem('email', email)
-          localStorage.setItem('password', password)
-          dispatch(fetchUserDataState(result.user))
-          router.push('/')
-          return
-        }
-      }
+      // console.log(localStorage.getItem('token'))
+      await getUserInfo()
+      // console.log(userName, profile, status)
+      // tokenをheaderに入れて，もう一回APIを叩く
+      // dispatch(fetchUserDataState(result.user))
     }
     f()
   }, [])

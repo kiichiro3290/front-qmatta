@@ -1,6 +1,6 @@
 import { LogInPagePresenter } from './presenter'
 
-import { logInUser } from '~/api/client/back/user'
+import { getUserInfo, logInUser } from '~/api/client/back/user'
 import { AppDispatch } from '~/store'
 import { fetchUserDataState } from '~/store/user/actions'
 
@@ -19,11 +19,11 @@ export const LogInPage: React.FC = () => {
   const onClickLoginButton = useCallback(
     async (email: string, password: string) => {
       // メールアドレスとパスワードを認証する
-      const result = await logInUser(email, password)
-      if (result.result) {
-        localStorage.setItem('email', email)
-        localStorage.setItem('password', password)
-        dispatch(fetchUserDataState(result.user))
+      const { code, token, expire } = await logInUser(email, password)
+      if (code == 200) {
+        localStorage.setItem('token', token)
+        localStorage.setItem('expire', expire)
+
         router.push('/')
         return
       } else {
