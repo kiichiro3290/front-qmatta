@@ -1,116 +1,110 @@
-// スタンプを送信する: PATCH
-
 import qmattaClient from '..'
 
-// (stampId: string?, userId: string) => { 返り値が謎 }
-export const sendUserStatus = async (stampId: string, userId: string) => {
-  const data = { stampId }
-  const result = await qmattaClient().patch(`user/status/${userId}`, data)
-  return result.data.response
-}
-
-// メッセージの送信履歴を取得する: GET
-// (userId: string) => string[]
-export const getMessageHistory = async (
-  userId: string
-): Promise<MessageHistory> => {
-  const result = await qmattaClient().get(`bear/history/${userId}`)
-  const data: ResMessageHistory = result.data
-
-  const dates = result.data.date.map((raw: string) => {
-    return new Date(raw)
-  })
-
-  const res = {
-    messages: data.message,
-    dates: dates,
-  }
-
-  return res
-}
-
-// 自分が加入しているコミュニティの一覧を取得する: GET
-// (userId: string) => comunity_name: string[]
-export const getCommunityList = async (userId: string): Promise<string[]> => {
-  const result = await qmattaClient().get(`user/community/${userId}`)
-  const communityList = result.data.communityName
-  return communityList
-}
-
-// ユーザの新規登録
-// (emailAddress: string, password: string) => { result: boolean, msg: string }
+/**
+ * ユーザの新規登録：POST
+ * @param emailAddress
+ * @param password
+ * @returns
+ */
 export const signUpUser = async (emailAddress: string, password: string) => {
   const body = {
     emailAddress,
     password,
   }
-  const response = await qmattaClient().post('signup', body)
-  const data = response.data
-  return { msg: data.msg, result: data.result }
+  const res = await qmattaClient()
+    .post('signup', body)
+    .then((res) => res.data)
+    .catch((e) => console.log(e))
+  return { msg: res.msg, result: res.result }
 }
 
-// ログイン
-// (emailAddress: string, password: string) => { result: boolean, user: User }
+/**
+ * ログイン処理
+ * @param emailAddress
+ * @param password
+ * @returns { code: string, token: string, expire: string}
+ */
 export const logInUser = async (emailAddress: string, password: string) => {
   const body = {
     emailAddress,
     password,
   }
 
-  const response = await qmattaClient().post('login', body, {
-    withCredentials: true,
-  })
+  const res = await qmattaClient()
+    .post('login', body, {
+      withCredentials: true,
+    })
+    .then((res) => res.data)
 
-  const data = response.data
   return {
-    code: data.code,
-    token: data.token,
-    expire: data.expire,
+    code: res.code,
+    token: res.token,
+    expire: res.expire,
   }
 }
 
-// ユーザの情報を取得する
+/**
+ * ユーザの情報を取得する
+ * @returns { userName: string, profile: string, status: string}
+ */
 export const getUserInfo = async () => {
-  console.log(qmattaClient().defaults)
-  // const token = localStorage.getItem('token')
-  // console.log(await fetchUser(token!))
-  const response = await qmattaClient().get('user', {
-    withCredentials: false,
-  })
-  const userData = response.data
-  return userData
+  const res = await qmattaClient()
+    .get('user')
+    .then((res) => res.data)
+  return res
+}
+/**
+ * メッセージの送信履歴を取得する：GET
+ * @returns string[]
+ */
+export const getMessageHistory = async (): Promise<MessageHistory> => {
+  const res = await qmattaClient()
+    .get('bear/history')
+    .then((res) => res.data)
+
+  // 時間を日付型に変更する
+  // const dates = res.map((raw: string) => {
+  //   return new Date(raw)
+  // })
+
+  return res.histories
 }
 
-// function main() {
-//   login()
-//     .then((data) => fetchUser(data.token))
-//     .then((data) => console.log('user', data))
-//     .catch((err) => console.error(err))
-// }
+/**
+ * ユーザがスタンプを押した時に，ユーザのステータスを更新する: PATCH
+ * @param stampId
+ * @returns { isUpdated: boolean }
+ */
+export const updateUserStatus = async (stampId: string): Promise<boolean> => {
+  const data = { stampId }
+  const res = await qmattaClient()
+    .patch('user/status', data)
+    .then((res) => res.data)
+    .catch((e) => console.log(e))
+  return res
+}
 
-// async function login() {
-//   const res = await fetch('https://qmatta.mydns.jp/login', {
-//     headers: {
-//       'Access-Control-Request-Headers': 'X-Requested-With',
-//       'Content-Type': 'application/json',
-//     },
-//     method: 'POST',
-//     body: JSON.stringify({
-//       emailAddress: 'ddd@gmai.com',
-//       password: 'testtest',
-//     }),
-//   })
-//   return await res.json()
-// }
+/**
+ * ユーザのアカウント情報を取得する：GET
+ * バイト列が返ってくる
+ * @returns byte[]
+ */
+export const getUserIcons = async () => {
+  const res = await qmattaClient()
+    .get('user/icon')
+    .then((res) => res.data)
+    .catch((e) => console.log(e))
+  return res
+}
 
-// async function fetchUser(token: string) {
-//   const res = await fetch('https://qmatta.mydns.jp/user', {
-//     headers: {
-//       'Access-Control-Request-Headers': 'X-Requested-With',
-//       'Content-Type': 'application/json; charset=utf-8',
-//       Authorization: 'Bearer ' + token,
-//     },
-//     method: 'GET',
-//   })
-//   return await res.json()
-// }
+/**
+ * 自分が加入しているコミュニティの一覧を取得する: GET
+ * @returns string[]
+ */
+export const getCommunityList = async (): Promise<string[]> => {
+  const res = await qmattaClient()
+    .get('user/community')
+    .then((res) => res.data)
+    .catch((e) => console.log(e))
+  return res.communities
+}
