@@ -77,12 +77,8 @@ export const getUserInfo = async () => {
   const response = await qmattaClient().get('user', {
     withCredentials: false,
   })
-  const data = response.data
-  return {
-    userName: data.userName,
-    profile: data.profile,
-    status: data.status,
-  }
+  const userData = response.data
+  return userData
 }
 
 // function main() {

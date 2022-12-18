@@ -1,11 +1,13 @@
-import { getCommunityList } from '~/api/client/back/user'
+import { getCommunityList, getUserInfo } from '~/api/client/back/user'
 
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-// ログイン成功時に走る関数
+// 初回ログイン時にユーザの情報を取得
 export const fetchUserDataState = createAsyncThunk(
   'user/fetchUserDataState',
-  (userData: UserData) => {
+  async () => {
+    const userData = await getUserInfo()
+    // tokenを元にしてもう一度APIを叩く
     return userData
   }
 )

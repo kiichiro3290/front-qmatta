@@ -1,18 +1,16 @@
 import { QmaPagePresenter } from './presenter'
 
 import { postQmaMessage, fetchQmaMessage } from '~/api/client/back/bear'
-import { getMessageHistory, getUserInfo } from '~/api/client/back/user'
+import { getMessageHistory } from '~/api/client/back/user'
 import { meboApi } from '~/api/client/mebo'
 import { AppDispatch } from '~/store'
 import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
 import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
 
-import { useRouter } from 'next/router'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const QmaPage: React.FC = () => {
-  const router = useRouter()
   const dispatch: AppDispatch = useDispatch()
   // reduxで管理している状態
   const isLoggedIn = useSelector(selectIsLoggedIn)
@@ -103,11 +101,7 @@ export const QmaPage: React.FC = () => {
   // 認証状態を確認する
   useEffect(() => {
     const f = async () => {
-      // console.log(localStorage.getItem('token'))
-      await getUserInfo()
-      // console.log(userName, profile, status)
-      // tokenをheaderに入れて，もう一回APIを叩く
-      // dispatch(fetchUserDataState(result.user))
+      dispatch(fetchUserDataState())
     }
     f()
   }, [])

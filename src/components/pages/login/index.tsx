@@ -1,6 +1,6 @@
 import { LogInPagePresenter } from './presenter'
 
-import { getUserInfo, logInUser } from '~/api/client/back/user'
+import { logInUser } from '~/api/client/back/user'
 import { AppDispatch } from '~/store'
 import { fetchUserDataState } from '~/store/user/actions'
 
@@ -23,6 +23,7 @@ export const LogInPage: React.FC = () => {
       if (code == 200) {
         localStorage.setItem('token', token)
         localStorage.setItem('expire', expire)
+        dispatch(fetchUserDataState())
 
         router.push('/')
         return
