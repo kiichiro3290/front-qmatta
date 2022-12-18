@@ -1,10 +1,13 @@
 import { QmaPagePresenter } from './presenter'
 
-import { postQmaMessage, fetchQmaMessage } from '~/api/client/back/bear'
-import { getMessageHistory } from '~/api/client/back/user'
+import {
+  postQmaMessage,
+  fetchQmaMessage,
+  getMessageHistory,
+} from '~/api/client/back/bear'
 import { AppDispatch } from '~/store'
 import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
-import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
+import { selectIsLoggedIn } from '~/store/user/userSlice'
 
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,14 +16,10 @@ export const QmaPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch()
   // reduxで管理している状態
   const isLoggedIn = useSelector(selectIsLoggedIn)
-  const userId = useSelector(selectUserId)
 
   const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
   // メッセージの送信履歴
-  const [messageHistory, setMessageHistory] = useState<MessageHistory>({
-    messages: [],
-    dates: [],
-  })
+  const [messageHistory, setMessageHistory] = useState<MessageHistory[]>([])
   // 入力したメッセージの受け皿
   const [dialogue, setDialogue] = useState<string>('')
   // メッセージをクマに送信するたびに，配列に追加する
@@ -61,7 +60,7 @@ export const QmaPage: React.FC = () => {
             setDialogue('')
             // AI 思考時間
             setQmaMessage('考え中...')
-            if (isLoggedIn && userId) {
+            if (isLoggedIn) {
               try {
                 // バックエンドからクマのセリフを取得する
                 // isChatGPT: true → AIによる返答を取得する
@@ -98,16 +97,13 @@ export const QmaPage: React.FC = () => {
 
   // 認証状態を確認する
   useEffect(() => {
-    const f = async () => {
-      dispatch(fetchUserDataState())
-    }
-    f()
+    dispatch(fetchUserDataState())
   }, [])
 
   // メッセージの送信履歴を取得する
   useEffect(() => {
     const f = async () => {
-      if (userId) {
+      if (isLoggedIn) {
         const data = await getMessageHistory()
         console.log(data)
         setMessageHistory(data)
@@ -119,8 +115,8 @@ export const QmaPage: React.FC = () => {
   // コミュニティの一覧を取得する
   useEffect(() => {
     const f = async () => {
-      if (userId) {
-        dispatch(fetchCommunityList(userId))
+      if (isLoggedIn) {
+        dispatch(fetchCommunityList())
       }
     }
     f()

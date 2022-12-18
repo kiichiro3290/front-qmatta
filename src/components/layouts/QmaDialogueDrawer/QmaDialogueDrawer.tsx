@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 export type QmaDialogueDrawerProps = {
   dialogues: string[]
-  messageHistory: MessageHistory
+  messageHistory: MessageHistory[]
 }
 export const QmaDialogueDrawer: React.FC<QmaDialogueDrawerProps> = ({
   dialogues,

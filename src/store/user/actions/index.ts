@@ -6,8 +6,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 export const fetchUserDataState = createAsyncThunk(
   'user/fetchUserDataState',
   async () => {
-    const userData = await getUserInfo()
     // tokenを元にしてもう一度APIを叩く
+    const userData = await getUserInfo()
+    // console.log(userData)
     return userData
   }
 )
@@ -15,8 +16,8 @@ export const fetchUserDataState = createAsyncThunk(
 // communityList を取得
 export const fetchCommunityList = createAsyncThunk(
   'user/fetchCommunityList',
-  async (userId: string) => {
-    const data = await getCommunityList(userId)
+  async () => {
+    const data = await getCommunityList()
     return data
   }
 )

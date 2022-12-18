@@ -8,7 +8,7 @@ export const fetchQmaMessage = async (text: string, isChatGPT: boolean) => {
     .post('bear_notlogin', body)
     .then((res) => res.data)
     .catch((e) => console.log(e))
-  return res
+  return res.response
 }
 
 // クマのメッセージを取得する & メッセージをDBに保存: POST
@@ -22,5 +22,23 @@ export const postQmaMessage = async (
     .post('bear', body)
     .then((res) => res.data)
     .catch((e) => console.log(e))
-  return res
+  return res.response
+}
+
+/**
+ * メッセージの送信履歴を取得する：GET
+ * @returns string[]
+ */
+export const getMessageHistory = async (): Promise<MessageHistory[]> => {
+  const res = await qmattaClient()
+    .get('bear/history')
+    .then((res) => res.data)
+    .catch((e) => console.log(e))
+
+  // 時間を日付型に変更する
+  // const dates = res.map((raw: string) => {
+  //   return new Date(raw)
+  // })
+
+  return res.histories
 }

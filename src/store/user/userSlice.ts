@@ -8,11 +8,15 @@ import { createSlice } from '@reduxjs/toolkit'
 export type InitialUserStateType = {
   isLoggedIn: boolean
   userData?: UserData
+  userName: string
+  profile?: string
+  status?: string
   communityList: string[]
 }
 const initialState: InitialUserStateType = {
   communityList: [],
   isLoggedIn: false,
+  userName: '未登録',
 }
 
 export const userSlice = createSlice({
@@ -21,8 +25,13 @@ export const userSlice = createSlice({
     builder.addCase(fetchUserDataState.fulfilled, (state, action) => {
       if (action.payload) {
         const userData = action.payload
+        const userName = userData.userName
+        const profile = userData.profile
+        const status = userData.status
+        state.userName = userName
+        state.profile = profile
+        state.status = status
         state.isLoggedIn = true
-        state.userData = userData
       }
     }),
       // コミュニティリストを取得する
@@ -44,7 +53,6 @@ export const userSlice = createSlice({
 export const userReducer = userSlice.reducer
 
 // Selecter→状態を取り出す
-export const selectUserId = (state: RootState) => state.user.userData?._id
 export const selectIsLoggedIn = (state: RootState) => state.user.isLoggedIn
 export const selectCommunityList = (state: RootState) =>
   state.user.communityList

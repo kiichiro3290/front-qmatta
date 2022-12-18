@@ -53,22 +53,6 @@ export const getUserInfo = async () => {
     .then((res) => res.data)
   return res
 }
-/**
- * メッセージの送信履歴を取得する：GET
- * @returns string[]
- */
-export const getMessageHistory = async (): Promise<MessageHistory> => {
-  const res = await qmattaClient()
-    .get('bear/history')
-    .then((res) => res.data)
-
-  // 時間を日付型に変更する
-  // const dates = res.map((raw: string) => {
-  //   return new Date(raw)
-  // })
-
-  return res.histories
-}
 
 /**
  * ユーザがスタンプを押した時に，ユーザのステータスを更新する: PATCH

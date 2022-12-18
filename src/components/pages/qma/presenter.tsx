@@ -29,7 +29,7 @@ export type QmaPagePresenterProps = {
   ) => void
   dialogue: string
   dialogues: string[]
-  messageHistory: MessageHistory
+  messageHistory: MessageHistory[]
   isOpenBearMouth?: boolean
 }
 
