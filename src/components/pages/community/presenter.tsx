@@ -10,8 +10,8 @@ import { useSelector } from 'react-redux'
 
 export type CommunityPagePresenterProps = {
   communityId: string
-  questions: Question[]
-  messageHistory: MessageHistory
+  questions: QuestionInfo[]
+  messageHistory: MessageHistory[]
 }
 
 export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({

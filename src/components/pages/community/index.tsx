@@ -1,8 +1,11 @@
 import { CommunityPagePresenter } from './presenter'
 
-import { getMockQuestionList } from '~/api/client/back/question'
-import { getMessageHistory } from '~/api/client/back/user'
-import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
+import { getMessageHistory } from '~/api/client/back/bear'
+import {
+  getMockQuestionList,
+  // getQuestionList, TODO: APIの修正
+} from '~/api/client/back/question'
+import { selectIsLoggedIn } from '~/store/user/userSlice'
 
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -14,19 +17,23 @@ export const CommunityPage: React.FC = () => {
 
   // reduxで管理している状態
   const isLoggedIn = useSelector(selectIsLoggedIn)
-  const userId = useSelector(selectUserId)
 
-  const [questions, setQuestions] = useState<Question[]>([])
-  const [messageHistory, setMessageHistory] = useState<MessageHistory>({
-    messages: [],
-    dates: [],
-  })
+  const [questions, setQuestions] = useState<QuestionInfo[]>([])
+  const [messageHistory, setMessageHistory] = useState<MessageHistory[]>([])
 
   useEffect(() => {
     // Questionsってリアルタイムに変化するから，更新されるたびにバックエンドから取得しないといけない?
     const f = async () => {
-      const questions = getMockQuestionList()
-      setQuestions(questions)
+      // 今はAPIが叩けなくてエラーが出る
+      // const questions = await getQuestionList(communityId)
+
+      // questionに何も入ってなかった時
+      if (!questions) {
+        const mockQuestions = await getMockQuestionList()
+        setQuestions(mockQuestions)
+      } else {
+        setQuestions(questions)
+      }
     }
     f()
   }, [])
@@ -34,11 +41,9 @@ export const CommunityPage: React.FC = () => {
   // メッセージの送信履歴を取得する
   useEffect(() => {
     const f = async () => {
-      if (userId) {
-        const data = await getMessageHistory(userId)
-        console.log(data)
-        setMessageHistory(data)
-      }
+      const data = await getMessageHistory()
+      console.log(data)
+      setMessageHistory(data)
     }
     f()
   }, [isLoggedIn])

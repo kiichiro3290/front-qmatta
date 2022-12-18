@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 type QmaDialoguePaperProps = {
   dialogues: string[]
-  messageHistory: MessageHistory
+  messageHistory: MessageHistory[]
 }
 
 export const QmaDialoguePaper: React.FC<QmaDialoguePaperProps> = ({

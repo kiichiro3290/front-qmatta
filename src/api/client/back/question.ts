@@ -1,78 +1,86 @@
 import qmattaClient from '..'
 
 // コミュニティの質問一覧を取得する
-export const getMockQuestionList = (): MockQuestion[] => {
-  const mockQuestions: MockQuestion[] = [
+export const getMockQuestionList = (): QuestionInfo[] => {
+  const mockQuestions: QuestionInfo[] = [
     {
-      title: 'コンパイルが通らない',
-      createdAt: new Date(),
-      status: 'ピンチ',
-      label: ['プログラミング'],
-      priority: '緊急',
+      questionId: 'aaaaa',
+      title: 'ものすっごいエラーが出て困ってる',
+      category: ['python'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
     {
+      questionId: 'aaaaa',
       title: 'botが同じセリフばかり返してくる',
-      createdAt: new Date(),
-      status: '解決',
-      label: ['bot'],
-      priority: 'いつでも',
+      category: ['chatGPT'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
     {
-      title: 'CORSエラーが出ます，助けてください',
-      createdAt: new Date(),
-      status: 'クマった',
-      label: ['フロントエンド'],
-      priority: 'なるはや',
+      questionId: 'aaaaa',
+      title: 'CORSエラーが出ます助けてください',
+      category: ['chatGPT'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
     {
+      questionId: 'aaaaa',
       title: 'page not found',
-      createdAt: new Date(),
-      status: 'クマった',
-      label: ['プログラミング'],
-      priority: 'まったり',
+      category: ['chatGPT'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
     {
+      questionId: 'aaaaa',
       title: '404エラーが出る',
-      createdAt: new Date(),
-      status: '回答募集中',
-      label: ['JavaScript'],
-      priority: 'なるはや',
+      category: ['chatGPT'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
     {
-      title: 'コンパイルが通らない',
-      createdAt: new Date(),
-      status: 'ピンチ',
-      label: ['プログラミング'],
-      priority: '緊急',
+      questionId: 'aaaaa',
+      title: 'ものすっごいエラーが出て困ってる',
+      category: ['python'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
     {
+      questionId: 'aaaaa',
       title: 'botが同じセリフばかり返してくる',
-      createdAt: new Date(),
-      status: '解決',
-      label: ['bot'],
-      priority: 'いつでも',
+      category: ['chatGPT'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
     {
-      title: 'CORSエラーが出ます，助けてください',
-      createdAt: new Date(),
-      status: 'クマった',
-      label: ['フロントエンド'],
-      priority: 'なるはや',
+      questionId: 'aaaaa',
+      title: 'CORSエラーが出ます助けてください',
+      category: ['JavaScript'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
     {
+      questionId: 'aaaaa',
       title: 'page not found',
-      createdAt: new Date(),
-      status: 'クマった',
-      label: ['プログラミング'],
-      priority: 'まったり',
+      category: ['chatGPT'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
     {
+      questionId: 'aaaaa',
       title: '404エラーが出る',
-      createdAt: new Date(),
-      status: '回答募集中',
-      label: ['JavaScript'],
-      priority: 'なるはや',
+      category: ['chatGPT'],
+      questioner: '誰？', // 質問者のuserId??
+      numLikis: 100, // いいねの数
     },
+    // },
+    // {
+    //   title: '404エラーが出る',
+    //   createdAt: new Date(),
+    //   status: '回答募集中',
+    //   label: ['JavaScript'],
+    //   priority: 'なるはや',
+    // },
   ]
 
   return mockQuestions
@@ -81,12 +89,15 @@ export const getMockQuestionList = (): MockQuestion[] => {
  * 質問投稿一覧を取得する：GET
  * @returns QuestionInfo[]
  */
-export const getQuestionList = async (): Promise<QuestionInfo[]> => {
+export const getQuestionList = async (
+  communityId: string
+): Promise<QuestionInfo[]> => {
+  const body = { communityId }
   const res = await qmattaClient()
-    .get('question')
+    .post('question', body)
     .then((res) => res.data)
     .catch((e) => console.log(e))
-
+  console.log(res)
   return res.questions
 }
 
