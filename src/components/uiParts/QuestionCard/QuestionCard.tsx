@@ -83,9 +83,10 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             <Box component='div' sx={{ display: 'flex', gap: 1, width: '70%' }}>
               <Chip color='success' label={status} size='small' />
               <Chip color='warning' label={priority} size='small' />
-              <IconButton aria-label='add to favorites' sx={{ p: 0 }}>
+              {/**カードより上にいいねボタンを配置する */}
+              {/* <IconButton aria-label='add to favorites' sx={{ p: 0 }}>
                 <Favorite />
-              </IconButton>
+              </IconButton> */}
               <Typography>{numLikes}</Typography>
             </Box>
           </CardActions>
