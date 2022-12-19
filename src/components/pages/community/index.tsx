@@ -1,10 +1,8 @@
 import { CommunityPagePresenter } from './presenter'
 
 import { getMessageHistory } from '~/api/client/back/bear'
-import {
-  getMockQuestionList,
-  // getQuestionList, TODO: APIの修正
-} from '~/api/client/back/question'
+// getQuestionList, TODO: APIの修正
+import { getMockQuestionList } from '~/api/client/back/question'
 import { selectIsLoggedIn } from '~/store/user/userSlice'
 
 import { useRouter } from 'next/router'
@@ -19,6 +17,7 @@ export const CommunityPage: React.FC = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
   const [questions, setQuestions] = useState<QuestionInfo[]>([])
+
   const [messageHistory, setMessageHistory] = useState<MessageHistory[]>([])
 
   useEffect(() => {
@@ -28,21 +27,20 @@ export const CommunityPage: React.FC = () => {
       // const questions = await getQuestionList(communityId)
 
       // questionに何も入ってなかった時
-      if (!questions) {
-        const mockQuestions = await getMockQuestionList()
+      if (questions.length == 0) {
+        const mockQuestions = getMockQuestionList()
         setQuestions(mockQuestions)
       } else {
         setQuestions(questions)
       }
     }
     f()
-  }, [])
+  }, [questions])
 
   // メッセージの送信履歴を取得する
   useEffect(() => {
     const f = async () => {
       const data = await getMessageHistory()
-      console.log(data)
       setMessageHistory(data)
     }
     f()

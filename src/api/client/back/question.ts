@@ -9,6 +9,8 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['python'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
     {
       questionId: 'aaaaa',
@@ -16,6 +18,8 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['chatGPT'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
     {
       questionId: 'aaaaa',
@@ -23,6 +27,8 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['chatGPT'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
     {
       questionId: 'aaaaa',
@@ -30,6 +36,8 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['chatGPT'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
     {
       questionId: 'aaaaa',
@@ -37,6 +45,8 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['chatGPT'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
     {
       questionId: 'aaaaa',
@@ -44,6 +54,8 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['python'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
     {
       questionId: 'aaaaa',
@@ -51,6 +63,8 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['chatGPT'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
     {
       questionId: 'aaaaa',
@@ -58,6 +72,8 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['JavaScript'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
     {
       questionId: 'aaaaa',
@@ -65,6 +81,8 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['chatGPT'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
     {
       questionId: 'aaaaa',
@@ -72,15 +90,9 @@ export const getMockQuestionList = (): QuestionInfo[] => {
       category: ['chatGPT'],
       questioner: '誰？', // 質問者のuserId??
       numLikis: 100, // いいねの数
+      priority: 'なるはや',
+      status: '解決済み',
     },
-    // },
-    // {
-    //   title: '404エラーが出る',
-    //   createdAt: new Date(),
-    //   status: '回答募集中',
-    //   label: ['JavaScript'],
-    //   priority: 'なるはや',
-    // },
   ]
 
   return mockQuestions

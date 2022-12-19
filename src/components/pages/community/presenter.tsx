@@ -6,6 +6,7 @@ import { QuestionCardList } from '~/components/uiParts/QuestionCardList/Question
 import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Box, Container, Typography } from '@mui/material'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 export type CommunityPagePresenterProps = {
@@ -15,8 +16,8 @@ export type CommunityPagePresenterProps = {
 }
 
 export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
-  // questions,
   messageHistory,
+  questions,
 }) => {
   const theme = useSelector(selectTheme)
 
@@ -31,6 +32,10 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
   } = useCommunityMenu()
 
   // TODO: レスポンシブ対応
+
+  useEffect(() => {
+    console.log(questions)
+  }, [questions])
 
   return (
     <Box component='div'>
@@ -51,14 +56,17 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
 
       {isShowEveryoneStatus && <div>みんなの状況</div>}
 
+      {/** 質問一覧ページ */}
       {isShowQuestionList && (
         <Container maxWidth='md' sx={{ pt: theme.spacing(4) }}>
           <Typography sx={{ mb: theme.spacing(6) }} variant='h5'>
             質問一覧
           </Typography>
-          <QuestionCardList />
+          <QuestionCardList questions={questions} />
         </Container>
       )}
+
+      {/** 質問投稿ページ */}
       {isShowPostQuestion && (
         <Box
           component='div'
