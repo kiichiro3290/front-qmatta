@@ -1,6 +1,6 @@
 import { selectTheme } from '~/store/theme/themeSlice'
 
-import { Favorite } from '@mui/icons-material'
+// import { Favorite } from '@mui/icons-material'
 import {
   Box,
   Card,
@@ -8,7 +8,7 @@ import {
   CardActions,
   CardContent,
   Chip,
-  IconButton,
+  // IconButton,
   Typography,
 } from '@mui/material'
 import { useSelector } from 'react-redux'
