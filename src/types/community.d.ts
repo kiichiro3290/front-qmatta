@@ -18,6 +18,7 @@ type QuestionInfo = {
   numLikis: number // いいねの数
   priority: string
   status: string
+  createdAt: string
 }
 
 type QuestionHistory = {

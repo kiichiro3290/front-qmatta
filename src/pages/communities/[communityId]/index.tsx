@@ -1,4 +1,4 @@
-import { getBaseLayout } from '~/components/layouts/base'
+import { getCommunityLayout } from '~/components/layouts/base'
 import { CommunityPage } from '~/components/pages/community'
 import { NextPageWithLayout } from '~/types/next'
 
@@ -10,6 +10,6 @@ const Community: NextPageWithLayout = () => {
   )
 }
 
-Community.getLayout = getBaseLayout
+Community.getLayout = getCommunityLayout
 
 export default Community

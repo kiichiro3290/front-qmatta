@@ -1,3 +1,5 @@
+import { CommunityMenu } from './community'
+
 import { Header } from '../uiParts/Header/Header'
 
 import { AppDispatch, store } from '~/store'
@@ -12,10 +14,15 @@ import { Provider, useDispatch, useSelector } from 'react-redux'
 
 type BaseLayoutProps = {
   children: ReactNode
+  isCommunity: boolean
 }
 
 export const getBaseLayout: GetLayout = (page) => (
-  <BaseLayout>{page}</BaseLayout>
+  <BaseLayout isCommunity={false}>{page}</BaseLayout>
+)
+
+export const getCommunityLayout: GetLayout = (page) => (
+  <BaseLayout isCommunity={true}>{page}</BaseLayout>
 )
 
 const BaseLayout: FC<BaseLayoutProps> = (props) => {
@@ -26,7 +33,7 @@ const BaseLayout: FC<BaseLayoutProps> = (props) => {
   )
 }
 
-const Layout: FC<BaseLayoutProps> = ({ children }) => {
+const Layout: FC<BaseLayoutProps> = ({ children, isCommunity }) => {
   const dispatch: AppDispatch = useDispatch()
   const theme = useSelector(selectTheme)
 
@@ -46,6 +53,7 @@ const Layout: FC<BaseLayoutProps> = ({ children }) => {
       <CssBaseline />
       <Fragment>
         <Header />
+        {isCommunity && <CommunityMenu />}
         <Box component='div' sx={{ mt: theme.spacing(8) }} />
         {children}
       </Fragment>

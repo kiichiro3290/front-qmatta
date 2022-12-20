@@ -1,4 +1,4 @@
-import { getBaseLayout } from '~/components/layouts/base'
+import { getCommunityLayout } from '~/components/layouts/base'
 import { QuestionPage } from '~/components/pages/question'
 import { NextPageWithLayout } from '~/types/next'
 
@@ -10,6 +10,6 @@ const Question: NextPageWithLayout = () => {
   )
 }
 
-Question.getLayout = getBaseLayout
+Question.getLayout = getCommunityLayout
 
 export default Question

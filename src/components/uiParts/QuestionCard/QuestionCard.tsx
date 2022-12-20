@@ -15,19 +15,23 @@ import { useSelector } from 'react-redux'
 
 type QuestionCardProps = {
   questionTitle: string
+  questionId: string
   numLikes: number
   userName: string
   status: string
   priority: string
   categories: string[]
+  createdAt: string
 }
 export const QuestionCard: React.FC<QuestionCardProps> = ({
   questionTitle,
   numLikes,
-  userName,
+  // userName,
   status,
   priority,
   categories,
+  // createdAt,
+  // questionId,
 }) => {
   const theme = useSelector(selectTheme)
   return (
@@ -78,7 +82,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 gap: 0.5,
               }}
             >
-              <Typography>{userName}</Typography>
+              <Typography>{'未登録'}</Typography>
             </Box>
             <Box component='div' sx={{ display: 'flex', gap: 1, width: '70%' }}>
               <Chip color='success' label={status} size='small' />
