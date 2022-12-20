@@ -1,7 +1,6 @@
 import { QuestionCard } from '../QuestionCard/QuestionCard'
 
 import { Grid } from '@mui/material'
-import { useEffect } from 'react'
 
 type QuestionCardListProps = {
   questions: QuestionInfo[]
@@ -9,9 +8,6 @@ type QuestionCardListProps = {
 export const QuestionCardList: React.FC<QuestionCardListProps> = ({
   questions,
 }) => {
-  useEffect(() => {
-    console.log(questions)
-  }, [])
   return (
     <>
       <Grid spacing={4} sx={{ width: '100%' }} container>

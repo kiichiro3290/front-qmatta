@@ -11,6 +11,7 @@ import {
   // IconButton,
   Typography,
 } from '@mui/material'
+import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
 type QuestionCardProps = {
@@ -31,9 +32,16 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   priority,
   categories,
   // createdAt,
-  // questionId,
+  questionId,
 }) => {
   const theme = useSelector(selectTheme)
+  const router = useRouter()
+
+  const routeQuestionPage = () => {
+    router.push(
+      `/communities/${router.query.communityId}/questions/${questionId}`
+    )
+  }
   return (
     <Card>
       <CardActionArea
@@ -42,7 +50,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           height: '240px',
           pb: theme.spacing(1),
         }}
-        onClick={() => console.log('ページ遷移')}
+        onClick={routeQuestionPage}
       >
         <CardContent sx={{ position: 'relative', height: '100%' }}>
           <Box
