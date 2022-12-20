@@ -97,6 +97,50 @@ export const getMockQuestionList = (): QuestionInfo[] => {
 
   return mockQuestions
 }
+
+export const getMockPriorityList = (): Priority[] => {
+  const mockPriorityList: Priority[] = [
+    {
+      priorityId: 'abcde',
+      label: 'なるはや',
+    },
+    {
+      priorityId: 'ddddd',
+      label: 'まったり',
+    },
+  ]
+  return mockPriorityList
+}
+
+export const getMockStatusList = (): QuestionStatus[] => {
+  const mockStatusList: QuestionStatus[] = [
+    {
+      statusId: 'aaaaa',
+      label: '解決済み',
+    },
+    {
+      statusId: 'cbbbbb',
+      label: '回答募集',
+    },
+  ]
+
+  return mockStatusList
+}
+
+export const getMockCategoryList = (): Category[] => {
+  const mockCategoryList: Category[] = [
+    {
+      categoryId: 'aaaaiiii',
+      label: 'GO',
+    },
+    {
+      categoryId: 'eeeee',
+      label: 'React',
+    },
+  ]
+  return mockCategoryList
+}
+
 /**
  * 質問投稿一覧を取得する：GET
  * @returns QuestionInfo[]
@@ -104,13 +148,18 @@ export const getMockQuestionList = (): QuestionInfo[] => {
 export const getQuestionList = async (
   communityId: string
 ): Promise<QuestionInfo[]> => {
-  const body = { communityId }
   const res = await qmattaClient()
-    .post('question', body)
+    .get(`question/${communityId}`)
     .then((res) => res.data)
-    .catch((e) => console.log(e))
-  console.log(res)
-  return res.questions
+    .catch((e) => e.code)
+
+  // データが何も入っていない時に，とりあえずモックデータを出すようにしてる
+  // デバッグができないので
+  if (!res.questions) {
+    const res = getMockQuestionList()
+    return res
+  }
+  return res
 }
 
 /**
@@ -132,16 +181,19 @@ export const getQuestionDetailInfo = async (
  * @param data: Question
  * @returns questionId: string
  */
-export const postQuestion = async (data: Question): Promise<string> => {
+export const postQuestion = async (
+  data: PostQuestion,
+  communityId: string
+): Promise<string> => {
   const res = await qmattaClient()
-    .post('question', data)
+    .post(`question/${communityId}`, data)
     .then((res) => res.data)
-    .catch((e) => console.log(e))
+    .catch((e) => e.code)
   return res.questionId
 }
 
 /**
- * 質問に対して回答を投稿する
+ * 質問に対して回答を投稿する: POST
  * @param questionId
  * @param data
  * @returns answerId
@@ -151,8 +203,56 @@ export const postAnswer = async (
   data: Answer
 ): Promise<string> => {
   const res = await qmattaClient()
-    .post(`question/${questionId}`, data)
+    .post(`question/answer/${questionId}`, data)
     .then((res) => res.data)
-    .catch((e) => console.log(e))
+    .catch((e) => e.code)
   return res.answerId
+}
+
+/**
+ * 質問投稿時に設定できる優先度を取得する
+ * @returns priorities
+ */
+export const getPriorityList = async () => {
+  const res = await qmattaClient()
+    .get('question/priority')
+    .then((res) => res.data)
+    .catch((e) => e.code)
+
+  if (!res.priorities) {
+    const res = getMockPriorityList()
+    return res
+  }
+
+  // console.log(res)
+  return res.priorities
+}
+
+/**
+ * 質問投稿時に設定できるステータスを取得する
+ * @returns status
+ */
+export const getStatusList = async () => {
+  const res = await qmattaClient()
+    .get('question/status')
+    .then((res) => res.data)
+    .catch((e) => e.code)
+
+  if (!res.statuses) {
+    const res = getMockStatusList()
+    return res
+  }
+  return res.statuses
+}
+
+export const getCategoryList = async () => {
+  const mockCategoryList = getMockCategoryList()
+  return mockCategoryList
+
+  // APIが実装されたら
+  const res = await qmattaClient()
+    .get('question/category')
+    .then((res) => res.data)
+    .catch((e) => e.code)
+  return res.category
 }

@@ -19,14 +19,12 @@ export const useCommunityMenu = (): UseCommunityMenuReturnVal => {
     setIsShowPostQuestion(true)
     setIsShowQuestionList(false)
     setIsShowEveryoneStatus(false)
-    console.log('押した')
   }
 
   const showQuestionList = () => {
     setIsShowPostQuestion(false)
     setIsShowQuestionList(true)
     setIsShowEveryoneStatus(false)
-    console.log('阻止しs')
   }
 
   const showEveryoneStatus = () => {

@@ -13,11 +13,17 @@ export type CommunityPagePresenterProps = {
   communityId: string
   questions: QuestionInfo[]
   messageHistory: MessageHistory[]
+  categoryList: Category[]
+  statusList: QuestionStatus[]
+  priorityList: Priority[]
 }
 
 export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
   messageHistory,
   questions,
+  categoryList,
+  priorityList,
+  statusList,
 }) => {
   const theme = useSelector(selectTheme)
 
@@ -93,7 +99,11 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
               質問する
             </Typography>
 
-            <InputQuestionPaper />
+            <InputQuestionPaper
+              categoryList={categoryList}
+              priorityList={priorityList}
+              statusList={statusList}
+            />
           </Box>
         </Box>
       )}

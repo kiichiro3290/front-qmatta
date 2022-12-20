@@ -29,7 +29,7 @@ type Question = {
   questioner: string // 質問者の名前
   title: string
   detail: string // 質問内容
-  image: string[][] // TODO:バイト列
+  image: string[] // TODO:バイト列
   category: string[]
   status: string
   priority: string
@@ -37,6 +37,15 @@ type Question = {
     user_name: string
     icon: string[] //TODO:バイト列
   }
+}
+
+type PostQuestion = {
+  title: string
+  detail: string
+  image: string[]
+  priority: string
+  status: string
+  category: string[]
 }
 
 type Answer = {
@@ -47,4 +56,19 @@ type Answer = {
     userName: string
     icon: string[] // TODO: バイト列
   }
+}
+
+type Priority = {
+  priorityId: string
+  label: string
+}
+
+type QuestionStatus = {
+  statusId: string
+  label: string
+}
+
+type Category = {
+  categoryId: string
+  label: string
 }
