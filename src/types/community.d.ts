@@ -58,6 +58,11 @@ type Answer = {
   }
 }
 
+type PostAnswer = {
+  detail: string
+  image: string[]
+}
+
 type Priority = {
   priorityId: string
   label: string
