@@ -5,7 +5,7 @@ import qmattaClient from '..'
 export const fetchQmaMessage = async (text: string, isChatGPT: boolean) => {
   const body: UserMessageToBear = { text, bot: isChatGPT }
   const res = await qmattaClient()
-    .post('bear_notlogin', body)
+    .post('bear-notlogin', body)
     .then((res) => res.data)
     .catch((e) => console.log(e))
   return res.response

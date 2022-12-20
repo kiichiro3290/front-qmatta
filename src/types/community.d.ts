@@ -23,7 +23,7 @@ type QuestionInfo = {
 
 type QuestionHistory = {
   question: Question
-  answer: Answer[]
+  answers: Answer[]
 }
 
 type Question = {
@@ -50,6 +50,7 @@ type PostQuestion = {
 }
 
 type Answer = {
+  answerId: string
   respondent: string // 回答者名
   detail: string // 回答内容
   image: striing[][] // TODO: バイト列
@@ -57,6 +58,7 @@ type Answer = {
     userName: string
     icon: string[] // TODO: バイト列
   }
+  createdAt: string
 }
 
 type PostAnswer = {

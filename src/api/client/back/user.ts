@@ -35,6 +35,7 @@ export const logInUser = async (emailAddress: string, password: string) => {
       withCredentials: true,
     })
     .then((res) => res.data)
+    .catch((e) => console.log(e))
 
   return {
     code: res.code,
@@ -51,6 +52,7 @@ export const getUserInfo = async () => {
   const res = await qmattaClient()
     .get('user')
     .then((res) => res.data)
+    .catch((e) => console.log(e))
   return res
 }
 
@@ -79,16 +81,4 @@ export const getUserIcons = async () => {
     .then((res) => res.data)
     .catch((e) => console.log(e))
   return res
-}
-
-/**
- * 自分が加入しているコミュニティの一覧を取得する: GET
- * @returns string[]
- */
-export const getCommunityList = async (): Promise<string[]> => {
-  const res = await qmattaClient()
-    .get('user/community')
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
-  return res.communities
 }

@@ -151,7 +151,7 @@ export const getQuestionList = async (
   const res = await qmattaClient()
     .get(`question/${communityId}`)
     .then((res) => res.data)
-    .catch((e) => e.code)
+    .catch((e) => console.log(e))
 
   // データが何も入っていない時に，とりあえずモックデータを出すようにしてる
   // デバッグができないので
@@ -173,7 +173,7 @@ export const getQuestionDetailInfo = async (
     .get(`question/${questionId}`)
     .then((res) => res.data)
     .catch((e) => console.log(e))
-  return { question: res.question, answer: res.answer }
+  return { question: res.question, answers: res.answers }
 }
 
 /**
@@ -188,7 +188,7 @@ export const postQuestion = async (
   const res = await qmattaClient()
     .post(`question/${communityId}`, data)
     .then((res) => res.data)
-    .catch((e) => e.code)
+    .catch((e) => console.log(e))
   return res.questionId
 }
 
@@ -205,7 +205,7 @@ export const postAnswer = async (
   const res = await qmattaClient()
     .post(`question/answer/${questionId}`, data)
     .then((res) => res.data)
-    .catch((e) => e.code)
+    .catch((e) => console.log(e))
   return res.answerId
 }
 
@@ -217,7 +217,7 @@ export const getPriorityList = async () => {
   const res = await qmattaClient()
     .get('question/priority')
     .then((res) => res.data)
-    .catch((e) => e.code)
+    .catch((e) => console.log(e))
 
   if (!res.priorities) {
     const res = getMockPriorityList()
@@ -236,7 +236,7 @@ export const getStatusList = async () => {
   const res = await qmattaClient()
     .get('question/status')
     .then((res) => res.data)
-    .catch((e) => e.code)
+    .catch((e) => console.log(e))
 
   if (!res.statuses) {
     const res = getMockStatusList()
