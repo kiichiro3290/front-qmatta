@@ -89,12 +89,9 @@ export const getCommunityUsers = async (
       return returnVal
     })
 
-  console.log(res)
-
   const returnVal = {
     error: false,
     users: res.users,
   }
-  console.log(returnVal)
   return returnVal
 }

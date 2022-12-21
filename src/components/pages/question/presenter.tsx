@@ -16,7 +16,13 @@ const defaultValues: PostAnswer = {
   image: [],
 }
 
-export const QuestionPagePresenter: React.FC = () => {
+type QuestionPagePresenterProps = {
+  questionHistory: QuestionHistory
+}
+
+export const QuestionPagePresenter: React.FC<QuestionPagePresenterProps> = ({
+  questionHistory,
+}) => {
   const theme = useSelector(selectTheme)
   // TODO: yupかzodを用いたバリデーション
   const { control, handleSubmit, setValue, getValues } = useForm({
@@ -36,7 +42,48 @@ export const QuestionPagePresenter: React.FC = () => {
           質問
         </Typography>
 
-        <MDEditor preview='preview' value='### とってきた質問をここに載せる' />
+        {questionHistory && (
+          <>
+            <Box
+              component='div'
+              sx={{
+                p: theme.spacing(2),
+                backgroundColor: theme.palette.background.paper,
+                borderRadius: theme.spacing(0.5),
+                boxShadow: theme.shadows[1],
+              }}
+            >
+              <Typography sx={{ mb: theme.spacing(2) }}>
+                質問者：{questionHistory.question.questioner}
+              </Typography>
+              <MDEditor
+                preview='preview'
+                value={questionHistory.question.details}
+              />
+            </Box>
+            {questionHistory.answers && (
+              <>
+                {questionHistory.answers.map((answer) => (
+                  <Box
+                    key={answer.answerId}
+                    component='div'
+                    sx={{
+                      p: theme.spacing(2),
+                      backgroundColor: theme.palette.background.paper,
+                      borderRadius: theme.spacing(0.5),
+                      boxShadow: theme.shadows[1],
+                    }}
+                  >
+                    <Typography sx={{ mb: theme.spacing(2) }}>
+                      質問者：{answer.respondent}
+                    </Typography>
+                    <MDEditor preview='preview' value={answer.detail} />
+                  </Box>
+                ))}
+              </>
+            )}
+          </>
+        )}
 
         <Box component='div' sx={{ height: theme.spacing(8) }} />
 

@@ -2,9 +2,9 @@ import { QuestionPostPagePresenter } from './presenter'
 
 import { getMessageHistory } from '~/api/client/back/bear'
 import {
+  getCategoryList,
   getPriorityList,
   getStatusList,
-  getCategoryList,
 } from '~/api/client/back/question'
 import { selectIsLoggedIn } from '~/store/user/userSlice'
 

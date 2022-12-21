@@ -33,9 +33,10 @@ type QuestionHistory = {
 }
 
 type Question = {
+  questionId: string
   questioner: string // 質問者の名前
   title: string
-  detail: string // 質問内容
+  details: string // 質問内容
   image: string[] // TODO:バイト列
   category: string[]
   status: string
@@ -44,6 +45,7 @@ type Question = {
     user_name: string
     icon: string[] //TODO:バイト列
   }
+  createdAt: string
 }
 
 type PostQuestion = {
