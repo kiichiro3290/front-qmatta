@@ -64,3 +64,37 @@ export const createCommunity = async (
     })
   return res.communityId
 }
+
+/**
+ * コミュニティに参加している全ユーザを取得
+ * @param communityId
+ * @returns
+ */
+type GetCommunityUsersType = {
+  error: boolean
+  errorMessage?: string
+  users: CommunityUser[]
+}
+export const getCommunityUsers = async (
+  communityId: string
+): Promise<GetCommunityUsersType> => {
+  const res = await qmattaClient()
+    .get(`community/users/${communityId}`)
+    .then((res) => res.data)
+    .catch((e) => {
+      const returnVal = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return returnVal
+    })
+
+  console.log(res)
+
+  const returnVal = {
+    error: false,
+    users: res.users,
+  }
+  console.log(returnVal)
+  return returnVal
+}

@@ -86,3 +86,5 @@ type Category = {
   categoryId: string
   label: string
 }
+
+type CommunityUser = [userName: string, status: string, icon: string]

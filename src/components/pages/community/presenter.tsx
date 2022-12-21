@@ -5,11 +5,12 @@ import { useSelector } from 'react-redux'
 
 export type CommunityPagePresenterProps = {
   communityId?: string
+  users: CommunityUser[]
 }
 
-export const CommunityPagePresenter: React.FC<
-  CommunityPagePresenterProps
-> = () => {
+export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
+  users,
+}) => {
   const theme = useSelector(selectTheme)
   // TODO: レスポンシブ対応
 
@@ -20,6 +21,8 @@ export const CommunityPagePresenter: React.FC<
           <Typography sx={{ mt: theme.spacing(2) }} variant='h5'>
             HOME TODO: コミュニティユーザの一覧
           </Typography>
+          {users &&
+            users.map((user, id) => <Box key={id} component='div'></Box>)}
         </Container>
       </Box>
     </>
