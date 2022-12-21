@@ -17,12 +17,14 @@ export const getCommunityList = async (): Promise<string[]> => {
  * @param communityId
  * @returns
  */
-export const enterCommunity = async (communityId: string) => {
+export const registerCommunity = async (communityId: string) => {
   const body = { communityId }
   const res = await qmattaClient()
     .post('community', body)
     .then((res) => res.data)
-    .catch((e) => console.log(e))
+    .catch(() => {
+      return 'error'
+    })
   return res.communityName
 }
 
@@ -40,6 +42,8 @@ export const createCommunity = async (
   const res = await qmattaClient()
     .post('community/make', body)
     .then((res) => res.data)
-    .catch((e) => console.log(e))
+    .catch(() => {
+      return 'error'
+    })
   return res.communityId
 }

@@ -42,11 +42,11 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
           flexDirection='column'
           sx={{ mt: '12px' }}
         >
-          <Link href='/resetPassword'>
+          {/* <Link href='/resetPassword'>
             <Button sx={{ justifyContent: 'left' }}>
               パスワードを忘れた方はこちら
             </Button>
-          </Link>
+          </Link> */}
           <Link href='/signup'>
             <Button sx={{ justifyContent: 'left' }}>新規登録はこちら</Button>
           </Link>
