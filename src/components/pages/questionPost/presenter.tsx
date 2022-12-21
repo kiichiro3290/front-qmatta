@@ -10,11 +10,18 @@ type QuestionPostPagePresenterProps = {
   categoryList: Category[]
   statusList: QuestionStatus[]
   priorityList: Priority[]
+  communityId: string
 }
 
 export const QuestionPostPagePresenter: React.FC<
   QuestionPostPagePresenterProps
-> = ({ messageHistory, categoryList, statusList, priorityList }) => {
+> = ({
+  messageHistory,
+  categoryList,
+  statusList,
+  priorityList,
+  communityId,
+}) => {
   const theme = useSelector(selectTheme)
   return (
     <>
@@ -45,6 +52,7 @@ export const QuestionPostPagePresenter: React.FC<
 
           <InputQuestionPaper
             categoryList={categoryList}
+            communityId={communityId}
             priorityList={priorityList}
             statusList={statusList}
           />

@@ -2,6 +2,12 @@
 type PriorityType = 'なるはや' | 'いつでも' | '緊急' | 'まったり'
 type StatusType = '解決' | 'クマった' | 'ピンチ' | '回答募集中'
 
+type Community = {
+  communityId: string
+  communityName: string
+  icon: string
+}
+
 type MockQuestion = {
   title: string
   createdAt: Date

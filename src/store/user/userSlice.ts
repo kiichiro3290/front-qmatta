@@ -11,7 +11,7 @@ export type InitialUserStateType = {
   userName: string
   profile?: string
   status?: string
-  communityList: string[]
+  communityList: Community[]
 }
 const initialState: InitialUserStateType = {
   communityList: [],

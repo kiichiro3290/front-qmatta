@@ -22,7 +22,7 @@ import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export type SideBarProps = {
-  communityList: string[]
+  communityList: Community[]
   closeSideBar: () => void
 }
 
@@ -79,7 +79,6 @@ export const SideBar: React.FC<SideBarProps> = ({
   }
 
   const onRegisterCommunity = async (communityId: string) => {
-    // const mockCommunityId = '639e1e8803161570622d5263'
     const res = await registerCommunity(communityId)
     setOpenCommunityRegistorModal(false)
     if (res === 'error') {
@@ -145,20 +144,21 @@ export const SideBar: React.FC<SideBarProps> = ({
               <ImageOutlined />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={'プログラミング'} />
+          <ListItemText primary={'Qmattaコミュニティ'} />
         </MenuItem>
+
         {communityList &&
           communityList.map((community) => (
             <MenuItem
-              key={community}
-              onClick={() => onClickWorkspaceButton(community)}
+              key={community.communityId}
+              onClick={() => onClickWorkspaceButton(community.communityId)}
             >
               <ListItemAvatar>
                 <Avatar>
                   <ImageOutlined />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary={community} />
+              <ListItemText primary={community.communityName} />
             </MenuItem>
           ))}
 

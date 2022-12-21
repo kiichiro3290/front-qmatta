@@ -1,3 +1,8 @@
+import '@uiw/react-md-editor/markdown-editor.css'
+import '@uiw/react-markdown-preview/markdown.css'
+
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
+
 import { postQuestion } from '~/api/client/back/question'
 import { selectTheme } from '~/store/theme/themeSlice'
 
@@ -7,21 +12,18 @@ import { Controller, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import rehypeSanitize from 'rehype-sanitize'
 
-import '@uiw/react-md-editor/markdown-editor.css'
-import '@uiw/react-markdown-preview/markdown.css'
-
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
-
 type InputQuestionPaperProps = {
   categoryList: Category[]
   priorityList: Priority[]
   statusList: QuestionStatus[]
+  communityId: string
 }
 
 export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
   categoryList,
   priorityList,
   statusList,
+  communityId,
 }) => {
   const theme = useSelector(selectTheme)
 
@@ -40,9 +42,7 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
   })
 
   const handlePostQuestion = async (data: PostQuestion) => {
-    console.log(data)
-    const mockCommunityId = '639e1e8803161570622d5263'
-    await postQuestion(data, mockCommunityId)
+    await postQuestion(data, communityId)
 
     // 投稿が成功したらリロード
     location.reload()

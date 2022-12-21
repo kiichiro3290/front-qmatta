@@ -8,12 +8,15 @@ import {
 } from '~/api/client/back/question'
 import { selectIsLoggedIn } from '~/store/user/userSlice'
 
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export const QuestionPostPage: React.FC = () => {
   // reduxで管理している状態
   const isLoggedIn = useSelector(selectIsLoggedIn)
+  const router = useRouter()
+  const communityId = router.query.communityId
 
   const [messageHistory, setMessageHistory] = useState<MessageHistory[]>([])
   const [priorityList, setPriorityList] = useState<Priority[]>([])
@@ -58,6 +61,7 @@ export const QuestionPostPage: React.FC = () => {
   return (
     <QuestionPostPagePresenter
       categoryList={categoryList}
+      communityId={communityId as string}
       messageHistory={messageHistory}
       priorityList={priorityList}
       statusList={statusList}

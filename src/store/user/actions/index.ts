@@ -1,4 +1,5 @@
-import { getCommunityList, getUserInfo } from '~/api/client/back/user'
+import { getCommunityList } from '~/api/client/back/community'
+import { getUserInfo } from '~/api/client/back/user'
 
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
@@ -16,6 +17,8 @@ export const fetchCommunityList = createAsyncThunk(
   'user/fetchCommunityList',
   async () => {
     const data = await getCommunityList()
-    return data
+    if (!data.error) {
+      return data.communities
+    }
   }
 )
