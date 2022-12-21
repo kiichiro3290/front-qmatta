@@ -156,7 +156,6 @@ export const getQuestionList = async (
   // データが何も入っていない時に，とりあえずモックデータを出すようにしてる
   // デバッグができないので
   if (!res.questions) {
-    // const res = getMockQuestionList()
     return res
   }
   return res.questions
@@ -219,13 +218,20 @@ export const getPriorityList = async () => {
     .then((res) => res.data)
     .catch((e) => console.log(e))
 
-  if (!res.priorities) {
-    const res = getMockPriorityList()
-    return res
+  const returnVal = {
+    error: false,
+    priorities: res.priorities.map(
+      (priority: { priorityId: string; priorityName: string }) => {
+        const data = {
+          label: priority.priorityName,
+          priorityId: priority.priorityId,
+        }
+        return data
+      }
+    ),
   }
 
-  // console.log(res)
-  return res.priorities
+  return returnVal
 }
 
 /**
@@ -238,11 +244,19 @@ export const getStatusList = async () => {
     .then((res) => res.data)
     .catch((e) => console.log(e))
 
-  if (!res.statuses) {
-    const res = getMockStatusList()
-    return res
+  const returnVal = {
+    error: false,
+    statuses: res.statuses.map(
+      (status: { statusId: string; statusName: string }) => {
+        const data = {
+          label: status.statusName,
+          statusId: status.statusId,
+        }
+        return data
+      }
+    ),
   }
-  return res.statuses
+  return returnVal
 }
 
 export const getCategoryList = async () => {

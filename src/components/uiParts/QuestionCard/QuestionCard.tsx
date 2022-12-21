@@ -61,9 +61,13 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               borderRadius: theme.spacing(1),
             }}
           >
-            {categories.map((category, id) => (
-              <Chip key={id} label='category' />
-            ))}
+            {categories && (
+              <>
+                {categories.map((category, id) => (
+                  <Chip key={id} label='category' />
+                ))}
+              </>
+            )}
           </Box>
           <Typography sx={{ mt: theme.spacing(2) }} variant='h5'>
             {questionTitle}

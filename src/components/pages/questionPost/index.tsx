@@ -35,8 +35,8 @@ export const QuestionPostPage: React.FC = () => {
   // 選択できる優先度の一覧を取得する
   useEffect(() => {
     const f = async () => {
-      const priorityList = await getPriorityList()
-      setPriorityList(priorityList)
+      const data = await getPriorityList()
+      if (!data.error) setPriorityList(data.priorities)
     }
     f()
   }, [])
@@ -45,7 +45,7 @@ export const QuestionPostPage: React.FC = () => {
   useEffect(() => {
     const f = async () => {
       const statusList = await getStatusList()
-      setStatusList(statusList)
+      if (!statusList.error) setStatusList(statusList.statuses)
     }
     f()
   }, [])
