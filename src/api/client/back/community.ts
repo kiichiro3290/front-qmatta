@@ -108,25 +108,27 @@ export const createCommunity = async (
 type GetCommunityUsersType = {
   error: boolean
   errorMessage?: string
-  users: CommunityUser[]
+  users?: UserList
 }
 export const getCommunityUsers = async (
   communityId: string
 ): Promise<GetCommunityUsersType> => {
   const res = await qmattaClient()
     .get(`community/users/${communityId}`)
-    .then((res) => res.data)
-    .catch((e) => {
+    .then((res) => {
       const returnVal = {
-        error: true,
-        errorMessage: e.code,
+        error: false,
+        users: res.data.users,
       }
       return returnVal
     })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
 
-  const returnVal = {
-    error: false,
-    users: res.users,
-  }
-  return returnVal
+  return res
 }

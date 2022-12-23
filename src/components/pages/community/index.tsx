@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
 export const CommunityPage: React.FC = () => {
   const router = useRouter()
   const [communityId, setCommunityId] = useState<string>('')
-  const [communityUsers, setCommunityusers] = useState<CommunityUser[]>([])
+  const [communityUsers, setCommunityusers] = useState<UserList>([])
 
   useEffect(() => {
     if (!communityId) return
