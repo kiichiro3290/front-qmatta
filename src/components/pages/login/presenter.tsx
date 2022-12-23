@@ -34,7 +34,7 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
     <Fragment>
       {isLoading && (
         <Container
-          maxWidth='sm'
+          maxWidth='xs'
           sx={{ textAlign: 'center', pt: theme.spacing(12) }}
         >
           <Typography>ログイン中です...</Typography>
@@ -42,7 +42,7 @@ export const LogInPagePresenter: React.FC<LogInPagePresenterProps> = ({
         </Container>
       )}
       {!isLoading && (
-        <Container maxWidth='sm' sx={{ pt: theme.spacing(12) }}>
+        <Container maxWidth='xs' sx={{ pt: theme.spacing(12) }}>
           <Typography
             component='h2'
             sx={{ textAlign: 'center', my: theme.spacing(2) }}

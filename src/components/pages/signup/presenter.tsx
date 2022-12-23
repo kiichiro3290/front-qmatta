@@ -23,7 +23,7 @@ export const SignUpPagePresenter: React.FC<SignUpPagePresenterProps> = ({
   const theme = useSelector(selectTheme)
   return (
     <Fragment>
-      <Container maxWidth='sm' sx={{ pt: theme.spacing(12) }}>
+      <Container maxWidth='xs' sx={{ pt: theme.spacing(12) }}>
         <Typography
           component='h2'
           sx={{ textAlign: 'center', my: theme.spacing(2) }}
