@@ -143,7 +143,7 @@ export const getPriorityList = async (): Promise<GetPriorityListType> => {
     .then((res) => {
       const returnVal = {
         error: false,
-        priorities: res.data.priorities.map(
+        priorityList: res.data.priorities.map(
           (priority: { priorityId: string; priorityName: string }) => {
             const data = {
               label: priority.priorityName,
@@ -181,7 +181,7 @@ export const getStatusList = async (): Promise<GetStatusListType> => {
     .then((res) => {
       const returnVal = {
         error: false,
-        statuses: res.data.statuses.map(
+        statusList: res.data.statuses.map(
           (status: { statusId: string; statusName: string }) => {
             const data = {
               label: status.statusName,
