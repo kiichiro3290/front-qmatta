@@ -12,14 +12,14 @@ export const CommunityMenu: React.FC = () => {
 
   const theme = useSelector(selectTheme)
   const routeCommunityHome = () => {
-    router.push(`/communities/${communityId}`)
+    router.push(`/${communityId}`)
   }
   const routeQuestionList = () => {
-    router.push(`/communities/${communityId}/questions`)
+    router.push(`/${communityId}/questions`)
   }
 
   const routeQuestionPost = () => {
-    router.push(`/communities/${communityId}/post`)
+    router.push(`/${communityId}/post`)
   }
   return (
     <>

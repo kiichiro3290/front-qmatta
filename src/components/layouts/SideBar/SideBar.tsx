@@ -39,7 +39,7 @@ export const SideBar: React.FC<SideBarProps> = ({
   }, [])
 
   const onClickWorkspaceButton = useCallback((communityId: string) => {
-    router.push(`/communities/${communityId}`)
+    router.push(`${communityId}`)
     closeSideBar()
   }, [])
 
