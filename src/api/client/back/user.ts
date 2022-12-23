@@ -167,15 +167,15 @@ export const updateUserStatus = async (
 type GetUserIconsType = {
   error: boolean
   errorMessage?: string
-  icon?: string
+  userIcon?: string
 }
-export const getUserIcons = async (): Promise<GetUserIconsType> => {
+export const getUserIcon = async (): Promise<GetUserIconsType> => {
   const res = await qmattaClient()
     .get('user/icon')
     .then((res) => {
       const returnVal = {
         error: false,
-        icon: res.data.icon,
+        userIcon: 'data:image/png;base64,' + res.data.userIcon,
       }
       return returnVal
     })
