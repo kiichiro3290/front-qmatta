@@ -73,7 +73,6 @@ export const SideBar: React.FC<SideBarProps> = ({
   }
 
   const onClickRegisterCommunity = () => {
-    // closeSideBar()
     setAnchorEl(null)
     setOpenCommunityRegistorModal(true)
   }
@@ -83,6 +82,8 @@ export const SideBar: React.FC<SideBarProps> = ({
     setOpenCommunityRegistorModal(false)
     if (!res.error && res.communityName) {
       console.log(res.communityName)
+      closeSideBar()
+      location.reload()
     } else {
       console.log(res.errorMessage)
     }
@@ -284,41 +285,5 @@ export const SideBar: React.FC<SideBarProps> = ({
         </Box>
       </Modal>
     </Box>
-  )
-}
-
-type CommunityMenuModalProps = {
-  openModal: boolean
-  handleModal: () => void
-}
-export const CommunityMenuModal: React.FC<CommunityMenuModalProps> = ({
-  openModal,
-  handleModal,
-}) => {
-  const theme = useSelector(selectTheme)
-  return (
-    <>
-      <Modal open={openModal} onClose={handleModal}>
-        <Box
-          component='div'
-          sx={{
-            width: '320px',
-            backgroundColor: theme.palette.background.paper,
-            position: 'absolute',
-            textAlign: 'center',
-            padding: theme.spacing(8),
-            borderRadius: theme.spacing(0.5),
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <Typography component='h2' id='modal-modal-title' variant='h6'>
-            コミュニティのIDを入力
-          </Typography>
-          <Button>参加する</Button>
-        </Box>
-      </Modal>
-    </>
   )
 }
