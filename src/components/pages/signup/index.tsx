@@ -5,9 +5,17 @@ import { signUpUser } from '~/api/client/back/user'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 
+export type SnackbarInfoType = {
+  message: string
+  type: 'error' | 'success'
+}
+
 export const SignUpPage: React.FC = () => {
   const [isOpenSnackbar, setIsOpenSnackbar] = useState<boolean>(false)
-  const [snackbarMessage, setSnackbarMessage] = useState<string>('')
+  const [snackbarInfo, setSnackbarInfo] = useState<SnackbarInfoType>({
+    message: '',
+    type: 'error',
+  })
 
   const router = useRouter()
 
@@ -20,13 +28,19 @@ export const SignUpPage: React.FC = () => {
       // 認証情報 (E-mailとパスワード)をバックエンドに送信する
       const res = await signUpUser(email, password)
       if (!res.error && res.message) {
-        setSnackbarMessage(res.message)
+        setSnackbarInfo({
+          message: res.message,
+          type: 'success',
+        })
         setIsOpenSnackbar(true)
-        router.push('login')
+        router.push('/login')
         return
       } else {
-        if (res.message) {
-          setSnackbarMessage(res.message)
+        if (res.errorMessage) {
+          setSnackbarInfo({
+            message: res.errorMessage,
+            type: 'error',
+          })
           setIsOpenSnackbar(true)
           return
         }
@@ -39,7 +53,7 @@ export const SignUpPage: React.FC = () => {
     <SignUpPagePresenter
       handleCloseSnackbar={handleCloseSnackbar}
       isOpenSnackbar={isOpenSnackbar}
-      snackbarMessage={snackbarMessage}
+      snackbarInfo={snackbarInfo}
       onClickSignUpButton={onClickSignUpButton}
     />
   )

@@ -6,11 +6,25 @@ const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 import { postQuestion } from '~/api/client/back/question'
 import { selectTheme } from '~/store/theme/themeSlice'
 
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Typography, TextField, Button, Autocomplete } from '@mui/material'
 import dynamic from 'next/dynamic'
 import { Controller, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import rehypeSanitize from 'rehype-sanitize'
+import * as yup from 'yup'
+
+// yupでバリデーションを行うためのスキーマ
+const postQuestionSchema = yup.object({
+  category: yup.array().of(yup.string().required()).required(),
+  priority: yup.string().required(),
+  status: yup.string().required(),
+  title: yup.string().required(),
+  detail: yup.string().required(),
+  image: yup.array().of(yup.string().required()).required(),
+})
+
+type Inputs = yup.InferType<typeof postQuestionSchema>
 
 type InputQuestionPaperProps = {
   categoryList: Category[]
@@ -29,16 +43,18 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
 
   const defaultValues: PostQuestion = {
     title: '',
-    image: [],
+    image: [] as string[],
     detail: '**CORSエラー出てつらい**',
     category: [] as string[],
     priority: 'なるはや',
     status: '回答募集中',
   }
+
   // TODO: yupかzodを用いたバリデーション
-  const { control, handleSubmit, setValue, getValues } = useForm({
+  const { control, handleSubmit, setValue, getValues } = useForm<Inputs>({
     mode: 'onChange',
     defaultValues,
+    resolver: yupResolver(postQuestionSchema),
   })
 
   const handlePostQuestion = async (data: PostQuestion) => {
@@ -48,8 +64,8 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
     } else {
       console.log(res.errorMessage)
     }
-    // 投稿が成功したらリロード
-    location.reload()
+    // 投稿が成功したらリロード→微妙
+    // location.reload()
   }
 
   return (
@@ -153,8 +169,9 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
                 fullWidth
                 multiple
                 onChange={(event, item) => {
-                  const categoryNames = item.map((i) => i.categoryId)
-                  setValue('category', categoryNames)
+                  // categoryIdの配列を保存する
+                  const categoryIds = item.map((i) => i.categoryId)
+                  setValue('category', categoryIds)
                 }}
               />
             )}
