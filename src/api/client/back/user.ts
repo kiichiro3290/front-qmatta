@@ -4,27 +4,66 @@ import qmattaClient from '..'
  * ユーザの新規登録：POST
  * @param emailAddress
  * @param password
- * @returns
+ * @returns { message: string }
  */
-export const signUpUser = async (emailAddress: string, password: string) => {
+type SignUpUser = {
+  error: boolean
+  errorMessage?: string
+  message?: string
+  code?: string
+}
+export const signUpUser = async (
+  emailAddress: string,
+  password: string
+): Promise<SignUpUser> => {
   const body = {
     emailAddress,
     password,
   }
   const res = await qmattaClient()
     .post('signup', body)
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
-  return { msg: res.msg, result: res.result }
+    .then((res) => {
+      if (res.data.result) {
+        const returnVal = {
+          error: false,
+          message: res.data.message,
+        }
+        return returnVal
+      } else {
+        const returnVal = {
+          error: true,
+          errorMessage: res.data.message,
+        }
+        return returnVal
+      }
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
 
 /**
  * ログイン処理
  * @param emailAddress
  * @param password
- * @returns { code: string, token: string, expire: string}
+ * @returns { code: string, token: string, expire: string }
  */
-export const logInUser = async (emailAddress: string, password: string) => {
+type LogInUserType = {
+  error: boolean
+  errorMessage?: string
+  code?: string
+  token?: string
+  expire?: string
+}
+export const logInUser = async (
+  emailAddress: string,
+  password: string
+): Promise<LogInUserType> => {
   const body = {
     emailAddress,
     password,
@@ -34,25 +73,56 @@ export const logInUser = async (emailAddress: string, password: string) => {
     .post('login', body, {
       withCredentials: true,
     })
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        code: res.data.code,
+        token: res.data.token,
+        expire: res.data.expire,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
 
-  return {
-    code: res.code,
-    token: res.token,
-    expire: res.expire,
-  }
+  return res
 }
 
 /**
  * ユーザの情報を取得する
  * @returns { userName: string, profile: string, status: string}
  */
-export const getUserInfo = async () => {
+type GetUserInfoType = {
+  error: boolean
+  errorMessage?: string
+  userName?: string
+  profile?: string
+  status?: string
+}
+export const getUserInfo = async (): Promise<GetUserInfoType> => {
   const res = await qmattaClient()
     .get('user')
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        userName: res.data.userName,
+        profile: res.data.profile,
+        status: res.data.status,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
   return res
 }
 
@@ -61,24 +131,60 @@ export const getUserInfo = async () => {
  * @param stampId
  * @returns { isUpdated: boolean }
  */
-export const updateUserStatus = async (stampId: string): Promise<boolean> => {
+type UpdateUserStatusType = {
+  error: boolean
+  errorMessage?: string
+  isUpdated?: boolean
+}
+export const updateUserStatus = async (
+  stampId: string
+): Promise<UpdateUserStatusType> => {
   const data = { stampId }
   const res = await qmattaClient()
     .patch('user/status', data)
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        isUpdated: res.data.isUpdated,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
   return res
 }
 
 /**
  * ユーザのアカウント情報を取得する：GET
  * バイト列が返ってくる
- * @returns byte[]
+ * @returns { icon: byte[] }
  */
-export const getUserIcons = async () => {
+type GetUserIconsType = {
+  error: boolean
+  errorMessage?: string
+  icon?: string
+}
+export const getUserIcons = async (): Promise<GetUserIconsType> => {
   const res = await qmattaClient()
     .get('user/icon')
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        icon: res.data.icon,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
   return res
 }

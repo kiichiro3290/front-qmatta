@@ -2,7 +2,7 @@ import qmattaClient from '..'
 
 /**
  * 自分が加入しているコミュニティの一覧を取得する: GET
- * @returns string[]
+ * @returns { communities: Community[] }
  */
 type GetCommunityListReturnValue = {
   error: boolean
@@ -32,43 +32,75 @@ export const getCommunityList =
 /**
  * コミュニティに参加する
  * @param communityId
- * @returns
+ * @returns { communityName: string }
  */
-export const registerCommunity = async (communityId: string) => {
+type RegisterCommunityType = {
+  error: boolean
+  errorMessage?: string
+  communityName?: string
+}
+export const registerCommunity = async (
+  communityId: string
+): Promise<RegisterCommunityType> => {
   const body = { communityId: communityId }
   const res = await qmattaClient()
     .post('community', body)
-    .then((res) => res.data)
-    .catch(() => {
-      return 'error'
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        communityName: res.data.communityName,
+      }
+      return returnVal
     })
-  return res.communityName
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
 
 /**
  * コミュニティを作成する
  * @param communityName
  * @param icon
- * @returns
+ * @returns { communityId: string }
  */
+type CreateCommunityType = {
+  error: boolean
+  errorMessage?: string
+  communityId?: string
+}
 export const createCommunity = async (
   communityName: string,
   icon: string[]
-) => {
+): Promise<CreateCommunityType> => {
   const body = { communityName: communityName, icon: icon }
   const res = await qmattaClient()
     .post('community/make', body)
-    .then((res) => res.data)
-    .catch(() => {
-      return 'error'
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        communityId: res.data.communityId,
+      }
+      return returnVal
     })
-  return res.communityId
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
 
 /**
  * コミュニティに参加している全ユーザを取得
  * @param communityId
- * @returns
+ * @returns { communityName: string }
  */
 type GetCommunityUsersType = {
   error: boolean

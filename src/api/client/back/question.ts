@@ -16,27 +16,39 @@ export const getMockCategoryList = (): Category[] => {
 
 /**
  * 質問投稿一覧を取得する：GET
- * @returns QuestionInfo[]
+ * @returns { quesitons: QuestionInfo[] }
  */
+type GetQuestionListType = {
+  error: boolean
+  errorMessage?: string
+  questions?: QuestionInfo[]
+}
 export const getQuestionList = async (
   communityId: string
-): Promise<QuestionInfo[]> => {
+): Promise<GetQuestionListType> => {
   const res = await qmattaClient()
     .get(`question/${communityId}`)
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
-
-  // データが何も入っていない時に，とりあえずモックデータを出すようにしてる
-  // デバッグができないので
-  if (!res.questions) {
-    return res
-  }
-  return res.questions
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        questions: res.data.questions,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
 
 /**
  * 質問の詳細を取得する：GET
- * @param questionId string
+ * @param questionId
+ * @return { getQuestionHistory: GetQuestionHistoryType }
  */
 type GetQuestionHistoryType = {
   error: boolean
@@ -48,7 +60,13 @@ export const getQuestionHistory = async (
 ): Promise<GetQuestionHistoryType> => {
   const res = await qmattaClient()
     .get(`question/answer/${questionId}`)
-    .then((res) => res.data)
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        getQuestionHistory: res.data.questionHistory,
+      }
+      return returnVal
+    })
     .catch((e) => {
       const returnVal = {
         error: true,
@@ -56,27 +74,41 @@ export const getQuestionHistory = async (
       }
       return returnVal
     })
-  const returnVal = {
-    error: false,
-    questionHistory: res,
-  }
-  return returnVal
+
+  return res
 }
 
 /**
  * 質問を投稿する：POST
  * @param data: Question
- * @returns questionId: string
+ * @returns { questionId: string }
  */
+type PostQuestionType = {
+  error: boolean
+  errorMessage?: string
+  questionId?: string
+}
 export const postQuestion = async (
   data: PostQuestion,
   communityId: string
-): Promise<string> => {
+): Promise<PostQuestionType> => {
   const res = await qmattaClient()
     .post(`question/${communityId}`, data)
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
-  return res.questionId
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        questionId: res.data.questionId,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
 
 /**
@@ -100,51 +132,76 @@ export const postAnswer = async (
  * 質問投稿時に設定できる優先度を取得する
  * @returns priorities
  */
-export const getPriorityList = async () => {
+type GetPriorityListType = {
+  error: boolean
+  errorMessage?: string
+  priorityList?: Priority[]
+}
+export const getPriorityList = async (): Promise<GetPriorityListType> => {
   const res = await qmattaClient()
     .get('question/priority')
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
-
-  const returnVal = {
-    error: false,
-    priorities: res.priorities.map(
-      (priority: { priorityId: string; priorityName: string }) => {
-        const data = {
-          label: priority.priorityName,
-          priorityId: priority.priorityId,
-        }
-        return data
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        priorities: res.data.priorities.map(
+          (priority: { priorityId: string; priorityName: string }) => {
+            const data = {
+              label: priority.priorityName,
+              priorityId: priority.priorityId,
+            }
+            return data
+          }
+        ),
       }
-    ),
-  }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
 
-  return returnVal
+  return res
 }
 
 /**
  * 質問投稿時に設定できるステータスを取得する
  * @returns status
  */
-export const getStatusList = async () => {
+type GetStatusListType = {
+  error: boolean
+  errorMessage?: string
+  statusList?: QuestionStatus[]
+}
+export const getStatusList = async (): Promise<GetStatusListType> => {
   const res = await qmattaClient()
     .get('question/status')
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
-
-  const returnVal = {
-    error: false,
-    statuses: res.statuses.map(
-      (status: { statusId: string; statusName: string }) => {
-        const data = {
-          label: status.statusName,
-          statusId: status.statusId,
-        }
-        return data
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        statuses: res.data.statuses.map(
+          (status: { statusId: string; statusName: string }) => {
+            const data = {
+              label: status.statusName,
+              statusId: status.statusId,
+            }
+            return data
+          }
+        ),
       }
-    ),
-  }
-  return returnVal
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+
+  return res
 }
 
 export const getCategoryList = async () => {

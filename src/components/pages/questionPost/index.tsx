@@ -26,8 +26,12 @@ export const QuestionPostPage: React.FC = () => {
   // メッセージの送信履歴を取得する
   useEffect(() => {
     const f = async () => {
-      const data = await getMessageHistory()
-      setMessageHistory(data)
+      const res = await getMessageHistory()
+      if (!res.error && res.histories) {
+        setMessageHistory(res.histories)
+      } else {
+        console.log(res.errorMessage)
+      }
     }
     f()
   }, [isLoggedIn])
@@ -35,8 +39,12 @@ export const QuestionPostPage: React.FC = () => {
   // 選択できる優先度の一覧を取得する
   useEffect(() => {
     const f = async () => {
-      const data = await getPriorityList()
-      if (!data.error) setPriorityList(data.priorities)
+      const res = await getPriorityList()
+      if (!res.error && res.priorityList) {
+        setPriorityList(res.priorityList)
+      } else {
+        console.log(res.errorMessage)
+      }
     }
     f()
   }, [])
@@ -44,8 +52,10 @@ export const QuestionPostPage: React.FC = () => {
   // 選択できるステータスの一覧を取得する
   useEffect(() => {
     const f = async () => {
-      const statusList = await getStatusList()
-      if (!statusList.error) setStatusList(statusList.statuses)
+      const res = await getStatusList()
+      if (!res.error && res.statusList) {
+        setStatusList(res.statusList)
+      }
     }
     f()
   }, [])

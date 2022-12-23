@@ -15,12 +15,12 @@ export const QuestionPage: React.FC = () => {
     if (!questionId) return
 
     const f = async () => {
-      const data = await getQuestionHistory(questionId)
+      const res = await getQuestionHistory(questionId)
 
-      if (data.error) {
-        console.log(data.errorMessage)
+      if (!res.error && res.questionHistory) {
+        setQuestionHistory(res.questionHistory)
       } else {
-        setQuestionHistory(data.questionHistory)
+        console.log(!res.errorMessage)
       }
     }
     f()

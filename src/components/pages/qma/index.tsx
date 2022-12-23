@@ -65,18 +65,30 @@ export const QmaPage: React.FC = () => {
                 // バックエンドからクマのセリフを取得する
                 // isChatGPT: true → AIによる返答を取得する
                 const res = await postQmaMessage(dialogue, true)
-                setQmaMessage(res)
+                if (!res.error && res.response) {
+                  setQmaMessage(res.response)
+                } else {
+                  console.log(res.errorMessage)
+                }
               } catch (e) {
                 console.log(e)
                 setQmaMessage('')
                 // エラーが出た時は，適当なメッセージを返す
                 const res = await postQmaMessage(dialogue, false)
-                setQmaMessage(res)
+                if (!res.error && res.response) {
+                  setQmaMessage(res.response)
+                } else {
+                  console.log(res.errorMessage)
+                }
               }
             } else {
               // ログインしていない時は，適当なメッセージを返す
               const res = await fetchQmaMessage(dialogue, false)
-              setQmaMessage(res)
+              if (!res.error && res.response) {
+                setQmaMessage(res.response)
+              } else {
+                console.log(res.errorMessage)
+              }
             }
           }
           // 画像を変更
@@ -99,9 +111,12 @@ export const QmaPage: React.FC = () => {
   useEffect(() => {
     const f = async () => {
       if (isLoggedIn) {
-        const data = await getMessageHistory()
-        console.log(data)
-        setMessageHistory(data)
+        const res = await getMessageHistory()
+        if (!res.error && res.histories) {
+          setMessageHistory(res.histories)
+        } else {
+          console.log(res.errorMessage)
+        }
       }
     }
     f()

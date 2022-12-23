@@ -1,44 +1,101 @@
 import qmattaClient from '..'
 
-// クマのメッセージを取得する（簡易版のためユーザ登録なしで叩ける）: GET
-// () => message: string
-export const fetchQmaMessage = async (text: string, isChatGPT: boolean) => {
+/**
+ * クマのメッセージを取得する（簡易版のためユーザ登録なしで叩ける）: GET
+ * @param text
+ * @param isChatGPT
+ * @returns { response: string }
+ */
+type FetchQmaMessageType = {
+  error: boolean
+  errorMessage?: string
+  response?: string
+}
+export const fetchQmaMessage = async (
+  text: string,
+  isChatGPT: boolean
+): Promise<FetchQmaMessageType> => {
   const body: UserMessageToBear = { text, bot: isChatGPT }
   const res = await qmattaClient()
     .post('bear-notlogin', body)
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
-  return res.response
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        response: res.data.response,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
 
-// クマのメッセージを取得する & メッセージをDBに保存: POST
-// (userID: string, message: string) => message: string
+/**
+ * クマのメッセージを取得する & メッセージをDBに保存: POST
+ * @param text
+ * @param isChatGPT
+ * @returns { response: string }
+ */
+type PostQmaMessageType = {
+  error: boolean
+  errorMessage?: string
+  response?: string
+}
 export const postQmaMessage = async (
   text: string,
   isChatGPT: boolean
-): Promise<string> => {
+): Promise<PostQmaMessageType> => {
   const body: UserMessageToBear = { text, bot: isChatGPT }
   const res = await qmattaClient()
     .post('bear', body)
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
-  return res.response
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        response: res.data.response,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
 
 /**
  * メッセージの送信履歴を取得する：GET
- * @returns string[]
+ * @returns { messageHistory: MessageHistory[] }
  */
-export const getMessageHistory = async (): Promise<MessageHistory[]> => {
+type GetMessageHistoryType = {
+  error: boolean
+  errorMessage?: string
+  histories?: MessageHistory[]
+}
+export const getMessageHistory = async (): Promise<GetMessageHistoryType> => {
   const res = await qmattaClient()
     .get('bear/history')
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        histories: res.data.histories,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
 
-  // 時間を日付型に変更する
-  // const dates = res.map((raw: string) => {
-  //   return new Date(raw)
-  // })
-
-  return res.histories
+  return res
 }

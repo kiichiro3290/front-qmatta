@@ -15,8 +15,12 @@ export const QuestionListPage: React.FC = () => {
     const f = async () => {
       const communityId = query.communityId
       if (communityId) {
-        const questions = await getQuestionList(communityId as string)
-        setQuestions(questions)
+        const res = await getQuestionList(communityId as string)
+        if (!res.error && res.questions) {
+          setQuestions(res.questions)
+        } else {
+          console.log(res.errorMessage)
+        }
       }
     }
     f()

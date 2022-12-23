@@ -14,11 +14,11 @@ export const CommunityPage: React.FC = () => {
     if (!communityId) return
 
     const f = async (communityId: string) => {
-      const users = await getCommunityUsers(communityId)
-      if (users.error) {
-        console.log(users.errorMessage)
+      const res = await getCommunityUsers(communityId)
+      if (!res.error && res.users) {
+        setCommunityusers(res.users)
       } else {
-        setCommunityusers(users.users)
+        console.log(res.errorMessage)
       }
     }
     f(communityId)
