@@ -20,19 +20,20 @@ export const signUpUser = async (
     emailAddress,
     password,
   }
+
   const res = await qmattaClient()
     .post('signup', body)
     .then((res) => {
       if (res.data.result) {
         const returnVal = {
           error: false,
-          message: res.data.message,
+          message: res.data.msg,
         }
         return returnVal
       } else {
         const returnVal = {
           error: true,
-          errorMessage: res.data.message,
+          errorMessage: res.data.msg,
         }
         return returnVal
       }

@@ -16,7 +16,6 @@ export const QuestionPage: React.FC = () => {
 
     const f = async () => {
       const res = await getQuestionHistory(questionId)
-
       if (!res.error && res.questionHistory) {
         setQuestionHistory(res.questionHistory)
       } else {
