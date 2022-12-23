@@ -18,7 +18,7 @@ export const QuestionPostPage: React.FC = () => {
   const router = useRouter()
   const communityId = router.query.communityId
 
-  const [messageHistory, setMessageHistory] = useState<MessageHistory>([])
+  const [chatHistory, setChatHistory] = useState<ChatHistory>([])
   const [priorityList, setPriorityList] = useState<Priority[]>([])
   const [statusList, setStatusList] = useState<QuestionStatus[]>([])
   const [categoryList, setCategoryList] = useState<Category[]>([])
@@ -28,7 +28,7 @@ export const QuestionPostPage: React.FC = () => {
     const f = async () => {
       const res = await getChatHistory()
       if (!res.error && res.histories) {
-        setMessageHistory(res.histories)
+        setChatHistory(res.histories)
       } else {
         console.log(res.errorMessage)
       }
@@ -78,8 +78,8 @@ export const QuestionPostPage: React.FC = () => {
   return (
     <QuestionPostPagePresenter
       categoryList={categoryList}
+      chatHistory={chatHistory}
       communityId={communityId as string}
-      messageHistory={messageHistory}
       priorityList={priorityList}
       statusList={statusList}
     />
