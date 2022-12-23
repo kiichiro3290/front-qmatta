@@ -9,7 +9,8 @@ import { selectTheme } from '~/store/theme/themeSlice'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Box, Typography, TextField, Button, Autocomplete } from '@mui/material'
 import dynamic from 'next/dynamic'
-import { Controller, useForm } from 'react-hook-form'
+import { useCallback } from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 import rehypeSanitize from 'rehype-sanitize'
 import * as yup from 'yup'
@@ -57,6 +58,10 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
     resolver: yupResolver(postQuestionSchema),
   })
 
+  const onSubmit: SubmitHandler<Inputs> = useCallback(async (data: Inputs) => {
+    await handlePostQuestion(data)
+  }, [])
+
   const handlePostQuestion = async (data: PostQuestion) => {
     const res = await postQuestion(data, communityId)
     if (!res.error && res.questionId) {
@@ -78,7 +83,7 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
         boxShadow: theme.shadows[1],
       }}
     >
-      <form onSubmit={handleSubmit(handlePostQuestion)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Typography sx={{ mb: theme.spacing(2) }} variant='subtitle1'>
           質問タイトル
         </Typography>

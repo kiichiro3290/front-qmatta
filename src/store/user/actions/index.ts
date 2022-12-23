@@ -16,9 +16,11 @@ export const fetchUserDataState = createAsyncThunk(
 export const fetchCommunityList = createAsyncThunk(
   'user/fetchCommunityList',
   async () => {
-    const data = await getCommunityList()
-    if (!data.error) {
-      return data.communities
+    const res = await getCommunityList()
+    if (!res.error && res.communityList) {
+      return res.communityList
+    } else {
+      console.log(res.errorMessage)
     }
   }
 )

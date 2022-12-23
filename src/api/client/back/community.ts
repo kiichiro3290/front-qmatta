@@ -7,13 +7,20 @@ import qmattaClient from '..'
 type GetCommunityListReturnValue = {
   error: boolean
   errorMessage?: string
-  communities?: Community[]
+  communityList?: Community[]
 }
 export const getCommunityList =
   async (): Promise<GetCommunityListReturnValue> => {
     const res = await qmattaClient()
       .get('community')
-      .then((res) => res.data)
+      .then((res) => {
+        console.log(res)
+        const returnVal = {
+          error: false,
+          communityList: res.data.communities,
+        }
+        return returnVal
+      })
       .catch((e) => {
         const returnVal = {
           error: true,
@@ -22,11 +29,7 @@ export const getCommunityList =
         return returnVal
       })
 
-    const returnVal = {
-      error: false,
-      communities: res.communities,
-    }
-    return returnVal
+    return res
   }
 
 /**
@@ -75,7 +78,7 @@ type CreateCommunityType = {
 }
 export const createCommunity = async (
   communityName: string,
-  icon: string[]
+  icon: string
 ): Promise<CreateCommunityType> => {
   const body = { communityName: communityName, icon: icon }
   const res = await qmattaClient()
