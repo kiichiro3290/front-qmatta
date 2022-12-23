@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 type QuestionPostPagePresenterProps = {
-  messageHistory: MessageHistory
+  chatHistory: ChatHistory
   categoryList: Category[]
   statusList: QuestionStatus[]
   priorityList: Priority[]
@@ -15,13 +15,7 @@ type QuestionPostPagePresenterProps = {
 
 export const QuestionPostPagePresenter: React.FC<
   QuestionPostPagePresenterProps
-> = ({
-  messageHistory,
-  categoryList,
-  statusList,
-  priorityList,
-  communityId,
-}) => {
+> = ({ chatHistory, categoryList, statusList, priorityList, communityId }) => {
   const theme = useSelector(selectTheme)
 
   return (
@@ -39,7 +33,7 @@ export const QuestionPostPagePresenter: React.FC<
           <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
             くま記録
           </Typography>
-          <QmaDialoguePaper messageHistory={messageHistory} />
+          <QmaDialoguePaper chatHistory={chatHistory} />
         </Box>
 
         <Box component='div' sx={{ height: '100%', width: '100%' }}>
