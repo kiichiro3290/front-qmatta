@@ -9,8 +9,8 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // action 全体を無視
-        ignoredActions: [],
-        ignoredPaths: [],
+        ignoredActions: ['bear/messageHistoryState'],
+        ignoredPaths: ['bear.messageHistory.*.date'],
       },
     }),
   reducer: {

@@ -1,6 +1,6 @@
 import { QuestionPostPagePresenter } from './presenter'
 
-import { getMessageHistory } from '~/api/client/back/bear'
+import { getChatHistory } from '~/api/client/back/bear'
 import {
   getCategoryList,
   getPriorityList,
@@ -18,7 +18,7 @@ export const QuestionPostPage: React.FC = () => {
   const router = useRouter()
   const communityId = router.query.communityId
 
-  const [messageHistory, setMessageHistory] = useState<MessageHistory[]>([])
+  const [messageHistory, setMessageHistory] = useState<MessageHistory>([])
   const [priorityList, setPriorityList] = useState<Priority[]>([])
   const [statusList, setStatusList] = useState<QuestionStatus[]>([])
   const [categoryList, setCategoryList] = useState<Category[]>([])
@@ -26,7 +26,7 @@ export const QuestionPostPage: React.FC = () => {
   // メッセージの送信履歴を取得する
   useEffect(() => {
     const f = async () => {
-      const res = await getMessageHistory()
+      const res = await getChatHistory()
       if (!res.error && res.histories) {
         setMessageHistory(res.histories)
       } else {

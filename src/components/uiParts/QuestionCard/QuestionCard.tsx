@@ -38,7 +38,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   const router = useRouter()
 
   const routeQuestionPage = () => {
-    router.push(`${router.query.communityId}/questions/${questionId}`)
+    router.push(`/${router.query.communityId}/questions/${questionId}`)
   }
   return (
     <Card>

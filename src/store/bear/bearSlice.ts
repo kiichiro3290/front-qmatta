@@ -17,8 +17,8 @@ export const bearSlice = createSlice({
   reducers: {
     // 現在のメッセージ履歴を保存
     messageHistoryState: (state, action) => {
-      const messageHistory = action.payload.messageHistory
-      state.messageHistory = messageHistory
+      const message = action.payload.message
+      state.messageHistory = [message, ...state.messageHistory]
     },
   },
 })

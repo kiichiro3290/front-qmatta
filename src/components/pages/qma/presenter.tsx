@@ -28,18 +28,16 @@ export type QmaPagePresenterProps = {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void
   dialogue: string
-  dialogues: string[]
-  messageHistory: MessageHistory[]
+  chatHistory: ChatHistory
   isOpenBearMouth?: boolean
 }
 
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   dialogue,
-  dialogues,
   endComposition,
   // isOpenBearMouth,
   isShowChatBaloon,
-  messageHistory,
+  chatHistory,
   onChangeDialogue,
   onKeydown,
   qmaMessage,
@@ -100,10 +98,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 
           <Divider />
         </Box>
-        <QmaDialogueDrawer
-          dialogues={dialogues}
-          messageHistory={messageHistory}
-        />
+        <QmaDialogueDrawer chatHistory={chatHistory} />
       </Drawer>
 
       {isShowChatBaloon ? (

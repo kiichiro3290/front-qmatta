@@ -23,6 +23,14 @@ type UserData = {
   _id: string
 }
 
+type Chat = {
+  text: string
+  response: string
+  date: Date
+}
+
+type ChatHistory = Chat[]
+
 type Message = {
   text: string
   date: Date
