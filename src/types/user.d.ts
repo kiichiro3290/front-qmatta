@@ -23,12 +23,9 @@ type UserData = {
   _id: string
 }
 
-type MessageHistory = {
+type Message = {
   text: string
   date: Date
 }
 
-type ResMessageHistory = {
-  message: string[]
-  date: string[]
-}
+type MessageHistory = Message[]

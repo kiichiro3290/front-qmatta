@@ -1,3 +1,4 @@
+import { bearReducer } from './bear/bearSlice'
 import { themeReducer } from './theme/themeSlice'
 import { userReducer } from './user/userSlice'
 
@@ -15,6 +16,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     theme: themeReducer,
+    bear: bearReducer,
   },
 })
 

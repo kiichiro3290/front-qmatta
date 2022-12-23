@@ -18,6 +18,7 @@ export const QmaPage: React.FC = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
   const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
+
   // メッセージの送信履歴
   const [messageHistory, setMessageHistory] = useState<MessageHistory[]>([])
   // 入力したメッセージの受け皿
