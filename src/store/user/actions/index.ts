@@ -1,11 +1,13 @@
-import { getCommunityList } from '~/api/client/back/user'
+import { getCommunityList } from '~/api/client/back/community'
+import { getUserInfo } from '~/api/client/back/user'
 
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-// ログイン成功時に走る関数
+// 初回ログイン時にユーザの情報を取得
 export const fetchUserDataState = createAsyncThunk(
   'user/fetchUserDataState',
-  (userData: UserData) => {
+  async () => {
+    const userData = await getUserInfo()
     return userData
   }
 )
@@ -13,8 +15,10 @@ export const fetchUserDataState = createAsyncThunk(
 // communityList を取得
 export const fetchCommunityList = createAsyncThunk(
   'user/fetchCommunityList',
-  async (userId: string) => {
-    const data = await getCommunityList(userId)
-    return data
+  async () => {
+    const data = await getCommunityList()
+    if (!data.error) {
+      return data.communities
+    }
   }
 )

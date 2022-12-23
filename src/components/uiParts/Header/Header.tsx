@@ -22,7 +22,6 @@ import { useSelector } from 'react-redux'
 
 export const Header: React.FC = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
-  const [openDialog, setOpenDialog] = useState(false)
   const theme = useSelector(selectTheme)
   // reduxで管理しているstate
   const communityList = useSelector(selectCommunityList)
@@ -39,9 +38,14 @@ export const Header: React.FC = () => {
     setIsShowSideBar(false)
   }, [])
 
-  const handleCloseDialog = useCallback(() => {
-    setOpenDialog(false)
-  }, [])
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const open = Boolean(anchorEl)
+  const handleAccountMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleCloseAccountMenu = () => {
+    setAnchorEl(null)
+  }
 
   return (
     <AppBar
@@ -69,7 +73,6 @@ export const Header: React.FC = () => {
           <IconButton
             aria-label='menu'
             color='inherit'
-            edge='start'
             size='large'
             sx={{
               backgroundColor: theme.palette.background.paper,
@@ -110,14 +113,15 @@ export const Header: React.FC = () => {
             justifyContent: 'center',
             display: 'flex',
           }}
-          onClick={() => setOpenDialog(true)}
+          onClick={handleAccountMenu}
         >
           <Avatar />
         </Box>
 
         <AccountMenu
-          openDialog={openDialog}
-          onCloseDialog={handleCloseDialog}
+          anchorEl={anchorEl as HTMLButtonElement}
+          openAccountMenu={open}
+          onCloseAccountMenu={handleCloseAccountMenu}
         />
       </Box>
     </AppBar>
@@ -125,22 +129,25 @@ export const Header: React.FC = () => {
 }
 
 type AccountMenuProps = {
-  openDialog: boolean
-  onCloseDialog: () => void
+  openAccountMenu: boolean
+  onCloseAccountMenu: () => void
+  anchorEl: HTMLButtonElement | null
 }
 
 export const AccountMenu: React.FC<AccountMenuProps> = ({
-  openDialog,
-  onCloseDialog,
+  openAccountMenu,
+  onCloseAccountMenu,
+  anchorEl,
 }) => {
   return (
     <Menu
+      anchorEl={anchorEl}
       anchorOrigin={{
         horizontal: 'right',
         vertical: 'top',
       }}
-      open={openDialog}
-      onClose={onCloseDialog}
+      open={openAccountMenu}
+      onClose={onCloseAccountMenu}
     >
       <Typography sx={{ py: '12px', textAlign: 'center' }}>
         アカウント情報
@@ -163,6 +170,14 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
             </Typography>
           </Button>
         </Link>
+      </MenuItem>
+      <MenuItem>
+        {/**TODO:ログアウト機能 */}
+        <Button sx={{ color: 'text.primary' }} fullWidth>
+          <Typography color='text.primary' sx={{ mx: '12px' }}>
+            ログアウト
+          </Typography>
+        </Button>
       </MenuItem>
     </Menu>
   )

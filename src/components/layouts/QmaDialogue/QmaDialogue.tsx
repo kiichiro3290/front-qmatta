@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 export type QmaDialogueProps = {
   dialogues: string[]
-  messageHistory: MessageHistory
+  messageHistory: MessageHistory[]
 }
 
 export const QmaDialogue: React.FC<QmaDialogueProps> = ({
@@ -32,10 +32,10 @@ export const QmaDialogue: React.FC<QmaDialogueProps> = ({
         過去の会話
       </Typography>
 
-      {messageHistory.messages &&
-        messageHistory.messages.map((dialogue, index) => (
-          <Box key={index} component='div'>
-            <DialogueTextContainer dialogue={dialogue} />
+      {messageHistory &&
+        messageHistory.map((history, id) => (
+          <Box key={id} component='div'>
+            <DialogueTextContainer dialogue={history.text} />
             <Typography
               sx={{
                 display: 'flex',
@@ -43,9 +43,7 @@ export const QmaDialogue: React.FC<QmaDialogueProps> = ({
               }}
               variant='body2'
             >
-              {messageHistory.dates[index]
-                .toLocaleTimeString('ja-JP')
-                .toString()}
+              {new Date(history.date).toLocaleTimeString('ja-JP').toString()}
             </Typography>
           </Box>
         ))}

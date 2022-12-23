@@ -1,29 +1,25 @@
 import { QmaPagePresenter } from './presenter'
 
-import { postQmaMessage, fetchQmaMessage } from '~/api/client/back/bear'
-import { logInUser, getMessageHistory } from '~/api/client/back/user'
-import { meboApi } from '~/api/client/mebo'
+import {
+  postQmaMessage,
+  fetchQmaMessage,
+  getMessageHistory,
+} from '~/api/client/back/bear'
 import { AppDispatch } from '~/store'
-import { fetchCommunityList, fetchUserDataState } from '~/store/user/actions'
-import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
+import { fetchCommunityList } from '~/store/user/actions'
+import { selectIsLoggedIn } from '~/store/user/userSlice'
 
-import { useRouter } from 'next/router'
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export const QmaPage: React.FC = () => {
-  const router = useRouter()
   const dispatch: AppDispatch = useDispatch()
   // reduxで管理している状態
   const isLoggedIn = useSelector(selectIsLoggedIn)
-  const userId = useSelector(selectUserId)
 
   const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
   // メッセージの送信履歴
-  const [messageHistory, setMessageHistory] = useState<MessageHistory>({
-    messages: [],
-    dates: [],
-  })
+  const [messageHistory, setMessageHistory] = useState<MessageHistory[]>([])
   // 入力したメッセージの受け皿
   const [dialogue, setDialogue] = useState<string>('')
   // メッセージをクマに送信するたびに，配列に追加する
@@ -64,24 +60,35 @@ export const QmaPage: React.FC = () => {
             setDialogue('')
             // AI 思考時間
             setQmaMessage('考え中...')
-            if (isLoggedIn && userId) {
+            if (isLoggedIn) {
               try {
                 // バックエンドからクマのセリフを取得する
-                // const data = await postQmaMessage(userId, dialogue)
-                // AIによる返答を取得する
-                const data = await meboApi.getMeboMessage(userId, dialogue)
-                setQmaMessage(data)
+                // isChatGPT: true → AIによる返答を取得する
+                const res = await postQmaMessage(dialogue, true)
+                if (!res.error && res.response) {
+                  setQmaMessage(res.response)
+                } else {
+                  console.log(res.errorMessage)
+                }
               } catch (e) {
                 console.log(e)
                 setQmaMessage('')
                 // エラーが出た時は，適当なメッセージを返す
-                const data = await postQmaMessage(userId, dialogue)
-                setQmaMessage(data)
+                const res = await postQmaMessage(dialogue, false)
+                if (!res.error && res.response) {
+                  setQmaMessage(res.response)
+                } else {
+                  console.log(res.errorMessage)
+                }
               }
             } else {
               // ログインしていない時は，適当なメッセージを返す
-              const data = await fetchQmaMessage()
-              setQmaMessage(data)
+              const res = await fetchQmaMessage(dialogue, false)
+              if (!res.error && res.response) {
+                setQmaMessage(res.response)
+              } else {
+                console.log(res.errorMessage)
+              }
             }
           }
           // 画像を変更
@@ -100,34 +107,16 @@ export const QmaPage: React.FC = () => {
     []
   )
 
-  // 認証状態を確認する
-  useEffect(() => {
-    const f = async () => {
-      // localstrage
-      const email = localStorage.getItem('email')
-      const password = localStorage.getItem('password')
-      // メールアドレスとパスワードを認証する
-      if (email && password) {
-        const result = await logInUser(email, password)
-        if (result.result) {
-          localStorage.setItem('email', email)
-          localStorage.setItem('password', password)
-          dispatch(fetchUserDataState(result.user))
-          router.push('/')
-          return
-        }
-      }
-    }
-    f()
-  }, [])
-
   // メッセージの送信履歴を取得する
   useEffect(() => {
     const f = async () => {
-      if (userId) {
-        const data = await getMessageHistory(userId)
-        console.log(data)
-        setMessageHistory(data)
+      if (isLoggedIn) {
+        const res = await getMessageHistory()
+        if (!res.error && res.histories) {
+          setMessageHistory(res.histories)
+        } else {
+          console.log(res.errorMessage)
+        }
       }
     }
     f()
@@ -136,8 +125,8 @@ export const QmaPage: React.FC = () => {
   // コミュニティの一覧を取得する
   useEffect(() => {
     const f = async () => {
-      if (userId) {
-        dispatch(fetchCommunityList(userId))
+      if (isLoggedIn) {
+        dispatch(fetchCommunityList())
       }
     }
     f()

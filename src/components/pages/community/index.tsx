@@ -1,52 +1,35 @@
 import { CommunityPagePresenter } from './presenter'
 
-import { getMockQuestionList } from '~/api/client/back/question'
-import { getMessageHistory } from '~/api/client/back/user'
-import { selectIsLoggedIn, selectUserId } from '~/store/user/userSlice'
+import { getCommunityUsers } from '~/api/client/back/community'
 
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 
 export const CommunityPage: React.FC = () => {
   const router = useRouter()
-  const communityId = router.query.toString()
-
-  // reduxで管理している状態
-  const isLoggedIn = useSelector(selectIsLoggedIn)
-  const userId = useSelector(selectUserId)
-
-  const [questions, setQuestions] = useState<Question[]>([])
-  const [messageHistory, setMessageHistory] = useState<MessageHistory>({
-    messages: [],
-    dates: [],
-  })
+  const [communityId, setCommunityId] = useState<string>('')
+  const [communityUsers, setCommunityusers] = useState<CommunityUser[]>([])
 
   useEffect(() => {
-    // Questionsってリアルタイムに変化するから，更新されるたびにバックエンドから取得しないといけない?
-    const f = async () => {
-      const questions = getMockQuestionList()
-      setQuestions(questions)
-    }
-    f()
-  }, [])
+    if (!communityId) return
 
-  // メッセージの送信履歴を取得する
-  useEffect(() => {
-    const f = async () => {
-      if (userId) {
-        const data = await getMessageHistory(userId)
-        console.log(data)
-        setMessageHistory(data)
+    const f = async (communityId: string) => {
+      const res = await getCommunityUsers(communityId)
+      if (!res.error && res.users) {
+        setCommunityusers(res.users)
+      } else {
+        console.log(res.errorMessage)
       }
     }
-    f()
-  }, [isLoggedIn])
+    f(communityId)
+  }, [communityId])
+
+  useEffect(() => {
+    console.log(router.query)
+    setCommunityId(router.query.communityId as string)
+  }, [router.query])
+
   return (
-    <CommunityPagePresenter
-      communityId={communityId}
-      messageHistory={messageHistory}
-      questions={questions}
-    />
+    <CommunityPagePresenter communityId={communityId} users={communityUsers} />
   )
 }

@@ -1,25 +1,101 @@
-// クマのメッセージを取得する（簡易版）: GET
+import qmattaClient from '..'
 
-import { qmattaClient } from '..'
-
-// () => message: string
-export const fetchQmaMessage = async () => {
-  const data = await qmattaClient()
-    .get('bear')
-    .then((res) => res.data.response)
-  return data
+/**
+ * クマのメッセージを取得する（簡易版のためユーザ登録なしで叩ける）: GET
+ * @param text
+ * @param isChatGPT
+ * @returns { response: string }
+ */
+type FetchQmaMessageType = {
+  error: boolean
+  errorMessage?: string
+  response?: string
+}
+export const fetchQmaMessage = async (
+  text: string,
+  isChatGPT: boolean
+): Promise<FetchQmaMessageType> => {
+  const body: UserMessageToBear = { text, bot: isChatGPT }
+  const res = await qmattaClient()
+    .post('bear-notlogin', body)
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        response: res.data.response,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
 
-// クマのメッセージを取得する & メッセージをDBに保存: POST
-// (userID: string, message: string) => message: string
+/**
+ * クマのメッセージを取得する & メッセージをDBに保存: POST
+ * @param text
+ * @param isChatGPT
+ * @returns { response: string }
+ */
+type PostQmaMessageType = {
+  error: boolean
+  errorMessage?: string
+  response?: string
+}
 export const postQmaMessage = async (
-  userId: string,
-  message: string
-): Promise<string> => {
-  const data: UserMessageToBear = { message }
-  const result = await qmattaClient()
-    .post(`/bear/${userId}`, data)
-    .then((res) => res.data.response)
-    .catch((e) => console.log(e))
-  return result
+  text: string,
+  isChatGPT: boolean
+): Promise<PostQmaMessageType> => {
+  const body: UserMessageToBear = { text, bot: isChatGPT }
+  const res = await qmattaClient()
+    .post('bear', body)
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        response: res.data.response,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
+}
+
+/**
+ * メッセージの送信履歴を取得する：GET
+ * @returns { messageHistory: MessageHistory[] }
+ */
+type GetMessageHistoryType = {
+  error: boolean
+  errorMessage?: string
+  histories?: MessageHistory[]
+}
+export const getMessageHistory = async (): Promise<GetMessageHistoryType> => {
+  const res = await qmattaClient()
+    .get('bear/history')
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        histories: res.data.histories,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+
+  return res
 }

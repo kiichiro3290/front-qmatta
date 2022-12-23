@@ -24,8 +24,8 @@ type UserData = {
 }
 
 type MessageHistory = {
-  messages: string[]
-  dates: Date[]
+  text: string
+  date: Date
 }
 
 type ResMessageHistory = {

@@ -10,6 +10,7 @@ export const BearImgContainer: React.FC<BearImgContainerProps> = ({
 }) => {
   return (
     <Box
+      component='div'
       sx={{
         m: '0 auto',
         mt: { sm: '0px', xs: '96px' },

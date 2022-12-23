@@ -4,14 +4,14 @@ import { Ref, Suspense, useEffect } from 'react'
 import { Group } from 'three'
 
 const Scene = () => {
-  const fbx = useFBX('/StuffedBear_withMotion.fbx')
+  const fbx = useFBX('/StuffedBear.fbx')
   const { ref, actions, names } = useAnimations(fbx.animations)
 
   // 手を振るアクションが 1 に格納されている
   useEffect(() => {
-    actions[names[1]]?.reset().fadeIn(0.5).play()
+    actions[names[3]]?.reset().fadeIn(1).play()
 
-    return () => void actions[names[1]]?.fadeOut(0.5)
+    return () => void actions[names[3]]?.fadeOut(1)
   }, [actions, names])
 
   return (
@@ -40,8 +40,8 @@ export const Qma3D: React.FC = () => {
   return (
     <Canvas camera={{ position: [0, 200, 900], fov: 50 }}>
       <Suspense fallback={null}>
-        <ambientLight intensity={4} />
-        <directionalLight color='white' intensity={4} position={[0, 2, 1]} />
+        <ambientLight intensity={12} />
+        <directionalLight color='white' intensity={10} position={[0, 2, 1]} />
         <spotLight color='white' intensity={4} position={[0, 4, -1]} />
         <Scene />
         <OrbitControls />

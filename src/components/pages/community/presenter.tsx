@@ -1,42 +1,30 @@
-import { MenuTabs } from '~/components/layouts/MenuTabs/Menutabs'
-import { InputQuestionPaper } from '~/components/papers/InputQuestionPaper'
 import { selectTheme } from '~/store/theme/themeSlice'
 
-import { Box, Typography } from '@mui/material'
+import { Box, Container, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 export type CommunityPagePresenterProps = {
-  communityId: string
-  questions: Question[]
-  messageHistory: MessageHistory
+  communityId?: string
+  users: CommunityUser[]
 }
 
 export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
-  questions,
-  messageHistory,
+  users,
 }) => {
   const theme = useSelector(selectTheme)
-  return (
-    <Box
-      sx={{
-        display: 'grid',
-        gap: theme.spacing(4),
-        gridTemplateColumns: '1fr 1fr',
-        height: '100vh',
-        p: theme.spacing(4),
-      }}
-    >
-      <Box sx={{ height: '100%' }}>
-        <MenuTabs messageHistory={messageHistory} questions={questions} />
-      </Box>
+  // TODO: レスポンシブ対応
 
-      <Box sx={{ height: '100%', width: '100%' }}>
-        <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
-          質問する
-        </Typography>
-        {/** マークダウン方式にしたいな */}
-        <InputQuestionPaper />
+  return (
+    <>
+      <Box component='div' sx={{ mt: theme.spacing(13), ml: theme.spacing(2) }}>
+        <Container maxWidth='lg'>
+          <Typography sx={{ mt: theme.spacing(2) }} variant='h5'>
+            HOME TODO: コミュニティユーザの一覧
+          </Typography>
+          {users &&
+            users.map((user, id) => <Box key={id} component='div'></Box>)}
+        </Container>
       </Box>
-    </Box>
+    </>
   )
 }
