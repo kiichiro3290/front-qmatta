@@ -2,7 +2,7 @@ import qmattaBoard from 'public/qmatta-board.png'
 import { QmaDialogueDrawer } from '~/components/layouts/QmaDialogueDrawer/QmaDialogueDrawer'
 import { QmaFooter } from '~/components/layouts/QmaFooter/QmaFooter'
 import { BearChatBalloon } from '~/components/uiParts/BearChatBalloon/BearChatBalloon'
-import { Qma3D } from '~/components/uiParts/Qma3D/Qma3D'
+import { ActionType, Qma3D } from '~/components/uiParts/Qma3D/Qma3D'
 import { selectTheme } from '~/store/theme/themeSlice'
 
 import { ChevronLeftRounded } from '@mui/icons-material'
@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux'
 
 export type QmaPagePresenterProps = {
   qmaMessage: string
-  isShowChatBaloon: boolean
+  moyaBuf: string[]
   onKeydown: (e: string) => void
   startComposition: () => void
   endComposition: () => void
@@ -29,19 +29,19 @@ export type QmaPagePresenterProps = {
   ) => void
   dialogue: string
   chatHistory: ChatHistory
-  isOpenBearMouth?: boolean
+  actionType: ActionType
 }
 
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   dialogue,
+  moyaBuf,
   endComposition,
-  // isOpenBearMouth,
-  isShowChatBaloon,
   chatHistory,
   onChangeDialogue,
   onKeydown,
   qmaMessage,
   startComposition,
+  actionType,
 }) => {
   const [isShowDialogue, setIsShowDialogue] = useState<boolean>(false)
   const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(
@@ -75,6 +75,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         }}
       >
         <Image alt='qmatta' height={100} src={qmattaBoard} width={320} />
+        <Typography>{moyaBuf.length}</Typography>
       </Box>
 
       <Drawer anchor='right' open={isShowDialogue} variant='persistent'>
@@ -101,11 +102,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         <QmaDialogueDrawer chatHistory={chatHistory} />
       </Drawer>
 
-      {isShowChatBaloon ? (
-        <BearChatBalloon qmaMessage={qmaMessage} />
-      ) : (
-        <Fragment />
-      )}
+      <BearChatBalloon qmaMessage={qmaMessage} />
 
       <Container
         sx={{
@@ -117,7 +114,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
           height: '70vh',
         }}
       >
-        <Qma3D />
+        <Qma3D actionType={actionType} />
       </Container>
 
       <QmaFooter

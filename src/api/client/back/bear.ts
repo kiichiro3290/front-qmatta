@@ -1,27 +1,128 @@
 import qmattaClient from '..'
 
 /**
- * クマのメッセージを取得する（簡易版のためユーザ登録なしで叩ける）: GET
+ * クマのメッセージを取得する：ログインしてないバージョン:POST
+ * chatGPTでモヤモヤが溜まったら使う
  * @param text
  * @param isChatGPT
  * @returns { response: string }
  */
-type FetchQmaMessageType = {
+type GetQmaReplyNotLoginType = {
   error: boolean
   errorMessage?: string
   response?: string
 }
-export const fetchQmaMessage = async (
-  text: string,
-  isChatGPT: boolean
-): Promise<FetchQmaMessageType> => {
-  const body: UserMessageToBear = { text, bot: isChatGPT }
+export const getQmaReplyNotLogin = async (
+  text: string
+): Promise<GetQmaReplyNotLoginType> => {
+  const body = { text }
   const res = await qmattaClient()
     .post('bear-notlogin', body)
     .then((res) => {
       const returnVal = {
         error: false,
         response: res.data.response,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
+}
+
+/**
+ * クマのメッセージを取得する & モヤモヤを溜める:ログインしてないバージョン：POST
+ * ユーザのモヤモヤを溜める
+ * @param text
+ * @returns { negPharese: string, response: string }
+ */
+type GetQmaReplyAndMoyaNotLoginType = {
+  error: boolean
+  errorMessage?: string
+  response?: string
+  negPhrase?: string[]
+}
+export const getQmaReplyAndMoyaNotLogin = async (
+  text: string
+): Promise<GetQmaReplyAndMoyaNotLoginType> => {
+  const body = { text }
+  const res = await qmattaClient()
+    .post('bear-notlogin/sentiment', body)
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        response: res.data.response,
+        negPhrase: res.data.negPharese,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
+}
+
+/**
+ * クマのメッセージを取得する：ログインバージョン：POST
+ * chatGPTの返答で，モヤモヤが溜まったら使う
+ */
+type GetQmaReplyType = {
+  error: boolean
+  errorMessage?: string
+  response?: string
+}
+export const getQmaReply = async (text: string): Promise<GetQmaReplyType> => {
+  const body = { text }
+  const res = await qmattaClient()
+    .post('bear', body)
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        response: res.data.response,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
+}
+
+/**
+ * クマのメッセージ & モヤモヤを取得する：ログインバージョン:POST
+ * ユーザのモヤモヤを溜める
+ */
+type GetQmaReplyAndMoyaType = {
+  error: boolean
+  errorMessage?: string
+  response?: string
+  negPhrase?: string[]
+}
+export const getQmaReplyAndMoya = async (
+  text: string
+): Promise<GetQmaReplyAndMoyaType> => {
+  const body = { text }
+  const res = await qmattaClient()
+    .post('bear/sentiment', body)
+    .then((res) => {
+      console.log('namares', res)
+      const returnVal = {
+        error: false,
+        response: res.data.response,
+        negPhrase: res.data.negPhrase,
       }
       return returnVal
     })

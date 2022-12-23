@@ -1,10 +1,13 @@
 import { QmaPagePresenter } from './presenter'
 
 import {
-  postQmaMessage,
-  fetchQmaMessage,
   getChatHistory,
+  getQmaReply,
+  getQmaReplyAndMoya,
+  getQmaReplyAndMoyaNotLogin,
+  getQmaReplyNotLogin,
 } from '~/api/client/back/bear'
+import { ActionType } from '~/components/uiParts/Qma3D/Qma3D'
 import { AppDispatch } from '~/store'
 import { messageHistoryState } from '~/store/bear/bearSlice'
 import { fetchCommunityList } from '~/store/user/actions'
@@ -18,25 +21,25 @@ export const QmaPage: React.FC = () => {
   // reduxで管理している状態
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
-  const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
-
   // メッセージの送信履歴
   const [chatHistory, setChatHistory] = useState<ChatHistory>([])
 
   // 入力したメッセージの受け皿
   const [dialogue, setDialogue] = useState<string>('')
-  // メッセージをクマに送信するたびに，配列に追加する＋reduxで管理する
-  // const [dialogues, setDialogues] = useState<string[]>([])
 
   // エンターキーを押下したか，かな字変換をしたかを制御するための State
   const [composing, setComposition] = useState(false)
   const startComposition = () => setComposition(true)
   const endComposition = () => setComposition(false)
+
+  const [actionType, setActionType] = useState<ActionType>('挨拶')
+
   // クマのセリフの受け皿
   const [qmaMessage, setQmaMessage] =
     useState<string>('困ったことがあったら教えて')
-  // クマの口が開いているかどうか
-  const [isOpenBearMouth, setIsOpenBearMouth] = useState<boolean>(false)
+
+  // モヤモヤバッファ
+  const [moyaBuf, setMoyaBuf] = useState<string[]>([])
 
   const onKeydown = async (key: string) => {
     switch (key) {
@@ -62,45 +65,66 @@ export const QmaPage: React.FC = () => {
             // reduxで管理
             dispatch(messageHistoryState({ message: currentMessage }))
 
-            // チャットバルーンを表示
-            setIsShowChatBaloon(true)
             // メッセージをリセット
             setDialogue('')
             // AI 思考時間
             setQmaMessage('考え中...')
+            setActionType('困惑')
+
+            // ログイン時は，ログイン時用のAPIを叩く
             if (isLoggedIn) {
-              try {
-                // バックエンドからクマのセリフを取得する
-                // isChatGPT: true → AIによる返答を取得する
-                const res = await postQmaMessage(dialogue, true)
+              // モヤモヤバッファに３つ以上溜まっていたら吐き出す
+              if (moyaBuf.length >= 3) {
+                console.log('3つになった')
+                const res = await getQmaReply(moyaBuf.join(' '))
+                setMoyaBuf([])
                 if (!res.error && res.response) {
                   setQmaMessage(res.response)
                 } else {
                   console.log(res.errorMessage)
                 }
-              } catch (e) {
-                console.log(e)
-                setQmaMessage('')
-                // エラーが出た時は，適当なメッセージを返す
-                const res = await postQmaMessage(dialogue, false)
+              } else {
+                // バックエンドからクマのセリフを取得する
+                const res = await getQmaReplyAndMoya(dialogue)
+                console.log('koko', res)
                 if (!res.error && res.response) {
                   setQmaMessage(res.response)
+                  if (res.negPhrase) {
+                    // モヤモヤバッファに追加
+                    const current = moyaBuf
+                    setMoyaBuf(current.concat(res.negPhrase))
+                  }
                 } else {
                   console.log(res.errorMessage)
                 }
               }
             } else {
-              // ログインしていない時は，適当なメッセージを返す
-              const res = await fetchQmaMessage(dialogue, false)
-              if (!res.error && res.response) {
-                setQmaMessage(res.response)
+              // モヤモヤバッファに３つ以上溜まっていたら吐き出す
+              if (moyaBuf.length >= 3) {
+                const res = await getQmaReplyNotLogin(moyaBuf.join(' '))
+                setMoyaBuf([])
+                if (!res.error && res.response) {
+                  setQmaMessage(res.response)
+                } else {
+                  console.log(res.errorMessage)
+                }
               } else {
-                console.log(res.errorMessage)
+                // ログインしていない時は,NotLoginバージョンを使う
+                const res = await getQmaReplyAndMoyaNotLogin(dialogue)
+                if (!res.error && res.response && res.negPhrase) {
+                  setQmaMessage(res.response)
+                  if (res.negPhrase) {
+                    // モヤモヤバッファに追加
+                    const current = moyaBuf
+                    setMoyaBuf(current.concat(res.negPhrase))
+                  }
+                } else {
+                  console.log(res.errorMessage)
+                }
               }
             }
           }
-          // 画像を変更
-          setIsOpenBearMouth((isOpen) => !isOpen)
+          setActionType('頷き')
         }
         break
     }
@@ -109,7 +133,8 @@ export const QmaPage: React.FC = () => {
   // 文字を入力したとき
   const onChangeDialogue = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setIsShowChatBaloon(false)
+      // setIsShowChatBaloon(false)
+      console.log(moyaBuf.length)
       setDialogue(e.target.value)
     },
     []
@@ -142,11 +167,11 @@ export const QmaPage: React.FC = () => {
 
   return (
     <QmaPagePresenter
+      actionType={actionType}
       chatHistory={chatHistory}
       dialogue={dialogue}
       endComposition={endComposition}
-      isOpenBearMouth={isOpenBearMouth}
-      isShowChatBaloon={isShowChatBaloon}
+      moyaBuf={moyaBuf}
       qmaMessage={qmaMessage}
       startComposition={startComposition}
       onChangeDialogue={onChangeDialogue}
