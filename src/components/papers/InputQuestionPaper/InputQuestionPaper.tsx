@@ -153,7 +153,7 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
                 fullWidth
                 multiple
                 onChange={(event, item) => {
-                  const categoryNames = item.map((i) => i.label)
+                  const categoryNames = item.map((i) => i.categoryId)
                   setValue('category', categoryNames)
                 }}
               />

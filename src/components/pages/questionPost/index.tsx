@@ -62,14 +62,19 @@ export const QuestionPostPage: React.FC = () => {
     f()
   }, [])
 
-  // 選択できるカテゴリーの一覧を取得する？？
+  // 選択できるカテゴリーの一覧を取得する
   useEffect(() => {
     const f = async () => {
-      const categoryList = await getCategoryList()
-      setCategoryList(categoryList)
+      const res = await getCategoryList()
+      if (!res.error && res.categoryList) {
+        setCategoryList(res.categoryList)
+      } else {
+        console.log(res.errorMessage)
+      }
     }
     f()
   }, [])
+
   return (
     <QuestionPostPagePresenter
       categoryList={categoryList}

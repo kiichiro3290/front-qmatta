@@ -204,14 +204,39 @@ export const getStatusList = async (): Promise<GetStatusListType> => {
   return res
 }
 
-export const getCategoryList = async () => {
-  const mockCategoryList = getMockCategoryList()
-  return mockCategoryList
-
-  // APIが実装されたら
+/**
+ * 質問投稿時に設定できるカテゴリーを取得する
+ * @returns
+ */
+type GetCategoryListType = {
+  error: boolean
+  errorMessage?: string
+  categoryList?: Category[]
+}
+export const getCategoryList = async (): Promise<GetCategoryListType> => {
   const res = await qmattaClient()
     .get('question/category')
-    .then((res) => res.data)
-    .catch((e) => e.code)
-  return res.category
+    .then((res) => {
+      const reuturnVal = {
+        error: false,
+        categoryList: res.data.categories.map(
+          (category: { categoryId: string; categoryName: string }) => {
+            const data = {
+              label: category.categoryName,
+              categoryId: category.categoryId,
+            }
+            return data
+          }
+        ),
+      }
+      return reuturnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
