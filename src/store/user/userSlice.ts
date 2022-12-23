@@ -25,9 +25,9 @@ export const userSlice = createSlice({
     builder.addCase(fetchUserDataState.fulfilled, (state, action) => {
       if (action.payload) {
         const userData = action.payload
-        const userName = userData.userName
-        const profile = userData.profile
-        const status = userData.status
+        const userName = userData.userName ?? '未登録'
+        const profile = userData.profile ?? ''
+        const status = userData.status ?? ''
         state.userName = userName
         state.profile = profile
         state.status = status
