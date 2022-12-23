@@ -12,7 +12,6 @@ export const CommunityMenu: React.FC = () => {
 
   const theme = useSelector(selectTheme)
   const routeCommunityHome = () => {
-    console.log(communityId)
     router.push(`/communities/${communityId}`)
   }
   const routeQuestionList = () => {
