@@ -1,4 +1,5 @@
 import { SideBar } from '../../layouts/SideBar/SideBar'
+import { AccountSettingModal } from '../Modal/AccountSettingModal/AccountSettingModal'
 
 import { selectTheme } from '~/store/theme/themeSlice'
 import { selectCommunityList } from '~/store/user/userSlice'
@@ -143,6 +144,44 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
   onCloseAccountMenu,
   anchorEl,
 }) => {
+  const theme = useSelector(selectTheme)
+  // アカウント設定モーダルの制御
+  const [openAccountSettingModal, setOpenAccountSettingModal] =
+    useState<boolean>(false)
+
+  const handleCloseAccountSettingModal = () => setOpenAccountSettingModal(false)
+  const onClickAccountSetting = () => setOpenAccountSettingModal(true)
+
+  // アカウント設定変更に必要な入力情報
+  const [userName, setUserName] = useState<string>('')
+  const [userIconImg, setUserIconImg] = useState<string>('')
+  const [preview, setPreview] = useState<string | ArrayBuffer>('')
+
+  // 画像のアップロード
+  const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files) {
+      const file = files[0]
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const result = e.target?.result
+        if (result) {
+          setPreview(result)
+          const data = result.toString().split(',')[1]
+          setUserIconImg(data)
+        }
+      }
+      reader.readAsDataURL(file)
+    } else {
+      setUserIconImg('')
+    }
+  }
+
+  // ユーザ情報の更新
+  const updateUserInfo = async () => {
+    // TODO: ユーザ名とアイコンの変更
+  }
+
   return (
     <Menu
       anchorEl={anchorEl}
@@ -158,31 +197,38 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
       </Typography>
       <Divider />
       <MenuItem>
-        <Link href='/account'>
-          <Button sx={{ color: 'text.primary' }} fullWidth>
-            <Typography color='text.primary' sx={{ mx: '12px' }}>
-              マイページ
-            </Typography>
-          </Button>
-        </Link>
+        <Button
+          sx={{ color: theme.palette.text.secondary }}
+          fullWidth
+          onClick={onClickAccountSetting}
+        >
+          <Typography sx={{ mx: '12px' }}>アカウント設定</Typography>
+        </Button>
       </MenuItem>
       <MenuItem>
         <Link href='/login'>
-          <Button sx={{ color: 'text.primary' }} fullWidth>
-            <Typography color='text.primary' sx={{ mx: '12px' }}>
-              ログイン
-            </Typography>
+          <Button sx={{ color: theme.palette.text.secondary }} fullWidth>
+            <Typography sx={{ mx: '12px' }}>ログイン</Typography>
           </Button>
         </Link>
       </MenuItem>
       <MenuItem>
         {/**TODO:ログアウト機能 */}
-        <Button sx={{ color: 'text.primary' }} fullWidth>
-          <Typography color='text.primary' sx={{ mx: '12px' }}>
-            ログアウト
-          </Typography>
+        <Button sx={{ color: theme.palette.text.secondary }} fullWidth>
+          <Typography sx={{ mx: '12px' }}>ログアウト</Typography>
         </Button>
       </MenuItem>
+
+      <AccountSettingModal
+        openAccountSettingModal={openAccountSettingModal}
+        preview={preview}
+        setUserName={setUserName}
+        updateUserInfo={updateUserInfo}
+        uploadImg={uploadImg}
+        userIconImg={userIconImg}
+        userName={userName}
+        onCloseAccuontSettingModal={handleCloseAccountSettingModal}
+      />
     </Menu>
   )
 }
