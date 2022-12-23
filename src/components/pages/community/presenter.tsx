@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 
 export type CommunityPagePresenterProps = {
   communityId?: string
-  users: CommunityUser[]
+  users: UserList
 }
 
 export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
@@ -22,7 +22,11 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
             HOME TODO: コミュニティユーザの一覧
           </Typography>
           {users &&
-            users.map((user, id) => <Box key={id} component='div'></Box>)}
+            users.map((user, id) => (
+              <Box key={id} component='div'>
+                <Typography>{user.userName}</Typography>
+              </Box>
+            ))}
         </Container>
       </Box>
     </>

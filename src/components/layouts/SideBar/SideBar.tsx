@@ -1,7 +1,11 @@
 import { createCommunity, registerCommunity } from '~/api/client/back/community'
+import { useCreateCommunityModal } from '~/components/hooks/useCreateCommunityModal'
+import { useRegisterCommunityModal } from '~/components/hooks/useRegisterCommunityModal'
+import { CreateCommunityModal } from '~/components/uiParts/Modal/CreateCommunityModal/CreateCommunityModal'
+import { RegisterCommunityModal } from '~/components/uiParts/Modal/RegisterCommunityModal/RegisterCommunityModal'
 import { selectTheme } from '~/store/theme/themeSlice'
 
-import { Add, Close, ImageOutlined, Upload } from '@mui/icons-material'
+import { Add, Close, ImageOutlined } from '@mui/icons-material'
 import {
   Avatar,
   Box,
@@ -13,8 +17,6 @@ import {
   Menu,
   MenuItem,
   MenuList,
-  Modal,
-  TextField,
   Typography,
 } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -33,73 +35,63 @@ export const SideBar: React.FC<SideBarProps> = ({
   const router = useRouter()
   const theme = useSelector(selectTheme)
 
+  // コミュニティ作成モーダルの制御
+  const {
+    openCreateCommunityModal,
+    setOpenCreateCommunityModal,
+    communityName,
+    setCommunityName,
+    iconImg,
+    preview,
+    uploadImg,
+    handleCloseCreateCommunityModal,
+  } = useCreateCommunityModal()
+
+  // コミュニティ登録モーダルの制御
+  const {
+    openRegisterCommunityModal,
+    handleCloseRegisterCommunityModal,
+    communityId,
+    setCommunityId,
+    setOpenRegisterCommunityModal,
+  } = useRegisterCommunityModal()
+
+  // ページ遷移
   const onClickQmaButton = useCallback(() => {
     router.push('/')
     closeSideBar()
   }, [])
 
   const onClickWorkspaceButton = useCallback((communityId: string) => {
-    router.push(`${communityId}`)
+    router.push(`/${communityId}`)
     closeSideBar()
   }, [])
 
+  // サイドバーのメニューを押した時に出てくるポップアップメニュ-の制御
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [openCommunityRegistorModal, setOpenCommunityRegistorModal] =
-    useState<boolean>(false)
-  const [openCommunityCreateModal, setOpenCommunityCreateModal] =
-    useState<boolean>(false)
-  const [communityId, setCommunityId] = useState<string>('')
-  const [communityName, setCommunityName] = useState<string>('')
-  const [iconImg, setIconImg] = useState<string>('')
-  const [preview, setPreview] = useState<string | ArrayBuffer>('')
-
   const open = Boolean(anchorEl)
-  const handleClickCommunityMenu = (event: React.MouseEvent<HTMLElement>) => {
+
+  const handleClickCommunityMenu = (event: React.MouseEvent<HTMLElement>) =>
     setAnchorEl(event.currentTarget)
+
+  const onClickCreateCommunityMenu = () => {
+    setAnchorEl(null)
+    setOpenCreateCommunityModal(true)
   }
+
+  const onClickRegisterCommunityMenu = () => {
+    setAnchorEl(null)
+    setOpenRegisterCommunityModal(true)
+  }
+
   const handleCloseCommunityMenu = () => {
     setAnchorEl(null)
   }
 
-  const handleCloseCommunityRegistorModal = () =>
-    setOpenCommunityRegistorModal(false)
-
-  const handleCloseCommunityCreateModal = () =>
-    setOpenCommunityCreateModal(false)
-
-  const onClickCreateCommunity = () => {
-    // closeSideBar()
-    setAnchorEl(null)
-    setOpenCommunityCreateModal(true)
-  }
-
-  const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (files) {
-      const file = files[0]
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        const result = e.target?.result
-        if (result) {
-          setPreview(result)
-          const data = result.toString().split(',')[1]
-          setIconImg(data)
-        }
-      }
-      reader.readAsDataURL(file)
-    } else {
-      setIconImg('')
-    }
-  }
-
-  const onClickRegisterCommunity = () => {
-    setAnchorEl(null)
-    setOpenCommunityRegistorModal(true)
-  }
-
+  // コミュニティの登録
   const onRegisterCommunity = async (communityId: string) => {
     const res = await registerCommunity(communityId)
-    setOpenCommunityRegistorModal(false)
+    setOpenRegisterCommunityModal(false)
     if (!res.error && res.communityName) {
       closeSideBar()
       location.reload()
@@ -108,10 +100,11 @@ export const SideBar: React.FC<SideBarProps> = ({
     }
   }
 
+  // コミュニティの新規作成
   const onCreateCommunity = async (communityName: string, icon: string) => {
     const res = await createCommunity(communityName, icon)
     console.log(res)
-    setOpenCommunityCreateModal(false)
+    setOpenCreateCommunityModal(false)
     closeSideBar()
   }
 
@@ -186,7 +179,7 @@ export const SideBar: React.FC<SideBarProps> = ({
 
         <MenuItem
           sx={{ my: theme.spacing(1) }}
-          onClick={(e) => handleClickCommunityMenu(e)}
+          onClick={handleClickCommunityMenu}
         >
           <Avatar>
             <Add />
@@ -202,130 +195,33 @@ export const SideBar: React.FC<SideBarProps> = ({
           open={open}
           onClose={handleCloseCommunityMenu}
         >
-          <MenuItem onClick={onClickRegisterCommunity}>
+          <MenuItem onClick={onClickRegisterCommunityMenu}>
             コミュニティに参加する
           </MenuItem>
-          <MenuItem onClick={onClickCreateCommunity}>
+          <MenuItem onClick={onClickCreateCommunityMenu}>
             コミュニティを新規作成する
           </MenuItem>
         </Menu>
       </MenuList>
 
-      <Modal
-        open={openCommunityRegistorModal}
-        sx={{ zIndex: theme.zIndex.modal + 1000 }}
-        onClose={handleCloseCommunityRegistorModal}
-      >
-        <Box
-          component='div'
-          sx={{
-            width: '360px',
-            backgroundColor: theme.palette.background.paper,
-            position: 'absolute',
-            textAlign: 'center',
-            padding: theme.spacing(6),
-            borderRadius: theme.spacing(0.5),
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <Typography
-            component='h2'
-            id='modal-modal-title'
-            sx={{ mb: theme.spacing(4) }}
-            variant='h6'
-          >
-            コミュニティに参加する
-          </Typography>
-          <TextField
-            label='コミュニティID'
-            value={communityId}
-            fullWidth
-            onChange={(e) => setCommunityId(e.target.value)}
-          />
-          <Button
-            sx={{ mt: theme.spacing(4) }}
-            variant='contained'
-            fullWidth
-            onClick={() => onRegisterCommunity(communityId)}
-          >
-            参加する
-          </Button>
-        </Box>
-      </Modal>
+      <RegisterCommunityModal
+        communityId={communityId}
+        openRegisterCommunityModal={openRegisterCommunityModal}
+        setCommunityId={setCommunityId}
+        onCloseRegisterCommunityModal={handleCloseRegisterCommunityModal}
+        onRegisterCommunity={onRegisterCommunity}
+      />
 
-      <Modal
-        open={openCommunityCreateModal}
-        sx={{ zIndex: theme.zIndex.modal + 1000 }}
-        onClose={handleCloseCommunityCreateModal}
-      >
-        <Box
-          component='div'
-          sx={{
-            width: '360px',
-            backgroundColor: theme.palette.background.paper,
-            position: 'absolute',
-            textAlign: 'center',
-            padding: theme.spacing(6),
-            borderRadius: theme.spacing(0.5),
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <Typography
-            component='h2'
-            id='modal-modal-title'
-            sx={{ mb: theme.spacing(4) }}
-            variant='h6'
-          >
-            コミュニティを新規登録する
-          </Typography>
-          <TextField
-            label='コミュニティ名'
-            sx={{ mb: theme.spacing(2) }}
-            value={communityName}
-            fullWidth
-            onChange={(e) => setCommunityName(e.target.value)}
-          />
-
-          {iconImg && (
-            <Box component='div' sx={{ textAlign: 'center' }}>
-              <img
-                alt='preview'
-                height='64px'
-                src={preview.toString()}
-                width='64px'
-              />
-            </Box>
-          )}
-          <Button
-            component='label'
-            sx={{ my: theme.spacing(2) }}
-            variant='outlined'
-            fullWidth
-          >
-            アイコン画像
-            <Upload />
-            <input
-              accept='image/*'
-              type='file'
-              hidden
-              onChange={(e) => uploadImg(e)}
-            />
-          </Button>
-
-          <Button
-            sx={{ mt: theme.spacing(4) }}
-            variant='contained'
-            fullWidth
-            onClick={() => onCreateCommunity(communityName, iconImg)}
-          >
-            作成する
-          </Button>
-        </Box>
-      </Modal>
+      <CreateCommunityModal
+        communityName={communityName}
+        iconImg={iconImg}
+        openCreateCommunityModal={openCreateCommunityModal}
+        preview={preview}
+        setCommunityName={setCommunityName}
+        uploadImg={uploadImg}
+        onCloseCreateCommunityModal={handleCloseCreateCommunityModal}
+        onCreateCommunity={onCreateCommunity}
+      />
     </Box>
   )
 }

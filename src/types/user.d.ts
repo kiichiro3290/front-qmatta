@@ -2,6 +2,7 @@ type UserRole = {
   permission: number
   rolename: string
 }
+
 type UserStatus = 'スッキリ' | '沼った'
 
 type UserData = {
@@ -37,3 +38,11 @@ type Message = {
 }
 
 type MessageHistory = Message[]
+
+type UserInfo = {
+  userName: string
+  status: string
+  icon: string
+}
+
+type UserList = UserInfo[]
