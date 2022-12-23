@@ -20,7 +20,11 @@ import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-export const Header: React.FC = () => {
+type HeaderProps = {
+  userIconSrc?: string
+}
+
+export const Header: React.FC<HeaderProps> = ({ userIconSrc }) => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
   const theme = useSelector(selectTheme)
   // reduxで管理しているstate
@@ -115,7 +119,7 @@ export const Header: React.FC = () => {
           }}
           onClick={handleAccountMenu}
         >
-          <Avatar />
+          <Avatar src={userIconSrc} />
         </Box>
 
         <AccountMenu

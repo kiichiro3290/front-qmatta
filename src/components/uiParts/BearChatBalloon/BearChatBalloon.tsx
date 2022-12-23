@@ -15,23 +15,14 @@ export const BearChatBalloon: React.FC<BearChatBalloonProps> = ({
       component='div'
       sx={[
         {
-          '&::before': {
-            border: '36px solid transparent',
-            borderLeft: `80px solid ${theme.palette.background.paper}`,
-            content: '""',
-            display: 'block',
-            left: { sm: '64%', xs: '24%' },
-            position: 'absolute',
-            top: '84%',
-            transform: 'rotate(50deg)',
-          },
           backgroundColor: theme.palette.background.paper,
-          borderRadius: '32px',
+          borderRadius: theme.spacing(3),
           display: 'block',
-          filter: `drop-shadow(0px 2px 2px ${theme.palette.grey[400]})`,
+          filter: `drop-shadow(0px 2px 2px ${theme.palette.background.default})`,
           height: '160px',
           p: theme.spacing(3),
           position: 'absolute',
+          overflow: 'scroll',
           top: {
             lg: theme.spacing(22),
             xs: theme.spacing(12),

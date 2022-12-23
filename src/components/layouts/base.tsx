@@ -2,6 +2,7 @@ import { CommunityMenu } from './community'
 
 import { Header } from '../uiParts/Header/Header'
 
+import { getUserIcon } from '~/api/client/back/user'
 import { AppDispatch, store } from '~/store'
 import { selectTheme, setMode } from '~/store/theme/themeSlice'
 import { fetchUserDataState } from '~/store/user/actions'
@@ -9,7 +10,7 @@ import { GetLayout } from '~/types/next'
 
 import { ThemeProvider } from '@emotion/react'
 import { Box, CssBaseline, useMediaQuery } from '@mui/material'
-import { FC, Fragment, ReactNode, useEffect } from 'react'
+import { FC, Fragment, ReactNode, useEffect, useState } from 'react'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 
 type BaseLayoutProps = {
@@ -37,6 +38,8 @@ const Layout: FC<BaseLayoutProps> = ({ children, isCommunity }) => {
   const dispatch: AppDispatch = useDispatch()
   const theme = useSelector(selectTheme)
 
+  const [userIconSrc, setUserIconSrc] = useState<string>('')
+
   // デバイスのモードを取得する
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
   useEffect(() => {
@@ -48,11 +51,24 @@ const Layout: FC<BaseLayoutProps> = ({ children, isCommunity }) => {
     dispatch(fetchUserDataState())
   }, [])
 
+  // ユーザのアイコン画像を取得する
+  useEffect(() => {
+    const f = async () => {
+      const res = await getUserIcon()
+      if (!res.error && res.userIcon) {
+        setUserIconSrc(res.userIcon)
+      } else {
+        console.log(res.errorMessage)
+      }
+    }
+    f()
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Fragment>
-        <Header />
+        <Header userIconSrc={userIconSrc} />
         {isCommunity && <CommunityMenu />}
         <Box component='div' sx={{ mt: theme.spacing(8) }} />
         {children}

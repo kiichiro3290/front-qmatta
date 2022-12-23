@@ -1,12 +1,16 @@
-import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/PasswordAuthForm'
+import { SnackbarInfoType } from '.'
 
-import { Alert, Box, Snackbar, Typography } from '@mui/material'
+import { PasswordAuthForm } from '~/components/uiParts/PasswordAuthForm/PasswordAuthForm'
+import { selectTheme } from '~/store/theme/themeSlice'
+
+import { Alert, Container, Snackbar, Typography } from '@mui/material'
 import { Fragment } from 'react'
+import { useSelector } from 'react-redux'
 
 export type SignUpPagePresenterProps = {
   onClickSignUpButton: (email: string, password: string) => void
   isOpenSnackbar: boolean
-  snackbarMessage: string
+  snackbarInfo: SnackbarInfoType
   handleCloseSnackbar: () => void
 }
 
@@ -14,21 +18,17 @@ export const SignUpPagePresenter: React.FC<SignUpPagePresenterProps> = ({
   handleCloseSnackbar,
   isOpenSnackbar,
   onClickSignUpButton,
-  snackbarMessage,
+  snackbarInfo,
 }) => {
+  const theme = useSelector(selectTheme)
   return (
     <Fragment>
-      <Box
-        component='div'
-        sx={{
-          maxWidth: '540px',
-          mt: '64px',
-          mx: 'auto',
-          p: '48px',
-          textAlign: 'center',
-        }}
-      >
-        <Typography component='h2' sx={{ my: '16px' }} variant='inherit'>
+      <Container maxWidth='sm' sx={{ pt: theme.spacing(12) }}>
+        <Typography
+          component='h2'
+          sx={{ textAlign: 'center', my: theme.spacing(2) }}
+          variant='inherit'
+        >
           アカウント新規登録
         </Typography>
         <Fragment>
@@ -39,14 +39,14 @@ export const SignUpPagePresenter: React.FC<SignUpPagePresenterProps> = ({
             sx={{ top: { md: 180, sm: 180, xs: 160 } }}
             onClose={handleCloseSnackbar}
           >
-            <Alert severity='error'>{snackbarMessage}</Alert>
+            <Alert severity={snackbarInfo.type}>{snackbarInfo.message}</Alert>
           </Snackbar>
         </Fragment>
         <PasswordAuthForm
           buttonText='新規登録する'
           onClickSubmitButton={onClickSignUpButton}
         />
-      </Box>
+      </Container>
     </Fragment>
   )
 }

@@ -6,12 +6,10 @@ import { Box } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 export type QmaDialogueDrawerProps = {
-  dialogues: string[]
-  messageHistory: MessageHistory[]
+  chatHistory: ChatHistory
 }
 export const QmaDialogueDrawer: React.FC<QmaDialogueDrawerProps> = ({
-  dialogues,
-  messageHistory,
+  chatHistory,
 }) => {
   const theme = useSelector(selectTheme)
   return (
@@ -19,7 +17,7 @@ export const QmaDialogueDrawer: React.FC<QmaDialogueDrawerProps> = ({
       component='div'
       sx={{ px: theme.spacing(2), width: { sm: '400px', xs: '280px' } }}
     >
-      <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
+      <QmaDialogue chatHistory={chatHistory} />
     </Box>
   )
 }

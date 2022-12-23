@@ -1,7 +1,7 @@
-import { registerCommunity } from '~/api/client/back/community'
+import { createCommunity, registerCommunity } from '~/api/client/back/community'
 import { selectTheme } from '~/store/theme/themeSlice'
 
-import { Add, Close, ImageOutlined } from '@mui/icons-material'
+import { Add, Close, ImageOutlined, Upload } from '@mui/icons-material'
 import {
   Avatar,
   Box,
@@ -39,7 +39,7 @@ export const SideBar: React.FC<SideBarProps> = ({
   }, [])
 
   const onClickWorkspaceButton = useCallback((communityId: string) => {
-    router.push(`/communities/${communityId}`)
+    router.push(`${communityId}`)
     closeSideBar()
   }, [])
 
@@ -50,7 +50,8 @@ export const SideBar: React.FC<SideBarProps> = ({
     useState<boolean>(false)
   const [communityId, setCommunityId] = useState<string>('')
   const [communityName, setCommunityName] = useState<string>('')
-  const [icon, setIcon] = useState<string>('')
+  const [iconImg, setIconImg] = useState<string>('')
+  const [preview, setPreview] = useState<string | ArrayBuffer>('')
 
   const open = Boolean(anchorEl)
   const handleClickCommunityMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -72,8 +73,26 @@ export const SideBar: React.FC<SideBarProps> = ({
     setOpenCommunityCreateModal(true)
   }
 
+  const uploadImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (files) {
+      const file = files[0]
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const result = e.target?.result
+        if (result) {
+          setPreview(result)
+          const data = result.toString().split(',')[1]
+          setIconImg(data)
+        }
+      }
+      reader.readAsDataURL(file)
+    } else {
+      setIconImg('')
+    }
+  }
+
   const onClickRegisterCommunity = () => {
-    // closeSideBar()
     setAnchorEl(null)
     setOpenCommunityRegistorModal(true)
   }
@@ -82,15 +101,18 @@ export const SideBar: React.FC<SideBarProps> = ({
     const res = await registerCommunity(communityId)
     setOpenCommunityRegistorModal(false)
     if (!res.error && res.communityName) {
-      console.log(res.communityName)
+      closeSideBar()
+      location.reload()
     } else {
       console.log(res.errorMessage)
     }
   }
 
   const onCreateCommunity = async (communityName: string, icon: string) => {
-    console.log(communityName, icon)
+    const res = await createCommunity(communityName, icon)
+    console.log(res)
     setOpenCommunityCreateModal(false)
+    closeSideBar()
   }
 
   return (
@@ -154,7 +176,7 @@ export const SideBar: React.FC<SideBarProps> = ({
               onClick={() => onClickWorkspaceButton(community.communityId)}
             >
               <ListItemAvatar>
-                <Avatar>
+                <Avatar src={'data:image/png;base64,' + community.icon}>
                   <ImageOutlined />
                 </Avatar>
               </ListItemAvatar>
@@ -267,58 +289,43 @@ export const SideBar: React.FC<SideBarProps> = ({
             fullWidth
             onChange={(e) => setCommunityName(e.target.value)}
           />
-          <TextField
-            label='アイコン'
-            value={icon}
+
+          {iconImg && (
+            <Box component='div' sx={{ textAlign: 'center' }}>
+              <img
+                alt='preview'
+                height='64px'
+                src={preview.toString()}
+                width='64px'
+              />
+            </Box>
+          )}
+          <Button
+            component='label'
+            sx={{ my: theme.spacing(2) }}
+            variant='outlined'
             fullWidth
-            onChange={(e) => setIcon(e.target.value)}
-          />
+          >
+            アイコン画像
+            <Upload />
+            <input
+              accept='image/*'
+              type='file'
+              hidden
+              onChange={(e) => uploadImg(e)}
+            />
+          </Button>
+
           <Button
             sx={{ mt: theme.spacing(4) }}
             variant='contained'
             fullWidth
-            onClick={() => onCreateCommunity(communityName, icon)}
+            onClick={() => onCreateCommunity(communityName, iconImg)}
           >
             作成する
           </Button>
         </Box>
       </Modal>
     </Box>
-  )
-}
-
-type CommunityMenuModalProps = {
-  openModal: boolean
-  handleModal: () => void
-}
-export const CommunityMenuModal: React.FC<CommunityMenuModalProps> = ({
-  openModal,
-  handleModal,
-}) => {
-  const theme = useSelector(selectTheme)
-  return (
-    <>
-      <Modal open={openModal} onClose={handleModal}>
-        <Box
-          component='div'
-          sx={{
-            width: '320px',
-            backgroundColor: theme.palette.background.paper,
-            position: 'absolute',
-            textAlign: 'center',
-            padding: theme.spacing(8),
-            borderRadius: theme.spacing(0.5),
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          <Typography component='h2' id='modal-modal-title' variant='h6'>
-            コミュニティのIDを入力
-          </Typography>
-          <Button>参加する</Button>
-        </Box>
-      </Modal>
-    </>
   )
 }

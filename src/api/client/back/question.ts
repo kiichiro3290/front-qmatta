@@ -61,9 +61,13 @@ export const getQuestionHistory = async (
   const res = await qmattaClient()
     .get(`question/answer/${questionId}`)
     .then((res) => {
+      console.log(res)
       const returnVal = {
         error: false,
-        getQuestionHistory: res.data.questionHistory,
+        questionHistory: {
+          question: res.data.question,
+          answers: res.data.answers,
+        },
       }
       return returnVal
     })
@@ -143,7 +147,7 @@ export const getPriorityList = async (): Promise<GetPriorityListType> => {
     .then((res) => {
       const returnVal = {
         error: false,
-        priorities: res.data.priorities.map(
+        priorityList: res.data.priorities.map(
           (priority: { priorityId: string; priorityName: string }) => {
             const data = {
               label: priority.priorityName,
@@ -181,7 +185,7 @@ export const getStatusList = async (): Promise<GetStatusListType> => {
     .then((res) => {
       const returnVal = {
         error: false,
-        statuses: res.data.statuses.map(
+        statusList: res.data.statuses.map(
           (status: { statusId: string; statusName: string }) => {
             const data = {
               label: status.statusName,
@@ -204,14 +208,39 @@ export const getStatusList = async (): Promise<GetStatusListType> => {
   return res
 }
 
-export const getCategoryList = async () => {
-  const mockCategoryList = getMockCategoryList()
-  return mockCategoryList
-
-  // APIが実装されたら
+/**
+ * 質問投稿時に設定できるカテゴリーを取得する
+ * @returns
+ */
+type GetCategoryListType = {
+  error: boolean
+  errorMessage?: string
+  categoryList?: Category[]
+}
+export const getCategoryList = async (): Promise<GetCategoryListType> => {
   const res = await qmattaClient()
     .get('question/category')
-    .then((res) => res.data)
-    .catch((e) => e.code)
-  return res.category
+    .then((res) => {
+      const reuturnVal = {
+        error: false,
+        categoryList: res.data.categories.map(
+          (category: { categoryId: string; categoryName: string }) => {
+            const data = {
+              label: category.categoryName,
+              categoryId: category.categoryId,
+            }
+            return data
+          }
+        ),
+      }
+      return reuturnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }

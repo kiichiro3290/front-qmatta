@@ -47,6 +47,7 @@ export const PasswordAuthForm: React.FC<PasswordAuthFormProps> = ({
     },
     resolver: yupResolver(signUpSchema),
   })
+
   const onSubmit: SubmitHandler<Inputs> = useCallback(async (data: Inputs) => {
     onClickSubmitButton(data.email, data.password)
   }, [])

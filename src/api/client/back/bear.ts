@@ -72,14 +72,14 @@ export const postQmaMessage = async (
 
 /**
  * メッセージの送信履歴を取得する：GET
- * @returns { messageHistory: MessageHistory[] }
+ * @returns { chatHistory: ChatHistory }
  */
-type GetMessageHistoryType = {
+type GetChatHistoryType = {
   error: boolean
   errorMessage?: string
-  histories?: MessageHistory[]
+  histories?: ChatHistory
 }
-export const getMessageHistory = async (): Promise<GetMessageHistoryType> => {
+export const getChatHistory = async (): Promise<GetChatHistoryType> => {
   const res = await qmattaClient()
     .get('bear/history')
     .then((res) => {

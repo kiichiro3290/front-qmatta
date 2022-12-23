@@ -6,13 +6,11 @@ import { Box } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 type QmaDialoguePaperProps = {
-  dialogues: string[]
-  messageHistory: MessageHistory[]
+  chatHistory: ChatHistory
 }
 
 export const QmaDialoguePaper: React.FC<QmaDialoguePaperProps> = ({
-  dialogues,
-  messageHistory,
+  chatHistory,
 }) => {
   const theme = useSelector(selectTheme)
   return (
@@ -30,7 +28,7 @@ export const QmaDialoguePaper: React.FC<QmaDialoguePaperProps> = ({
         component='div'
         sx={{ height: '95%', overflowY: 'scroll', px: theme.spacing(4) }}
       >
-        <QmaDialogue dialogues={dialogues} messageHistory={messageHistory} />
+        <QmaDialogue chatHistory={chatHistory} />
       </Box>
     </Box>
   )

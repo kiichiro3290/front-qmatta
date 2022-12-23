@@ -1,6 +1,6 @@
 import { QuestionPostPagePresenter } from './presenter'
 
-import { getMessageHistory } from '~/api/client/back/bear'
+import { getChatHistory } from '~/api/client/back/bear'
 import {
   getCategoryList,
   getPriorityList,
@@ -18,7 +18,7 @@ export const QuestionPostPage: React.FC = () => {
   const router = useRouter()
   const communityId = router.query.communityId
 
-  const [messageHistory, setMessageHistory] = useState<MessageHistory[]>([])
+  const [chatHistory, setChatHistory] = useState<ChatHistory>([])
   const [priorityList, setPriorityList] = useState<Priority[]>([])
   const [statusList, setStatusList] = useState<QuestionStatus[]>([])
   const [categoryList, setCategoryList] = useState<Category[]>([])
@@ -26,9 +26,9 @@ export const QuestionPostPage: React.FC = () => {
   // メッセージの送信履歴を取得する
   useEffect(() => {
     const f = async () => {
-      const res = await getMessageHistory()
+      const res = await getChatHistory()
       if (!res.error && res.histories) {
-        setMessageHistory(res.histories)
+        setChatHistory(res.histories)
       } else {
         console.log(res.errorMessage)
       }
@@ -55,24 +55,31 @@ export const QuestionPostPage: React.FC = () => {
       const res = await getStatusList()
       if (!res.error && res.statusList) {
         setStatusList(res.statusList)
+      } else {
+        console.log(res.errorMessage)
       }
     }
     f()
   }, [])
 
-  // 選択できるカテゴリーの一覧を取得する？？
+  // 選択できるカテゴリーの一覧を取得する
   useEffect(() => {
     const f = async () => {
-      const categoryList = await getCategoryList()
-      setCategoryList(categoryList)
+      const res = await getCategoryList()
+      if (!res.error && res.categoryList) {
+        setCategoryList(res.categoryList)
+      } else {
+        console.log(res.errorMessage)
+      }
     }
     f()
   }, [])
+
   return (
     <QuestionPostPagePresenter
       categoryList={categoryList}
+      chatHistory={chatHistory}
       communityId={communityId as string}
-      messageHistory={messageHistory}
       priorityList={priorityList}
       statusList={statusList}
     />

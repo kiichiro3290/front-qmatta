@@ -3,9 +3,10 @@ import { QmaPagePresenter } from './presenter'
 import {
   postQmaMessage,
   fetchQmaMessage,
-  getMessageHistory,
+  getChatHistory,
 } from '~/api/client/back/bear'
 import { AppDispatch } from '~/store'
+import { messageHistoryState } from '~/store/bear/bearSlice'
 import { fetchCommunityList } from '~/store/user/actions'
 import { selectIsLoggedIn } from '~/store/user/userSlice'
 
@@ -18,12 +19,14 @@ export const QmaPage: React.FC = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
   const [isShowChatBaloon, setIsShowChatBaloon] = useState<boolean>(true)
+
   // メッセージの送信履歴
-  const [messageHistory, setMessageHistory] = useState<MessageHistory[]>([])
+  const [chatHistory, setChatHistory] = useState<ChatHistory>([])
+
   // 入力したメッセージの受け皿
   const [dialogue, setDialogue] = useState<string>('')
-  // メッセージをクマに送信するたびに，配列に追加する
-  const [dialogues, setDialogues] = useState<string[]>([])
+  // メッセージをクマに送信するたびに，配列に追加する＋reduxで管理する
+  // const [dialogues, setDialogues] = useState<string[]>([])
 
   // エンターキーを押下したか，かな字変換をしたかを制御するための State
   const [composing, setComposition] = useState(false)
@@ -51,9 +54,14 @@ export const QmaPage: React.FC = () => {
           // 入力がある時
           else {
             //会話ログを更新
-            const newDialogues = dialogues
-            newDialogues.unshift(dialogue)
-            setDialogues(newDialogues)
+            const currentMessage: Message = {
+              text: dialogue,
+              // 現在の日時を保存できてる？
+              date: new Date(),
+            }
+            // reduxで管理
+            dispatch(messageHistoryState({ message: currentMessage }))
+
             // チャットバルーンを表示
             setIsShowChatBaloon(true)
             // メッセージをリセット
@@ -111,9 +119,9 @@ export const QmaPage: React.FC = () => {
   useEffect(() => {
     const f = async () => {
       if (isLoggedIn) {
-        const res = await getMessageHistory()
+        const res = await getChatHistory()
         if (!res.error && res.histories) {
-          setMessageHistory(res.histories)
+          setChatHistory(res.histories)
         } else {
           console.log(res.errorMessage)
         }
@@ -134,12 +142,11 @@ export const QmaPage: React.FC = () => {
 
   return (
     <QmaPagePresenter
+      chatHistory={chatHistory}
       dialogue={dialogue}
-      dialogues={dialogues}
       endComposition={endComposition}
       isOpenBearMouth={isOpenBearMouth}
       isShowChatBaloon={isShowChatBaloon}
-      messageHistory={messageHistory}
       qmaMessage={qmaMessage}
       startComposition={startComposition}
       onChangeDialogue={onChangeDialogue}

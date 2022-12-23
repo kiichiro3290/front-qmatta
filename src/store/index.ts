@@ -1,3 +1,4 @@
+import { bearReducer } from './bear/bearSlice'
 import { themeReducer } from './theme/themeSlice'
 import { userReducer } from './user/userSlice'
 
@@ -8,13 +9,14 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         // action 全体を無視
-        ignoredActions: [],
-        ignoredPaths: [],
+        ignoredActions: ['bear/messageHistoryState'],
+        ignoredPaths: ['bear.messageHistory.*.date'],
       },
     }),
   reducer: {
     user: userReducer,
     theme: themeReducer,
+    bear: bearReducer,
   },
 })
 

@@ -20,19 +20,20 @@ export const signUpUser = async (
     emailAddress,
     password,
   }
+
   const res = await qmattaClient()
     .post('signup', body)
     .then((res) => {
       if (res.data.result) {
         const returnVal = {
           error: false,
-          message: res.data.message,
+          message: res.data.msg,
         }
         return returnVal
       } else {
         const returnVal = {
           error: true,
-          errorMessage: res.data.message,
+          errorMessage: res.data.msg,
         }
         return returnVal
       }
@@ -167,15 +168,15 @@ export const updateUserStatus = async (
 type GetUserIconsType = {
   error: boolean
   errorMessage?: string
-  icon?: string
+  userIcon?: string
 }
-export const getUserIcons = async (): Promise<GetUserIconsType> => {
+export const getUserIcon = async (): Promise<GetUserIconsType> => {
   const res = await qmattaClient()
     .get('user/icon')
     .then((res) => {
       const returnVal = {
         error: false,
-        icon: res.data.icon,
+        userIcon: 'data:image/png;base64,' + res.data.userIcon,
       }
       return returnVal
     })
