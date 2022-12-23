@@ -42,8 +42,12 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
   })
 
   const handlePostQuestion = async (data: PostQuestion) => {
-    await postQuestion(data, communityId)
-
+    const res = await postQuestion(data, communityId)
+    if (!res.error && res.questionId) {
+      console.log(res.questionId)
+    } else {
+      console.log(res.errorMessage)
+    }
     // 投稿が成功したらリロード
     location.reload()
   }

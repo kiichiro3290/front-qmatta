@@ -19,15 +19,16 @@ export const LogInPage: React.FC = () => {
   const onClickLoginButton = useCallback(
     async (email: string, password: string) => {
       // メールアドレスとパスワードを認証する
-      const { code, token, expire } = await logInUser(email, password)
-      if (code == 200) {
-        localStorage.setItem('token', token)
-        localStorage.setItem('expire', expire)
+      const res = await logInUser(email, password)
+      if (!res.error && res.expire && res.token) {
+        localStorage.setItem('token', res.token)
+        localStorage.setItem('expire', res.expire)
         dispatch(fetchUserDataState())
 
         router.push('/')
         return
       } else {
+        console.log(res.errorMessage)
         setSnackbarMessage('ログインに失敗しました')
         setIsOpenSnackbar(true)
         return

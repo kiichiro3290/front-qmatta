@@ -81,10 +81,10 @@ export const SideBar: React.FC<SideBarProps> = ({
   const onRegisterCommunity = async (communityId: string) => {
     const res = await registerCommunity(communityId)
     setOpenCommunityRegistorModal(false)
-    if (res === 'error') {
-      console.log(res)
+    if (!res.error && res.communityName) {
+      console.log(res.communityName)
     } else {
-      console.log(res)
+      console.log(res.errorMessage)
     }
   }
 
