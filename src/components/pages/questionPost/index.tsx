@@ -55,6 +55,8 @@ export const QuestionPostPage: React.FC = () => {
       const res = await getStatusList()
       if (!res.error && res.statusList) {
         setStatusList(res.statusList)
+      } else {
+        console.log(res.errorMessage)
       }
     }
     f()
