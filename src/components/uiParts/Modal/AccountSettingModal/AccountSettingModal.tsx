@@ -82,7 +82,7 @@ export const AccountSettingModal: React.FC<AccountSettingModalProps> = ({
         fullWidth
         onClick={() => updateUserInfo(userName, userIconImg)}
       >
-        作成する
+        更新する
       </Button>
     </BasicModal>
   )

@@ -192,7 +192,9 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
       open={openAccountMenu}
       onClose={onCloseAccountMenu}
     >
-      <Typography sx={{ py: '12px', textAlign: 'center' }}>
+      <Typography
+        sx={{ py: theme.spacing(1), textAlign: 'center', fontWeight: 'bold' }}
+      >
         アカウント情報
       </Typography>
       <Divider />
@@ -202,20 +204,20 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
           fullWidth
           onClick={onClickAccountSetting}
         >
-          <Typography sx={{ mx: '12px' }}>アカウント設定</Typography>
+          <Typography>アカウント設定</Typography>
         </Button>
       </MenuItem>
       <MenuItem>
         <Link href='/login'>
           <Button sx={{ color: theme.palette.text.secondary }} fullWidth>
-            <Typography sx={{ mx: '12px' }}>ログイン</Typography>
+            <Typography>ログイン</Typography>
           </Button>
         </Link>
       </MenuItem>
       <MenuItem>
         {/**TODO:ログアウト機能 */}
         <Button sx={{ color: theme.palette.text.secondary }} fullWidth>
-          <Typography sx={{ mx: '12px' }}>ログアウト</Typography>
+          <Typography>ログアウト</Typography>
         </Button>
       </MenuItem>
 

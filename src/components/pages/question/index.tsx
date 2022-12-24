@@ -31,5 +31,10 @@ export const QuestionPage: React.FC = () => {
       setQuestionId(id as string)
     }
   }, [query])
-  return <QuestionPagePresenter questionHistory={questionHistory!} />
+  return (
+    <QuestionPagePresenter
+      questionHistory={questionHistory!}
+      questionId={questionId}
+    />
+  )
 }

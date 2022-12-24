@@ -20,8 +20,9 @@ type QuestionInfo = {
   questionId: string
   title: string
   category: string[]
-  questioner: string // 質問者のuserId??
-  numLikis: number // いいねの数
+  questioner: string
+  questionerIcon: string
+  numLikes: number
   priority: string
   status: string
   createdAt: string
@@ -52,19 +53,28 @@ type PostQuestion = {
   title: string
   detail: string
   image: string[]
-  priority: string
-  status: string
-  category: string[]
+  priorityId: string
+  statusId: string
+  categoryIdArray: string[]
+}
+
+type PostQuestionInput = {
+  title: string
+  detail: string
+  image: string[]
+  priority: { label: string; priorityId: string }
+  status: { label: string; statusId: string }
+  categoryArray: { label: string; categoryId: string }[]
 }
 
 type Answer = {
   answerId: string
   respondent: string // 回答者名
-  detail: string // 回答内容
-  image: striing[][] // TODO: バイト列
+  details: string // 回答内容
+  image: striing[]
   likes: {
     userName: string
-    icon: string[] // TODO: バイト列
+    icon: string[]
   }
   createdAt: string
 }

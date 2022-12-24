@@ -14,7 +14,6 @@ export const getCommunityList =
     const res = await qmattaClient()
       .get('community')
       .then((res) => {
-        console.log(res)
         const returnVal = {
           error: false,
           communityList: res.data.communities,
@@ -100,6 +99,26 @@ export const createCommunity = async (
   return res
 }
 
+type GetCommunityUsersQuery = {
+  communityId: string
+}
+export const communityApi = {
+  getCommunityUsers: async (
+    params: GetCommunityUsersQuery
+  ): Promise<UserList> => {
+    const res = await qmattaClient()
+      .get(`community/users/${params.communityId}`)
+      .then((res) => res.data)
+    return res
+  },
+  getCommunityList: async (): Promise<Community[]> => {
+    const res = await qmattaClient()
+      .get('community')
+      .then((res) => res.data)
+    return res.communities
+  },
+}
+
 /**
  * コミュニティに参加している全ユーザを取得
  * @param communityId
@@ -131,4 +150,74 @@ export const getCommunityUsers = async (
     })
 
   return res
+}
+
+/**
+ * 投稿されている質問にいいねをつける
+ * @param questionId
+ */
+type LikePostedQuestion = {
+  error: boolean
+  message: string
+}
+export const likePostedQuestion = async (
+  id: string,
+  isQuestion: boolean
+): Promise<LikePostedQuestion> => {
+  // 質問にいいねをつけるか，回答にいいねをつけるか
+  if (isQuestion) {
+    const body = { questionId: id }
+    const res = await qmattaClient()
+      .patch('question/answer/like', body)
+      .then((res) => {
+        if (res.data.code === 400) {
+          const returnVal = {
+            error: true,
+            message: res.data.message,
+          }
+          return returnVal
+        } else {
+          const returnVal = {
+            error: false,
+            message: res.data.message,
+          }
+          return returnVal
+        }
+      })
+      .catch((e) => {
+        const res = {
+          error: true,
+          message: e.code,
+        }
+        return res
+      })
+    return res
+  } else {
+    const body = { answerId: id }
+    const res = await qmattaClient()
+      .patch('question/answer/like', body)
+      .then((res) => {
+        if (res.data.code === 400) {
+          const returnVal = {
+            error: true,
+            message: res.data.message,
+          }
+          return returnVal
+        } else {
+          const returnVal = {
+            error: false,
+            message: res.data.message,
+          }
+          return returnVal
+        }
+      })
+      .catch((e) => {
+        const res = {
+          error: true,
+          message: e.code,
+        }
+        return res
+      })
+    return res
+  }
 }

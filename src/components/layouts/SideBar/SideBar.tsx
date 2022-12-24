@@ -1,4 +1,8 @@
-import { createCommunity, registerCommunity } from '~/api/client/back/community'
+import {
+  communityApi,
+  createCommunity,
+  registerCommunity,
+} from '~/api/client/back/community'
 import { useCreateCommunityModal } from '~/components/hooks/useCreateCommunityModal'
 import { useRegisterCommunityModal } from '~/components/hooks/useRegisterCommunityModal'
 import { CreateCommunityModal } from '~/components/uiParts/Modal/CreateCommunityModal/CreateCommunityModal'
@@ -19,21 +23,27 @@ import {
   MenuList,
   Typography,
 } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export type SideBarProps = {
-  communityList: Community[]
+  communityList?: Community[]
   closeSideBar: () => void
 }
 
 export const SideBar: React.FC<SideBarProps> = ({
-  communityList,
+  // communityList,
   closeSideBar,
 }) => {
   const router = useRouter()
   const theme = useSelector(selectTheme)
+
+  const { data } = useQuery(
+    ['community', 'list'],
+    communityApi.getCommunityList
+  )
 
   // コミュニティ作成モーダルの制御
   const {
@@ -162,8 +172,8 @@ export const SideBar: React.FC<SideBarProps> = ({
           <ListItemText primary={'Qmattaコミュニティ'} />
         </MenuItem>
 
-        {communityList &&
-          communityList.map((community) => (
+        {data &&
+          data.map((community) => (
             <MenuItem
               key={community.communityId}
               onClick={() => onClickWorkspaceButton(community.communityId)}

@@ -16,7 +16,7 @@ export const QuestionListPagePresenter: React.FC<
   return (
     <>
       {/** 質問一覧ページ */}
-      <Container maxWidth='md' sx={{ pt: theme.spacing(4) }}>
+      <Container maxWidth='md'>
         <Typography sx={{ mb: theme.spacing(6) }} variant='h5'>
           質問一覧
         </Typography>

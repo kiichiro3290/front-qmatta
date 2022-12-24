@@ -207,3 +207,13 @@ export const getChatHistory = async (): Promise<GetChatHistoryType> => {
 
   return res
 }
+
+// reactqueryに移行して，エラーハンドリングを任せる
+export const baerApi = {
+  getChatHistory: async (): Promise<ChatHistory> => {
+    const res = await qmattaClient()
+      .get('bear/history')
+      .then((res) => res.data.histories)
+    return res
+  },
+}

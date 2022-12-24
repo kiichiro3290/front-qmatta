@@ -2,6 +2,8 @@ import { CommunityMenu } from './community'
 
 import { Header } from '../uiParts/Header/Header'
 
+import { baerApi } from '~/api/client/back/bear'
+import { communityApi } from '~/api/client/back/community'
 import { getUserIcon } from '~/api/client/back/user'
 import { AppDispatch, store } from '~/store'
 import { selectTheme, setMode } from '~/store/theme/themeSlice'
@@ -10,6 +12,11 @@ import { GetLayout } from '~/types/next'
 
 import { ThemeProvider } from '@emotion/react'
 import { Box, CssBaseline, useMediaQuery } from '@mui/material'
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
 import { FC, Fragment, ReactNode, useEffect, useState } from 'react'
 import { Provider, useDispatch, useSelector } from 'react-redux'
 
@@ -27,10 +34,13 @@ export const getCommunityLayout: GetLayout = (page) => (
 )
 
 const BaseLayout: FC<BaseLayoutProps> = (props) => {
+  const queryClient = new QueryClient()
   return (
-    <Provider store={store}>
-      <Layout {...props} />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <Layout {...props} />
+      </Provider>
+    </QueryClientProvider>
   )
 }
 
@@ -63,6 +73,12 @@ const Layout: FC<BaseLayoutProps> = ({ children, isCommunity }) => {
     }
     f()
   }, [])
+
+  // コミュニティリストを取得する
+  useQuery(['community', 'list'], communityApi.getCommunityList)
+
+  // クマとの会話履歴を取得する
+  useQuery(['bear', 'chatHistory'], baerApi.getChatHistory)
 
   return (
     <ThemeProvider theme={theme}>
