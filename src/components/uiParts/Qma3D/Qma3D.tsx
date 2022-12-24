@@ -3,16 +3,46 @@ import { Canvas } from '@react-three/fiber'
 import { Ref, Suspense, useEffect } from 'react'
 import { Group } from 'three'
 
-const Scene = () => {
+type QmaSceneType = {
+  actionType: string
+}
+
+const getActionNum = (actionType: string): number => {
+  switch (actionType) {
+    case '静止':
+      return 0
+    case '困惑':
+      return 1
+    case '頷き':
+      return 2
+    case '挨拶':
+      return 3
+    case '跳躍':
+      return 4
+    case '説得':
+      return 5
+    default:
+      return 0
+  }
+}
+
+const QmaScene: React.FC<QmaSceneType> = ({ actionType }) => {
   const fbx = useFBX('/StuffedBear.fbx')
   const { ref, actions, names } = useAnimations(fbx.animations)
 
-  // 手を振るアクションが 1 に格納されている
-  useEffect(() => {
-    actions[names[3]]?.reset().fadeIn(1).play()
+  // 0: 静止: Action
+  // 1: 困惑：Ponder
+  // 2: 頷き：Nod
+  // 3: 挨拶：WaveHands
+  // 4: 跳躍：Inspiration
+  // 5: 説得：Explanation
 
-    return () => void actions[names[3]]?.fadeOut(1)
-  }, [actions, names])
+  const actionNum = getActionNum(actionType)
+  useEffect(() => {
+    actions[names[actionNum]]?.reset().fadeIn(1).play()
+
+    return () => void actions[names[actionNum]]?.fadeOut(1)
+  }, [actions, names, actionType])
 
   return (
     <>
@@ -25,7 +55,12 @@ const Scene = () => {
   )
 }
 
-export const Qma3D: React.FC = () => {
+export type ActionType = '静止' | '困惑' | '頷き' | '挨拶' | '跳躍' | '説得'
+
+type Qma3DProps = {
+  actionType: ActionType
+}
+export const Qma3D: React.FC<Qma3DProps> = ({ actionType }) => {
   // TODO: cameraの位置
   // TODO: shadower
   // TODO: canvasの大きさのレスポンシブ
@@ -43,7 +78,7 @@ export const Qma3D: React.FC = () => {
         <ambientLight intensity={12} />
         <directionalLight color='white' intensity={10} position={[0, 2, 1]} />
         <spotLight color='white' intensity={4} position={[0, 4, -1]} />
-        <Scene />
+        <QmaScene actionType={actionType} />
         <OrbitControls />
       </Suspense>
     </Canvas>

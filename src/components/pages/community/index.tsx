@@ -25,7 +25,6 @@ export const CommunityPage: React.FC = () => {
   }, [communityId])
 
   useEffect(() => {
-    console.log(router.query)
     setCommunityId(router.query.communityId as string)
   }, [router.query])
 
