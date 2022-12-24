@@ -5,10 +5,12 @@ import { useSelector } from 'react-redux'
 
 type DialogueTextContainerProps = {
   dialogue: string
+  isBear: boolean
 }
 
 export const DialogueTextContainer: React.FC<DialogueTextContainerProps> = ({
   dialogue,
+  isBear,
 }) => {
   const theme = useSelector(selectTheme)
   return (
@@ -23,7 +25,10 @@ export const DialogueTextContainer: React.FC<DialogueTextContainerProps> = ({
         width: '100%',
       }}
     >
-      <Typography variant='inherit'>{dialogue}</Typography>
+      <Typography variant='inherit'>
+        {isBear ? 'bear：' : 'you：'}
+        {dialogue}
+      </Typography>
     </Box>
   )
 }

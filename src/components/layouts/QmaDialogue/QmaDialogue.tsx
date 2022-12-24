@@ -19,7 +19,7 @@ export const QmaDialogue = () => {
       {messageHistory &&
         messageHistory.map((message, index) => (
           <Box key={index} component='div'>
-            <DialogueTextContainer dialogue={message.text} />
+            <DialogueTextContainer dialogue={message.text} isBear={false} />
           </Box>
         ))}
 
@@ -35,7 +35,8 @@ export const QmaDialogue = () => {
       {data &&
         data.map((chat, id) => (
           <Box key={id} component='div'>
-            <DialogueTextContainer dialogue={chat.text} />
+            <DialogueTextContainer dialogue={chat.text} isBear={false} />
+            <DialogueTextContainer dialogue={chat.response} isBear={true} />
             <Typography
               sx={{
                 display: 'flex',
