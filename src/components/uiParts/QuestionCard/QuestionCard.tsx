@@ -11,6 +11,7 @@ import {
   CardContent,
   Chip,
   IconButton,
+  Stack,
   Typography,
 } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -84,20 +85,25 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               </Box>
             )}
           </Box>
-          <Typography sx={{ my: theme.spacing(2) }} variant='h5'>
-            {questionTitle}
-          </Typography>
-          <Box
-            component='div'
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: theme.spacing(1),
-            }}
-          >
-            <Avatar src={'data:image/png;base64, ' + questionerIcon} />
-            <Typography>{userName}</Typography>
-          </Box>
+          <Stack spacing={2} sx={{ mt: theme.spacing(1) }}>
+            <Stack>
+              <Typography variant='h5'>{questionTitle}</Typography>
+              <Typography variant='caption'>
+                {new Date(createdAt).toLocaleDateString('ja-JP').toString()}
+              </Typography>
+            </Stack>
+            <Box
+              component='div'
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: theme.spacing(1),
+              }}
+            >
+              <Avatar src={'data:image/png;base64, ' + questionerIcon} />
+              <Typography>{userName}</Typography>
+            </Box>
+          </Stack>
 
           <CardActions
             sx={{
