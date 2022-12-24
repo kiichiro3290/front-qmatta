@@ -57,6 +57,7 @@ export const QuestionPagePresenter: React.FC<QuestionPagePresenterProps> = ({
                 質問者：{questionHistory.question.questioner}
               </Typography>
               <MDEditor
+                hideToolbar={true}
                 preview='preview'
                 value={questionHistory.question.details}
               />
