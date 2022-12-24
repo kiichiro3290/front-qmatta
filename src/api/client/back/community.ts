@@ -131,3 +131,73 @@ export const getCommunityUsers = async (
 
   return res
 }
+
+/**
+ * 投稿されている質問にいいねをつける
+ * @param questionId
+ */
+type LikePostedQuestion = {
+  error: boolean
+  message: string
+}
+export const likePostedQuestion = async (
+  id: string,
+  isQuestion: boolean
+): Promise<LikePostedQuestion> => {
+  // 質問にいいねをつけるか，回答にいいねをつけるか
+  if (isQuestion) {
+    const body = { questionId: id }
+    const res = await qmattaClient()
+      .patch('question/answer/like', body)
+      .then((res) => {
+        if (res.data.code === 400) {
+          const returnVal = {
+            error: true,
+            message: res.data.message,
+          }
+          return returnVal
+        } else {
+          const returnVal = {
+            error: false,
+            message: res.data.message,
+          }
+          return returnVal
+        }
+      })
+      .catch((e) => {
+        const res = {
+          error: true,
+          message: e.code,
+        }
+        return res
+      })
+    return res
+  } else {
+    const body = { answerId: id }
+    const res = await qmattaClient()
+      .patch('question/answer/like', body)
+      .then((res) => {
+        if (res.data.code === 400) {
+          const returnVal = {
+            error: true,
+            message: res.data.message,
+          }
+          return returnVal
+        } else {
+          const returnVal = {
+            error: false,
+            message: res.data.message,
+          }
+          return returnVal
+        }
+      })
+      .catch((e) => {
+        const res = {
+          error: true,
+          message: e.code,
+        }
+        return res
+      })
+    return res
+  }
+}

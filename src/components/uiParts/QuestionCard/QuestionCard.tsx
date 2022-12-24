@@ -1,7 +1,9 @@
+import { likePostedQuestion } from '~/api/client/back/community'
 import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Favorite } from '@mui/icons-material'
 import {
+  Avatar,
   Box,
   Card,
   CardActionArea,
@@ -23,6 +25,7 @@ type QuestionCardProps = {
   priority: string
   categories: string[]
   createdAt: string
+  questionerIcon: string
 }
 export const QuestionCard: React.FC<QuestionCardProps> = ({
   questionTitle,
@@ -31,7 +34,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   status,
   priority,
   categories,
-  // createdAt,
+  createdAt,
+  questionerIcon,
   questionId,
 }) => {
   const theme = useSelector(selectTheme)
@@ -40,6 +44,13 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   const routeQuestionPage = () => {
     router.push(`/${router.query.communityId}/questions/${questionId}`)
   }
+
+  // いいねをつけたり，外したりする
+  // TODO: 自分がいいねしたか，いいねしてないかを判断する機能
+  const onClickFabButton = async () => {
+    await likePostedQuestion(questionId, true)
+  }
+
   return (
     <Card sx={{ position: 'relative' }}>
       <CardActionArea
@@ -76,7 +87,17 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           <Typography sx={{ my: theme.spacing(2) }} variant='h5'>
             {questionTitle}
           </Typography>
-          <Typography>{userName}</Typography>
+          <Box
+            component='div'
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: theme.spacing(1),
+            }}
+          >
+            <Avatar src={'data:image/png;base64, ' + questionerIcon} />
+            <Typography>{userName}</Typography>
+          </Box>
 
           <CardActions
             sx={{
@@ -103,10 +124,11 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           justifyContent: 'flex-end',
           bottom: theme.spacing(1),
           right: theme.spacing(1.5),
-          gap: theme.spacing(0.5),
+          gap: theme.spacing(0.2),
+          alignItems: 'center',
         }}
       >
-        <IconButton aria-label='add to favorites' sx={{ p: 0 }}>
+        <IconButton onClick={onClickFabButton}>
           <Favorite />
         </IconButton>
         <Typography>{numLikes}</Typography>

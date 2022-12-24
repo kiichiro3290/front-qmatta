@@ -20,6 +20,7 @@ export const QuestionCardList: React.FC<QuestionCardListProps> = ({
               priority={question.priority}
               questionId={question.questionId}
               questionTitle={question.title}
+              questionerIcon={question.questionerIcon}
               status={question.status}
               userName={question.questioner}
             />

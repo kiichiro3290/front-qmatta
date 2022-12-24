@@ -20,8 +20,9 @@ type QuestionInfo = {
   questionId: string
   title: string
   category: string[]
-  questioner: string // 質問者のuserId??
-  numLikes: number // いいねの数
+  questioner: string
+  questionerIcon: string
+  numLikes: number
   priority: string
   status: string
   createdAt: string

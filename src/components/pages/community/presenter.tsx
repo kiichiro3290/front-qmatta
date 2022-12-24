@@ -1,6 +1,5 @@
 import { selectTheme } from '~/store/theme/themeSlice'
 
-import { ImageOutlined } from '@mui/icons-material'
 import { Avatar, Box, Chip, Container, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 
@@ -53,9 +52,7 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
                       gap: theme.spacing(2),
                     }}
                   >
-                    <Avatar src={'data:image/png;base64,' + user.icon}>
-                      <ImageOutlined />
-                    </Avatar>
+                    <Avatar src={'data:image/png;base64,' + user.icon} />
                     <Typography variant='h6'>{user.userName}</Typography>
                   </Box>
                   <Chip color='primary' label={user.status} />
