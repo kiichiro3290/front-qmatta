@@ -132,9 +132,6 @@ export const QmaPage: React.FC = () => {
     switch (key) {
       case 'Enter':
         if (composing) {
-          // かな字変換しただけなのでスルー
-          // 入力が一定文字以下だったらスルーしたいな
-          // 空行の無駄撃ちとか
           break
         } else {
           // エンターキー押下時の処理
@@ -142,6 +139,7 @@ export const QmaPage: React.FC = () => {
           if (dialogue == '') {
             // クマが入力を促す
             setQmaMessage('困ったことがあったら教えて')
+            break
           }
           // 入力がある時
           else {
