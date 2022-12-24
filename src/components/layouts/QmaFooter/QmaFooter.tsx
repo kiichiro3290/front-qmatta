@@ -88,7 +88,7 @@ export const QmaFooter: React.FC<QmaFooterProps> = ({
       {/* </Box> */}
 
       <InputBase
-        placeholder='コンパイル通らない...😂'
+        placeholder='CORSエラーが出て困った...😂'
         sx={{
           color: theme.palette.text.primary,
           backgroundColor: theme.palette.background.default,
