@@ -46,11 +46,19 @@ export const userSlice = createSlice({
   initialState,
   name: 'user',
 
-  reducers: {},
+  reducers: {
+    // ログアウト機能
+    logout: (state) => {
+      state.isLoggedIn = false
+    },
+  },
 })
 
 // Reducer→Storeと接続するため
 export const userReducer = userSlice.reducer
+
+// actionを取り出す
+export const { logout } = userSlice.actions
 
 // Selecter→状態を取り出す
 export const selectIsLoggedIn = (state: RootState) => state.user.isLoggedIn

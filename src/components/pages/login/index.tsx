@@ -28,7 +28,9 @@ export const LogInPage: React.FC = () => {
         dispatch(fetchUserDataState())
 
         setIsLoading(false)
+        // リロードではないのでヘッダーの再取得が起きない
         router.push('/')
+        location.reload()
         return
       } else {
         console.log(res.errorMessage)
@@ -42,6 +44,7 @@ export const LogInPage: React.FC = () => {
     []
   )
 
+  // スナックバーの制御
   const handleCloseSnackbar = useCallback(() => {
     setIsOpenSnackbar(false)
   }, [])

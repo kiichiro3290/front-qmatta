@@ -2,7 +2,7 @@ import { SideBar } from '../../layouts/SideBar/SideBar'
 import { AccountSettingModal } from '../Modal/AccountSettingModal/AccountSettingModal'
 
 import { selectTheme } from '~/store/theme/themeSlice'
-import { selectCommunityList } from '~/store/user/userSlice'
+import { logout, selectCommunityList } from '~/store/user/userSlice'
 
 import { Menu as MenuIcon } from '@mui/icons-material'
 import {
@@ -19,7 +19,7 @@ import {
 } from '@mui/material'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 type HeaderProps = {
   userIconSrc?: string
@@ -145,6 +145,8 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
   anchorEl,
 }) => {
   const theme = useSelector(selectTheme)
+  const dispatch = useDispatch()
+
   // アカウント設定モーダルの制御
   const [openAccountSettingModal, setOpenAccountSettingModal] =
     useState<boolean>(false)
@@ -176,6 +178,14 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
       setUserIconImg('')
     }
   }
+
+  // ログアウトボタン押下時に走る関数
+  const onClickLogoutButton = useCallback(() => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('expire')
+    dispatch(logout())
+    location.reload()
+  }, [])
 
   // ユーザ情報の更新
   const updateUserInfo = async () => {
@@ -216,7 +226,11 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
       </MenuItem>
       <MenuItem>
         {/**TODO:ログアウト機能 */}
-        <Button sx={{ color: theme.palette.text.secondary }} fullWidth>
+        <Button
+          sx={{ color: theme.palette.text.secondary }}
+          fullWidth
+          onClick={onClickLogoutButton}
+        >
           <Typography>ログアウト</Typography>
         </Button>
       </MenuItem>
