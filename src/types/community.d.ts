@@ -69,7 +69,7 @@ type PostQuestionInput = {
 type Answer = {
   answerId: string
   respondent: string // 回答者名
-  detail: string // 回答内容
+  details: string // 回答内容
   image: striing[]
   likes: {
     userName: string

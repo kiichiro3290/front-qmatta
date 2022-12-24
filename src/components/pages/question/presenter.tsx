@@ -115,12 +115,12 @@ export const QuestionPagePresenter: React.FC<QuestionPagePresenterProps> = ({
                     }}
                   >
                     <Typography sx={{ mb: theme.spacing(2) }}>
-                      質問者：{answer.respondent}
+                      回答者：{answer.respondent}
                     </Typography>
                     <MDEditor
                       hideToolbar={true}
                       preview='preview'
-                      value={answer.detail}
+                      value={answer.details}
                     />
                   </Box>
                 ))}
