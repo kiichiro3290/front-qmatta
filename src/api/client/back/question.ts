@@ -129,15 +129,32 @@ export const postQuestion = async (
  * @param data
  * @returns answerId
  */
+type PostAnswerType = {
+  error: boolean
+  errorMessage?: string
+  answerId?: string
+}
 export const postAnswer = async (
   questionId: string,
-  data: Answer
-): Promise<string> => {
+  data: PostAnswer
+): Promise<PostAnswerType> => {
   const res = await qmattaClient()
     .post(`question/answer/${questionId}`, data)
-    .then((res) => res.data)
-    .catch((e) => console.log(e))
-  return res.answerId
+    .then((res) => {
+      const returnVal = {
+        error: false,
+        answerId: res.data.answerId,
+      }
+      return returnVal
+    })
+    .catch((e) => {
+      const res = {
+        error: true,
+        errorMessage: e.code,
+      }
+      return res
+    })
+  return res
 }
 
 /**

@@ -70,10 +70,10 @@ type Answer = {
   answerId: string
   respondent: string // 回答者名
   detail: string // 回答内容
-  image: striing[][] // TODO: バイト列
+  image: striing[]
   likes: {
     userName: string
-    icon: string[] // TODO: バイト列
+    icon: string[]
   }
   createdAt: string
 }

@@ -11,7 +11,14 @@ import { postQuestion } from '~/api/client/back/question'
 import { selectTheme } from '~/store/theme/themeSlice'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Box, Typography, TextField, Button, Autocomplete } from '@mui/material'
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Autocomplete,
+  FormHelperText,
+} from '@mui/material'
 import dynamic from 'next/dynamic'
 import { useCallback } from 'react'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
@@ -87,7 +94,6 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
     status: { label: '', statusId: '' },
   }
 
-  // TODO: yupかzodを用いたバリデーション
   const { control, handleSubmit, setValue, getValues, reset } = useForm<Inputs>(
     {
       mode: 'onChange',
@@ -113,7 +119,7 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
   const handlePostQuestion = async (data: PostQuestion) => {
     const res = await postQuestion(data, communityId)
     if (!res.error && res.questionId) {
-      console.log(res.questionId)
+      // console.log(res.questionId)
     } else {
       console.log(res.errorMessage)
     }
@@ -178,27 +184,32 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
         <Controller
           control={control}
           name='detail'
-          render={() => (
-            <MDEditor
-              height='400px'
-              previewOptions={{
-                rehypePlugins: [[rehypeSanitize]],
-              }}
-              textareaProps={{
-                placeholder: '質問内容を入力',
-              }}
-              value={getValues('detail')}
-              onChange={(value) => {
-                setValue('detail', value as string)
-              }}
-              // TODO:画像のアップロード機能
-              // onDrop={async (event) => {
-              //   await onImagePasted(event.dataTransfer)
-              // }}
-              // onPaste={async (event) => {
-              //   await onImagePasted(event.clipboardData)
-              // }}
-            />
+          render={({ field, fieldState }) => (
+            <>
+              <MDEditor
+                height='400px'
+                previewOptions={{
+                  rehypePlugins: [[rehypeSanitize]],
+                }}
+                textareaProps={{
+                  placeholder: '質問内容を入力',
+                }}
+                value={getValues('detail')}
+                onChange={(value) => {
+                  setValue('detail', value as string)
+                }}
+                // TODO:画像のアップロード機能
+                // onDrop={async (event) => {
+                //   await onImagePasted(event.dataTransfer)
+                // }}
+                // onPaste={async (event) => {
+                //   await onImagePasted(event.clipboardData)
+                // }}
+              />
+              <FormHelperText {...field} error={fieldState.error !== undefined}>
+                {fieldState.error ? '回答を入力してください。' : ''}
+              </FormHelperText>
+            </>
           )}
         />
         <Box
