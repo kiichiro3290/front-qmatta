@@ -27,7 +27,7 @@ type QuestionCardProps = {
 export const QuestionCard: React.FC<QuestionCardProps> = ({
   questionTitle,
   numLikes,
-  // userName,
+  userName,
   status,
   priority,
   categories,
@@ -60,11 +60,18 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             }}
           >
             {categories && (
-              <>
+              <Box
+                component='div'
+                sx={{
+                  display: 'flex',
+                  gap: theme.spacing(1),
+                  overflow: 'hidden',
+                }}
+              >
                 {categories.map((category, id) => (
-                  <Chip key={id} label='category' />
+                  <Chip key={id} label={category} />
                 ))}
-              </>
+              </Box>
             )}
           </Box>
           <Typography sx={{ mt: theme.spacing(2) }} variant='h5'>
@@ -92,7 +99,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 gap: 0.5,
               }}
             >
-              <Typography>{'未登録'}</Typography>
+              <Typography>{userName}</Typography>
             </Box>
             <Box component='div' sx={{ display: 'flex', gap: 1, width: '70%' }}>
               <Chip color='success' label={status} size='small' />

@@ -29,6 +29,7 @@ export const getQuestionList = async (
   const res = await qmattaClient()
     .get(`question/${communityId}`)
     .then((res) => {
+      console.log(res)
       const returnVal = {
         error: false,
         questions: res.data.questions,
