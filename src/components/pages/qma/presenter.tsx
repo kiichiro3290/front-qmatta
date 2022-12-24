@@ -27,7 +27,6 @@ export type QmaPagePresenterProps = {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void
   dialogue: string
-  chatHistory: ChatHistory
   actionType: ActionType
   moyaScore?: number
 }
@@ -35,7 +34,6 @@ export type QmaPagePresenterProps = {
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   dialogue,
   endComposition,
-  chatHistory,
   onChangeDialogue,
   onKeydown,
   qmaMessage,
@@ -99,7 +97,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
 
           <Divider />
         </Box>
-        <QmaDialogueDrawer chatHistory={chatHistory} />
+        <QmaDialogueDrawer />
       </Drawer>
 
       <BearChatBalloon qmaMessage={qmaMessage} />

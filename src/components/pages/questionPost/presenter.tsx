@@ -6,7 +6,6 @@ import { Grid, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 type QuestionPostPagePresenterProps = {
-  chatHistory: ChatHistory
   categoryList: Category[]
   statusList: QuestionStatus[]
   priorityList: Priority[]
@@ -15,7 +14,7 @@ type QuestionPostPagePresenterProps = {
 
 export const QuestionPostPagePresenter: React.FC<
   QuestionPostPagePresenterProps
-> = ({ chatHistory, categoryList, statusList, priorityList, communityId }) => {
+> = ({ categoryList, statusList, priorityList, communityId }) => {
   const theme = useSelector(selectTheme)
 
   return (
@@ -25,7 +24,7 @@ export const QuestionPostPagePresenter: React.FC<
           <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
             くま記録
           </Typography>
-          <QmaDialoguePaper chatHistory={chatHistory} />
+          <QmaDialoguePaper />
         </Grid>
 
         <Grid sm={6} sx={{ height: '100%', width: '100%' }} xs={12} item>

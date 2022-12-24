@@ -1,40 +1,22 @@
 import { QuestionPostPagePresenter } from './presenter'
 
-import { getChatHistory } from '~/api/client/back/bear'
 import {
   getCategoryList,
   getPriorityList,
   getStatusList,
 } from '~/api/client/back/question'
-import { selectIsLoggedIn } from '~/store/user/userSlice'
 
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 
 export const QuestionPostPage: React.FC = () => {
   // reduxで管理している状態
-  const isLoggedIn = useSelector(selectIsLoggedIn)
   const router = useRouter()
   const communityId = router.query.communityId
 
-  const [chatHistory, setChatHistory] = useState<ChatHistory>([])
   const [priorityList, setPriorityList] = useState<Priority[]>([])
   const [statusList, setStatusList] = useState<QuestionStatus[]>([])
   const [categoryList, setCategoryList] = useState<Category[]>([])
-
-  // メッセージの送信履歴を取得する
-  useEffect(() => {
-    const f = async () => {
-      const res = await getChatHistory()
-      if (!res.error && res.histories) {
-        setChatHistory(res.histories)
-      } else {
-        console.log(res.errorMessage)
-      }
-    }
-    f()
-  }, [isLoggedIn])
 
   // 選択できる優先度の一覧を取得する
   useEffect(() => {
@@ -78,7 +60,6 @@ export const QuestionPostPage: React.FC = () => {
   return (
     <QuestionPostPagePresenter
       categoryList={categoryList}
-      chatHistory={chatHistory}
       communityId={communityId as string}
       priorityList={priorityList}
       statusList={statusList}

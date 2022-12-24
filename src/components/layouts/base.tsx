@@ -2,6 +2,7 @@ import { CommunityMenu } from './community'
 
 import { Header } from '../uiParts/Header/Header'
 
+import { baerApi } from '~/api/client/back/bear'
 import { communityApi } from '~/api/client/back/community'
 import { getUserIcon } from '~/api/client/back/user'
 import { AppDispatch, store } from '~/store'
@@ -75,6 +76,9 @@ const Layout: FC<BaseLayoutProps> = ({ children, isCommunity }) => {
 
   // コミュニティリストを取得する
   useQuery(['community', 'list'], communityApi.getCommunityList)
+
+  // クマとの会話履歴を取得する
+  useQuery(['bear', 'chatHistory'], baerApi.getChatHistory)
 
   return (
     <ThemeProvider theme={theme}>

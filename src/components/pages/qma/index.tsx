@@ -1,7 +1,6 @@
 import { QmaPagePresenter } from './presenter'
 
 import {
-  getChatHistory,
   getQmaReply,
   getQmaReplyAndMoya,
   getQmaReplyAndMoyaNotLogin,
@@ -10,7 +9,6 @@ import {
 import { ActionType } from '~/components/uiParts/Qma3D/Qma3D'
 import { AppDispatch } from '~/store'
 import { messageHistoryState } from '~/store/bear/bearSlice'
-import { fetchCommunityList } from '~/store/user/actions'
 import { selectIsLoggedIn } from '~/store/user/userSlice'
 
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
@@ -20,9 +18,6 @@ export const QmaPage: React.FC = () => {
   const dispatch: AppDispatch = useDispatch()
   // reduxで管理している状態
   const isLoggedIn = useSelector(selectIsLoggedIn)
-
-  // メッセージの送信履歴
-  const [chatHistory, setChatHistory] = useState<ChatHistory>([])
 
   // 入力したメッセージの受け皿
   const [dialogue, setDialogue] = useState<string>('')
@@ -214,31 +209,6 @@ export const QmaPage: React.FC = () => {
     []
   )
 
-  // メッセージの送信履歴を取得する
-  useEffect(() => {
-    const f = async () => {
-      if (isLoggedIn) {
-        const res = await getChatHistory()
-        if (!res.error && res.histories) {
-          setChatHistory(res.histories)
-        } else {
-          console.log(res.errorMessage)
-        }
-      }
-    }
-    f()
-  }, [isLoggedIn])
-
-  // コミュニティの一覧を取得する
-  useEffect(() => {
-    const f = async () => {
-      if (isLoggedIn) {
-        dispatch(fetchCommunityList())
-      }
-    }
-    f()
-  }, [isLoggedIn])
-
   // モヤモヤを吐き出す
   useEffect(() => {
     const f = async () => {
@@ -270,7 +240,6 @@ export const QmaPage: React.FC = () => {
   return (
     <QmaPagePresenter
       actionType={actionType}
-      chatHistory={chatHistory}
       dialogue={dialogue}
       endComposition={endComposition}
       moyaScore={moyaScore}

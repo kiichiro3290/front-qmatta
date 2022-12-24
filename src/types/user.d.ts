@@ -25,8 +25,8 @@ type UserData = {
 }
 
 type Chat = {
-  text: string
-  response: string
+  text: string // 自分のメッセージ
+  response: string // クマのメッセージ
   date: Date
 }
 
