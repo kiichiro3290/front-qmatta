@@ -75,7 +75,7 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
   const defaultValues: PostQuestionInput = {
     title: '',
     image: [] as string[],
-    detail: '*** 質問を入力***',
+    detail: '',
     categoryArray: [],
     priority: { label: '', priorityId: '' },
     status: { label: '', statusId: '' },
@@ -155,6 +155,9 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
               height='400px'
               previewOptions={{
                 rehypePlugins: [[rehypeSanitize]],
+              }}
+              textareaProps={{
+                placeholder: '質問内容を入力',
               }}
               value={getValues('detail')}
               onChange={(value) => {
