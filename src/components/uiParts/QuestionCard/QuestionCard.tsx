@@ -1,6 +1,6 @@
 import { selectTheme } from '~/store/theme/themeSlice'
 
-// import { Favorite } from '@mui/icons-material'
+import { Favorite } from '@mui/icons-material'
 import {
   Box,
   Card,
@@ -8,7 +8,7 @@ import {
   CardActions,
   CardContent,
   Chip,
-  // IconButton,
+  IconButton,
   Typography,
 } from '@mui/material'
 import { useRouter } from 'next/router'
@@ -41,12 +41,10 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     router.push(`/${router.query.communityId}/questions/${questionId}`)
   }
   return (
-    <Card>
+    <Card sx={{ position: 'relative' }}>
       <CardActionArea
         sx={{
-          width: { lg: '380px', xs: '100%' },
           height: '240px',
-          pb: theme.spacing(1),
         }}
         onClick={routeQuestionPage}
       >
@@ -55,7 +53,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             component='div'
             sx={{
               backgroundColor: theme.palette.background.default,
-              p: theme.spacing(0.8),
+              p: theme.spacing(0.7),
+              width: '100%',
               borderRadius: theme.spacing(1),
             }}
           >
@@ -74,45 +73,43 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               </Box>
             )}
           </Box>
-          <Typography sx={{ mt: theme.spacing(2) }} variant='h5'>
+          <Typography sx={{ my: theme.spacing(2) }} variant='h5'>
             {questionTitle}
           </Typography>
+          <Typography>{userName}</Typography>
 
           <CardActions
             sx={{
               alignItems: 'center',
               position: 'absolute',
               bottom: 0,
-              display: 'flex',
-              justifyContent: 'space-around',
               width: '100%',
+              display: 'flex',
+              gap: theme.spacing(1),
             }}
             disableSpacing
           >
-            <Box
-              component='div'
-              sx={{
-                display: 'fflex',
-                justifyContent: 'start',
-                alignItems: 'center',
-                width: '30%',
-                gap: 0.5,
-              }}
-            >
-              <Typography>{userName}</Typography>
-            </Box>
-            <Box component='div' sx={{ display: 'flex', gap: 1, width: '70%' }}>
-              <Chip color='success' label={status} size='small' />
-              <Chip color='warning' label={priority} size='small' />
-              {/**カードより上にいいねボタンを配置する */}
-              {/* <IconButton aria-label='add to favorites' sx={{ p: 0 }}>
-                <Favorite />
-              </IconButton> */}
-              <Typography>{numLikes}</Typography>
-            </Box>
+            <Chip color='success' label={status} size='small' />
+            <Chip color='warning' label={priority} size='small' />
           </CardActions>
         </CardContent>
       </CardActionArea>
+      {/**カードより上にいいねボタンを配置する */}
+      <Box
+        component='div'
+        sx={{
+          display: 'flex',
+          position: 'absolute',
+          justifyContent: 'flex-end',
+          bottom: theme.spacing(1),
+          right: theme.spacing(1.5),
+        }}
+      >
+        <IconButton aria-label='add to favorites' sx={{ p: 0 }}>
+          <Favorite />
+        </IconButton>
+        <Typography>{numLikes ? numLikes : 0}</Typography>
+      </Box>
     </Card>
   )
 }

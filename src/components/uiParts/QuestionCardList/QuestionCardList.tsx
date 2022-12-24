@@ -10,9 +10,9 @@ export const QuestionCardList: React.FC<QuestionCardListProps> = ({
 }) => {
   return (
     <>
-      <Grid spacing={4} sx={{ width: '100%' }} container>
+      <Grid spacing={4} container>
         {questions.map((question, id) => (
-          <Grid key={(question.questionId, id)} item>
+          <Grid key={(question.questionId, id)} sm={6} xs={12} item>
             <QuestionCard
               categories={question.category}
               createdAt={question.createdAt}
