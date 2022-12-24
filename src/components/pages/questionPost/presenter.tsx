@@ -2,7 +2,7 @@ import { QmaDialoguePaper } from '~/components/layouts/QmaDialoguePaper/QmaDialo
 import { InputQuestionPaper } from '~/components/papers/InputQuestionPaper/InputQuestionPaper'
 import { selectTheme } from '~/store/theme/themeSlice'
 
-import { Box, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { useSelector } from 'react-redux'
 
 type QuestionPostPagePresenterProps = {
@@ -20,23 +20,15 @@ export const QuestionPostPagePresenter: React.FC<
 
   return (
     <>
-      <Box
-        component='div'
-        sx={{
-          display: 'grid',
-          gap: theme.spacing(4),
-          gridTemplateColumns: '1fr 1fr',
-          p: theme.spacing(4),
-        }}
-      >
-        <Box component='div' sx={{ height: '100%' }}>
+      <Grid spacing={2} sx={{ px: theme.spacing(3) }} container>
+        <Grid sm={6} sx={{ height: '100%' }} xs={12} item>
           <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
             くま記録
           </Typography>
           <QmaDialoguePaper chatHistory={chatHistory} />
-        </Box>
+        </Grid>
 
-        <Box component='div' sx={{ height: '100%', width: '100%' }}>
+        <Grid sm={6} sx={{ height: '100%', width: '100%' }} xs={12} item>
           <Typography sx={{ mb: theme.spacing(2) }} variant='h5'>
             質問する
           </Typography>
@@ -47,8 +39,8 @@ export const QuestionPostPagePresenter: React.FC<
             priorityList={priorityList}
             statusList={statusList}
           />
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </>
   )
 }
