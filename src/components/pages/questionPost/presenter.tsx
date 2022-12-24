@@ -1,5 +1,5 @@
 import { QmaDialoguePaper } from '~/components/layouts/QmaDialoguePaper/QmaDialoguePaper'
-import { InputQuestionPaper } from '~/components/papers/InputQuestionPaper/InputQuestionPaper'
+import { InputQuestionPaper } from '~/components/uiParts/InputQuestionPaper/InputQuestionPaper'
 import { selectTheme } from '~/store/theme/themeSlice'
 
 import { Grid, Typography } from '@mui/material'

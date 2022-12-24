@@ -3,6 +3,10 @@ import '@uiw/react-markdown-preview/markdown.css'
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false })
 
+// TODO 画像のアップロード機能
+// import fileUpload from './utils/fileUploader'
+// import insertToTextArea from './utils/insertToTextArea'
+
 import { postQuestion } from '~/api/client/back/question'
 import { selectTheme } from '~/store/theme/themeSlice'
 
@@ -20,6 +24,8 @@ import * as yup from 'yup'
  * https://connectedpapers.com
  * form
  * https://zenn.dev/vacatono/articles/647c06eaa6f436
+ * 画像アップロード
+ * https://zenn.dev/dino3616/articles/b6c09b73ade20e
  */
 
 const categoryArraySchema = yup.object({
@@ -103,6 +109,7 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
     reset()
   }, [])
 
+  // 投稿時
   const handlePostQuestion = async (data: PostQuestion) => {
     const res = await postQuestion(data, communityId)
     if (!res.error && res.questionId) {
@@ -110,9 +117,30 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
     } else {
       console.log(res.errorMessage)
     }
-    // 投稿が成功したらリロード→微妙
-    // location.reload()
   }
+
+  // TODO: 写真のアップロード
+  // const onImagePasted = async (dataTransfer: DataTransfer) => {
+  //   const files: File[] = []
+  //   for (let index = 0; index < dataTransfer.items.length; index += 1) {
+  //     const file = dataTransfer.files.item(index)
+
+  //     if (file) {
+  //       files.push(file)
+  //     }
+  //   }
+
+  //   await Promise.all(
+  //     files.map(async (file) => {
+  //       const url = await fileUpload(file)
+  //       const insertedMarkdown = insertToTextArea(`![](${url})`)
+  //       if (!insertedMarkdown) {
+  //         return
+  //       }
+  //       setValue('detail', insertedMarkdown)
+  //     })
+  //   )
+  // }
 
   return (
     <Box
@@ -163,6 +191,13 @@ export const InputQuestionPaper: React.FC<InputQuestionPaperProps> = ({
               onChange={(value) => {
                 setValue('detail', value as string)
               }}
+              // TODO:画像のアップロード機能
+              // onDrop={async (event) => {
+              //   await onImagePasted(event.dataTransfer)
+              // }}
+              // onPaste={async (event) => {
+              //   await onImagePasted(event.clipboardData)
+              // }}
             />
           )}
         />
