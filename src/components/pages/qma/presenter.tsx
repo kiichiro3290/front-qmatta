@@ -100,7 +100,16 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         <QmaDialogueDrawer />
       </Drawer>
 
-      <BearChatBalloon qmaMessage={qmaMessage} />
+      <Container
+        sx={{
+          display: 'flex',
+          m: '0 auto',
+          maxWidth: 'md',
+          position: 'relative',
+        }}
+      >
+        <BearChatBalloon qmaMessage={qmaMessage} />
+      </Container>
 
       <Container
         sx={{

@@ -25,7 +25,7 @@ export const BearChatBalloon: React.FC<BearChatBalloonProps> = ({
           overflow: 'scroll',
           top: {
             lg: theme.spacing(22),
-            xs: theme.spacing(12),
+            xs: theme.spacing(8),
           },
           width: {
             lg: '300px',
@@ -36,7 +36,7 @@ export const BearChatBalloon: React.FC<BearChatBalloonProps> = ({
         },
         {
           left: {
-            lg: theme.spacing(34),
+            lg: theme.spacing(18),
             md: theme.spacing(8),
             xs: theme.spacing(2),
           },
