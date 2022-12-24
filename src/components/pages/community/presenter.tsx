@@ -42,6 +42,7 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
                     p: theme.spacing(2),
                     alignItems: 'center',
                     justifyContent: 'space-between',
+                    boxShadow: theme.shadows[1],
                   }}
                 >
                   <Box
