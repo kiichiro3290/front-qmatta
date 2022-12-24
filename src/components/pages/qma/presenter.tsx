@@ -20,7 +20,6 @@ import { useSelector } from 'react-redux'
 
 export type QmaPagePresenterProps = {
   qmaMessage: string
-  moyaBuf: string[]
   onKeydown: (e: string) => void
   startComposition: () => void
   endComposition: () => void
@@ -30,11 +29,11 @@ export type QmaPagePresenterProps = {
   dialogue: string
   chatHistory: ChatHistory
   actionType: ActionType
+  moyaScore: number
 }
 
 export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   dialogue,
-  moyaBuf,
   endComposition,
   chatHistory,
   onChangeDialogue,
@@ -42,6 +41,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
   qmaMessage,
   startComposition,
   actionType,
+  moyaScore,
 }) => {
   const [isShowDialogue, setIsShowDialogue] = useState<boolean>(false)
   const [stampAnchorEl, setStampAnchorEl] = useState<HTMLButtonElement | null>(
@@ -75,7 +75,7 @@ export const QmaPagePresenter: React.FC<QmaPagePresenterProps> = ({
         }}
       >
         <Image alt='qmatta' height={100} src={qmattaBoard} width={320} />
-        <Typography>{moyaBuf.length}</Typography>
+        <Typography>{moyaScore}</Typography>
       </Box>
 
       <Drawer anchor='right' open={isShowDialogue} variant='persistent'>

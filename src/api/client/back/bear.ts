@@ -4,7 +4,7 @@ import qmattaClient from '..'
  * クマのメッセージを取得する：ログインしてないバージョン:POST
  * chatGPTでモヤモヤが溜まったら使う
  * @param text
- * @param isChatGPT
+ * @param score
  * @returns { response: string }
  */
 type GetQmaReplyNotLoginType = {
@@ -13,9 +13,10 @@ type GetQmaReplyNotLoginType = {
   response?: string
 }
 export const getQmaReplyNotLogin = async (
-  text: string
+  text: string,
+  score: number
 ): Promise<GetQmaReplyNotLoginType> => {
-  const body = { text }
+  const body = { text: text, score: score }
   const res = await qmattaClient()
     .post('bear-notlogin', body)
     .then((res) => {
@@ -46,6 +47,7 @@ type GetQmaReplyAndMoyaNotLoginType = {
   errorMessage?: string
   response?: string
   negPhrase?: string[]
+  score?: number
 }
 export const getQmaReplyAndMoyaNotLogin = async (
   text: string
@@ -58,6 +60,7 @@ export const getQmaReplyAndMoyaNotLogin = async (
         error: false,
         response: res.data.response,
         negPhrase: res.data.negPharese,
+        score: res.data.score,
       }
       return returnVal
     })
@@ -80,8 +83,11 @@ type GetQmaReplyType = {
   errorMessage?: string
   response?: string
 }
-export const getQmaReply = async (text: string): Promise<GetQmaReplyType> => {
-  const body = { text }
+export const getQmaReply = async (
+  text: string,
+  score: number
+): Promise<GetQmaReplyType> => {
+  const body = { text: text, score: score }
   const res = await qmattaClient()
     .post('bear', body)
     .then((res) => {
@@ -110,6 +116,7 @@ type GetQmaReplyAndMoyaType = {
   errorMessage?: string
   response?: string
   negPhrase?: string[]
+  score?: number
 }
 export const getQmaReplyAndMoya = async (
   text: string
@@ -118,11 +125,11 @@ export const getQmaReplyAndMoya = async (
   const res = await qmattaClient()
     .post('bear/sentiment', body)
     .then((res) => {
-      console.log('namares', res)
       const returnVal = {
         error: false,
         response: res.data.response,
         negPhrase: res.data.negPhrase,
+        score: res.data.score,
       }
       return returnVal
     })

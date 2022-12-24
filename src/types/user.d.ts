@@ -34,7 +34,7 @@ type ChatHistory = Chat[]
 
 type Message = {
   text: string
-  date: Date
+  date: string
 }
 
 type MessageHistory = Message[]

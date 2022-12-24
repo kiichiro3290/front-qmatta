@@ -10,7 +10,7 @@ export const store = configureStore({
       serializableCheck: {
         // action 全体を無視
         ignoredActions: ['bear/messageHistoryState'],
-        ignoredPaths: ['bear.messageHistory.*.date'],
+        ignoredPaths: ['bear.messageHistory.0.date'],
       },
     }),
   reducer: {

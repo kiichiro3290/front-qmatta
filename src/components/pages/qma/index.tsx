@@ -40,12 +40,101 @@ export const QmaPage: React.FC = () => {
 
   // モヤモヤバッファ
   const [moyaBuf, setMoyaBuf] = useState<string[]>([])
+  const [moyaScore, setMoyaScore] = useState<number>(0)
+  type MoyaLevelType = {
+    level: number
+    isToVentMoya: boolean
+  }
+  const [moyaLevel, setMoyaLevel] = useState<MoyaLevelType>({
+    level: 0,
+    isToVentMoya: false,
+  })
+
+  // モヤスコアが閾値を超えたことを検知する
+  const detectMoyaScoreOverThreshold = (
+    prevMoyaScore: number,
+    currentMoyaScore: number,
+    prevMoyaLevel: MoyaLevelType
+  ) => {
+    // 現在のスコアと新しく取得したメッセージのスコアを元に新しいモヤスコアを算出する
+    const newMoyaScore = prevMoyaScore + currentMoyaScore
+
+    // moyaScoreを更新する
+    setMoyaScore(newMoyaScore)
+
+    // モヤレベルを調べる
+    /**
+     * モヤレベル
+     * 1: 0 ~ -100
+     * 2: -100 ~ -200
+     * 3: -200 ~ -300
+     * 4: -300 ~
+     */
+    if (0 <= newMoyaScore) {
+      // モヤレベル0の時
+      setActionType('跳躍')
+      setMoyaLevel({ level: 1, isToVentMoya: false })
+
+      return
+    }
+    if (-100 <= newMoyaScore && newMoyaScore < 0) {
+      // モヤレベル１の時
+      setActionType('頷き')
+      setMoyaLevel({ level: 1, isToVentMoya: false })
+
+      return
+    }
+
+    if (-200 <= newMoyaScore && newMoyaScore < -100) {
+      // モヤレベル２の時
+      setActionType('説得')
+
+      // モヤレベルが前回から上がったか
+      if (2 > prevMoyaLevel.level) {
+        setMoyaLevel({ level: 2, isToVentMoya: true })
+      } else {
+        // 前回と同じ，もしくはモヤレベルが下がった
+        setMoyaLevel({ level: 2, isToVentMoya: false })
+      }
+      return
+    }
+
+    if (-300 <= newMoyaScore && newMoyaScore < -200) {
+      // モヤレベル３の時
+      setActionType('困惑')
+
+      // モヤレベルが前回から上がったか
+      if (3 > prevMoyaLevel.level) {
+        setMoyaLevel({ level: 3, isToVentMoya: true })
+      } else {
+        // 前回と同じ，もしくはモヤレベルが下がった
+        setMoyaLevel({ level: 3, isToVentMoya: false })
+      }
+      return
+    }
+
+    if (newMoyaScore < -300) {
+      // モヤレベル4の時
+      setActionType('困惑')
+
+      // モヤレベルが前回から上がったか
+      if (4 > prevMoyaLevel.level) {
+        setMoyaLevel({ level: 3, isToVentMoya: true })
+      } else {
+        // 前回と同じ，もしくはモヤレベルが下がった
+        setMoyaLevel({ level: 3, isToVentMoya: false })
+      }
+      return
+    }
+  }
 
   const onKeydown = async (key: string) => {
     switch (key) {
       case 'Enter':
         if (composing) {
           // かな字変換しただけなのでスルー
+          // 入力が一定文字以下だったらスルーしたいな
+          // 空行の無駄撃ちとか
           break
         } else {
           // エンターキー押下時の処理
@@ -60,7 +149,7 @@ export const QmaPage: React.FC = () => {
             const currentMessage: Message = {
               text: dialogue,
               // 現在の日時を保存できてる？
-              date: new Date(),
+              date: new Date().toString(),
             }
             // reduxで管理
             dispatch(messageHistoryState({ message: currentMessage }))
@@ -69,62 +158,51 @@ export const QmaPage: React.FC = () => {
             setDialogue('')
             // AI 思考時間
             setQmaMessage('考え中...')
-            setActionType('困惑')
 
             // ログイン時は，ログイン時用のAPIを叩く
             if (isLoggedIn) {
-              // モヤモヤバッファに３つ以上溜まっていたら吐き出す
-              if (moyaBuf.length >= 3) {
-                console.log('3つになった')
-                const res = await getQmaReply(moyaBuf.join(' '))
-                setMoyaBuf([])
-                if (!res.error && res.response) {
-                  setQmaMessage(res.response)
-                } else {
-                  console.log(res.errorMessage)
+              // バックエンドからクマのセリフを取得する
+              const res = await getQmaReplyAndMoya(dialogue)
+
+              if (!res.error && res.response) {
+                setQmaMessage(res.response)
+
+                if (res.negPhrase) {
+                  // モヤモヤバッファに追加
+                  const current = moyaBuf
+                  setMoyaBuf(current.concat(res.negPhrase))
+                }
+
+                // モヤスコアが閾値を超えたかどうかを確認
+                const score = res.score
+                if (score) {
+                  detectMoyaScoreOverThreshold(moyaScore, score, moyaLevel)
                 }
               } else {
-                // バックエンドからクマのセリフを取得する
-                const res = await getQmaReplyAndMoya(dialogue)
-                console.log('koko', res)
-                if (!res.error && res.response) {
-                  setQmaMessage(res.response)
-                  if (res.negPhrase) {
-                    // モヤモヤバッファに追加
-                    const current = moyaBuf
-                    setMoyaBuf(current.concat(res.negPhrase))
-                  }
-                } else {
-                  console.log(res.errorMessage)
-                }
+                console.log(res.errorMessage)
               }
             } else {
-              // モヤモヤバッファに３つ以上溜まっていたら吐き出す
-              if (moyaBuf.length >= 3) {
-                const res = await getQmaReplyNotLogin(moyaBuf.join(' '))
-                setMoyaBuf([])
-                if (!res.error && res.response) {
-                  setQmaMessage(res.response)
-                } else {
-                  console.log(res.errorMessage)
+              // ログインしていない時は,NotLoginバージョンを使う
+              const res = await getQmaReplyAndMoyaNotLogin(dialogue)
+              if (!res.error && res.response && res.negPhrase) {
+                setQmaMessage(res.response)
+
+                // モヤスコアが閾値を超えたかどうかを確認
+                const score = res.score
+                if (score) {
+                  detectMoyaScoreOverThreshold(moyaScore, score, moyaLevel)
+                }
+
+                if (res.negPhrase) {
+                  // モヤモヤバッファに追加
+                  const current = moyaBuf
+                  setMoyaBuf(current.concat(res.negPhrase))
                 }
               } else {
-                // ログインしていない時は,NotLoginバージョンを使う
-                const res = await getQmaReplyAndMoyaNotLogin(dialogue)
-                if (!res.error && res.response && res.negPhrase) {
-                  setQmaMessage(res.response)
-                  if (res.negPhrase) {
-                    // モヤモヤバッファに追加
-                    const current = moyaBuf
-                    setMoyaBuf(current.concat(res.negPhrase))
-                  }
-                } else {
-                  console.log(res.errorMessage)
-                }
+                console.log(res.errorMessage)
               }
             }
           }
-          setActionType('頷き')
         }
         break
     }
@@ -133,8 +211,6 @@ export const QmaPage: React.FC = () => {
   // 文字を入力したとき
   const onChangeDialogue = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      // setIsShowChatBaloon(false)
-      console.log(moyaBuf.length)
       setDialogue(e.target.value)
     },
     []
@@ -165,13 +241,41 @@ export const QmaPage: React.FC = () => {
     f()
   }, [isLoggedIn])
 
+  // モヤモヤを吐き出す
+  useEffect(() => {
+    const f = async () => {
+      if (isLoggedIn) {
+        setQmaMessage('考え中...')
+        const res = await getQmaReply(moyaBuf.join(' '), moyaScore)
+        setMoyaBuf([])
+        if (!res.error && res.response) {
+          setQmaMessage(res.response)
+        } else {
+          console.log(res.errorMessage)
+        }
+      } else {
+        setQmaMessage('考え中...')
+        const res = await getQmaReplyNotLogin(moyaBuf.join(' '), moyaScore)
+        setMoyaBuf([])
+        if (!res.error && res.response) {
+          setQmaMessage(res.response)
+        } else {
+          console.log(res.errorMessage)
+        }
+      }
+    }
+
+    // モヤモヤが閾値を超えた時だけ吐き出す
+    if (moyaLevel.isToVentMoya) f()
+  }, [moyaLevel])
+
   return (
     <QmaPagePresenter
       actionType={actionType}
       chatHistory={chatHistory}
       dialogue={dialogue}
       endComposition={endComposition}
-      moyaBuf={moyaBuf}
+      moyaScore={moyaScore}
       qmaMessage={qmaMessage}
       startComposition={startComposition}
       onChangeDialogue={onChangeDialogue}
