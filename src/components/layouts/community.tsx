@@ -21,6 +21,7 @@ export const CommunityMenu: React.FC = () => {
   const routeQuestionPost = () => {
     router.push(`/${communityId}/post`)
   }
+
   return (
     <>
       <Box component='div' sx={{ mt: theme.spacing(13), ml: theme.spacing(2) }}>

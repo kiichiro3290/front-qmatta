@@ -12,7 +12,6 @@ export const CommunityPagePresenter: React.FC<CommunityPagePresenterProps> = ({
   users,
 }) => {
   const theme = useSelector(selectTheme)
-  // TODO: レスポンシブ対応
 
   return (
     <>

@@ -99,6 +99,26 @@ export const createCommunity = async (
   return res
 }
 
+type GetCommunityUsersQuery = {
+  communityId: string
+}
+export const communityApi = {
+  getCommunityUsers: async (
+    params: GetCommunityUsersQuery
+  ): Promise<UserList> => {
+    const res = await qmattaClient()
+      .get(`community/users/${params.communityId}`)
+      .then((res) => res.data)
+    return res
+  },
+  getCommunityList: async (): Promise<Community[]> => {
+    const res = await qmattaClient()
+      .get('community')
+      .then((res) => res.data)
+    return res.communities
+  },
+}
+
 /**
  * コミュニティに参加している全ユーザを取得
  * @param communityId
