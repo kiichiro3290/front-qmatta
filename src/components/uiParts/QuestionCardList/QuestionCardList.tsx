@@ -16,7 +16,7 @@ export const QuestionCardList: React.FC<QuestionCardListProps> = ({
             <QuestionCard
               categories={question.category}
               createdAt={question.createdAt}
-              numLikes={question.numLikis}
+              numLikes={question.numLikes}
               priority={question.priority}
               questionId={question.questionId}
               questionTitle={question.title}

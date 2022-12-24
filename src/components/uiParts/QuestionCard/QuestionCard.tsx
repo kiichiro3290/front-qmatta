@@ -103,12 +103,13 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           justifyContent: 'flex-end',
           bottom: theme.spacing(1),
           right: theme.spacing(1.5),
+          gap: theme.spacing(0.5),
         }}
       >
         <IconButton aria-label='add to favorites' sx={{ p: 0 }}>
           <Favorite />
         </IconButton>
-        <Typography>{numLikes ? numLikes : 0}</Typography>
+        <Typography>{numLikes}</Typography>
       </Box>
     </Card>
   )
