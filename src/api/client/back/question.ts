@@ -96,8 +96,16 @@ export const postQuestion = async (
   data: PostQuestion,
   communityId: string
 ): Promise<PostQuestionType> => {
+  const body = {
+    title: data.title,
+    detail: data.detail,
+    image: data.image,
+    priority: data.priorityId,
+    status: data.statusId,
+    category: data.categoryIdArray,
+  }
   const res = await qmattaClient()
-    .post(`question/${communityId}`, data)
+    .post(`question/${communityId}`, body)
     .then((res) => {
       const returnVal = {
         error: false,

@@ -52,9 +52,18 @@ type PostQuestion = {
   title: string
   detail: string
   image: string[]
-  priority: string
-  status: string
-  category: string[]
+  priorityId: string
+  statusId: string
+  categoryIdArray: string[]
+}
+
+type PostQuestionInput = {
+  title: string
+  detail: string
+  image: string[]
+  priority: { label: string; priorityId: string }
+  status: { label: string; statusId: string }
+  categoryArray: { label: string; categoryId: string }[]
 }
 
 type Answer = {
