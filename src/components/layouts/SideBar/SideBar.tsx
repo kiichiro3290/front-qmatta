@@ -163,15 +163,6 @@ export const SideBar: React.FC<SideBarProps> = ({
       <Divider />
 
       <MenuList sx={{ my: theme.spacing(2) }}>
-        <MenuItem onClick={() => onClickWorkspaceButton('programming')}>
-          <ListItemAvatar>
-            <Avatar>
-              <ImageOutlined />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={'Qmattaコミュニティ'} />
-        </MenuItem>
-
         {data &&
           data.map((community) => (
             <MenuItem
