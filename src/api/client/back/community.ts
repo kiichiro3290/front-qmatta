@@ -14,7 +14,6 @@ export const getCommunityList =
     const res = await qmattaClient()
       .get('community')
       .then((res) => {
-        console.log(res)
         const returnVal = {
           error: false,
           communityList: res.data.communities,

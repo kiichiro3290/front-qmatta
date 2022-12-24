@@ -61,7 +61,6 @@ export const getQuestionHistory = async (
   const res = await qmattaClient()
     .get(`question/answer/${questionId}`)
     .then((res) => {
-      console.log(res)
       const returnVal = {
         error: false,
         questionHistory: {
