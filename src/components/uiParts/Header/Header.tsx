@@ -2,7 +2,7 @@ import { SideBar } from '../../layouts/SideBar/SideBar'
 import { AccountSettingModal } from '../Modal/AccountSettingModal/AccountSettingModal'
 
 import { selectTheme } from '~/store/theme/themeSlice'
-import { logout, selectCommunityList } from '~/store/user/userSlice'
+import { logout } from '~/store/user/userSlice'
 
 import { Menu as MenuIcon } from '@mui/icons-material'
 import {
@@ -28,8 +28,6 @@ type HeaderProps = {
 export const Header: React.FC<HeaderProps> = ({ userIconSrc }) => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
   const theme = useSelector(selectTheme)
-  // reduxで管理しているstate
-  const communityList = useSelector(selectCommunityList)
 
   const onClickMenuButton = useCallback(() => {
     setIsShowSideBar((val) => !val)
@@ -99,10 +97,7 @@ export const Header: React.FC<HeaderProps> = ({ userIconSrc }) => {
             }}
             onClose={onCloseMenuButton}
           >
-            <SideBar
-              closeSideBar={closeSideBar}
-              communityList={communityList}
-            />
+            <SideBar closeSideBar={closeSideBar} />
           </Drawer>
         </Box>
 

@@ -29,14 +29,10 @@ import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export type SideBarProps = {
-  communityList?: Community[]
   closeSideBar: () => void
 }
 
-export const SideBar: React.FC<SideBarProps> = ({
-  // communityList,
-  closeSideBar,
-}) => {
+export const SideBar: React.FC<SideBarProps> = ({ closeSideBar }) => {
   const router = useRouter()
   const theme = useSelector(selectTheme)
 
