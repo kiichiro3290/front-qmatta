@@ -18,7 +18,7 @@ export const CommunityPage: React.FC = () => {
       if (!res.error && res.users) {
         setCommunityusers(res.users)
       } else {
-        console.log(res.errorMessage)
+        // console.log(res.errorMessage)
       }
     }
     f(communityId)

@@ -1,8 +1,9 @@
 import { SideBar } from '../../layouts/SideBar/SideBar'
 import { AccountSettingModal } from '../Modal/AccountSettingModal/AccountSettingModal'
 
+import { userApi } from '~/api/client/back/user'
 import { selectTheme } from '~/store/theme/themeSlice'
-import { selectCommunityList } from '~/store/user/userSlice'
+import { logout } from '~/store/user/userSlice'
 
 import { Menu as MenuIcon } from '@mui/icons-material'
 import {
@@ -17,19 +18,19 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 type HeaderProps = {
   userIconSrc?: string
 }
 
-export const Header: React.FC<HeaderProps> = ({ userIconSrc }) => {
+export const Header: React.FC<HeaderProps> = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
   const theme = useSelector(selectTheme)
-  // reduxで管理しているstate
-  const communityList = useSelector(selectCommunityList)
+  const { data } = useQuery(['user', 'icon'], userApi.getUserIcon)
 
   const onClickMenuButton = useCallback(() => {
     setIsShowSideBar((val) => !val)
@@ -99,10 +100,7 @@ export const Header: React.FC<HeaderProps> = ({ userIconSrc }) => {
             }}
             onClose={onCloseMenuButton}
           >
-            <SideBar
-              closeSideBar={closeSideBar}
-              communityList={communityList}
-            />
+            <SideBar closeSideBar={closeSideBar} />
           </Drawer>
         </Box>
 
@@ -120,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({ userIconSrc }) => {
           }}
           onClick={handleAccountMenu}
         >
-          <Avatar src={userIconSrc} />
+          <Avatar src={data} />
         </Box>
 
         <AccountMenu
@@ -145,6 +143,8 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
   anchorEl,
 }) => {
   const theme = useSelector(selectTheme)
+  const dispatch = useDispatch()
+
   // アカウント設定モーダルの制御
   const [openAccountSettingModal, setOpenAccountSettingModal] =
     useState<boolean>(false)
@@ -176,6 +176,14 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
       setUserIconImg('')
     }
   }
+
+  // ログアウトボタン押下時に走る関数
+  const onClickLogoutButton = useCallback(() => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('expire')
+    dispatch(logout())
+    location.reload()
+  }, [])
 
   // ユーザ情報の更新
   const updateUserInfo = async () => {
@@ -216,7 +224,11 @@ export const AccountMenu: React.FC<AccountMenuProps> = ({
       </MenuItem>
       <MenuItem>
         {/**TODO:ログアウト機能 */}
-        <Button sx={{ color: theme.palette.text.secondary }} fullWidth>
+        <Button
+          sx={{ color: theme.palette.text.secondary }}
+          fullWidth
+          onClick={onClickLogoutButton}
+        >
           <Typography>ログアウト</Typography>
         </Button>
       </MenuItem>

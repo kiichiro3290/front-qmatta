@@ -29,14 +29,10 @@ import { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 export type SideBarProps = {
-  communityList?: Community[]
   closeSideBar: () => void
 }
 
-export const SideBar: React.FC<SideBarProps> = ({
-  // communityList,
-  closeSideBar,
-}) => {
+export const SideBar: React.FC<SideBarProps> = ({ closeSideBar }) => {
   const router = useRouter()
   const theme = useSelector(selectTheme)
 
@@ -106,7 +102,7 @@ export const SideBar: React.FC<SideBarProps> = ({
       closeSideBar()
       location.reload()
     } else {
-      console.log(res.errorMessage)
+      // console.log(res.errorMessage)
     }
   }
 
@@ -163,15 +159,6 @@ export const SideBar: React.FC<SideBarProps> = ({
       <Divider />
 
       <MenuList sx={{ my: theme.spacing(2) }}>
-        <MenuItem onClick={() => onClickWorkspaceButton('programming')}>
-          <ListItemAvatar>
-            <Avatar>
-              <ImageOutlined />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary={'Qmattaコミュニティ'} />
-        </MenuItem>
-
         {data &&
           data.map((community) => (
             <MenuItem
