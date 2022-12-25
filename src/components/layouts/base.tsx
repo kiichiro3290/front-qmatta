@@ -56,9 +56,11 @@ const Layout: FC<BaseLayoutProps> = ({ children, isCommunity }) => {
     dispatch(setMode(prefersDarkMode ? 'dark' : 'light'))
   }, [prefersDarkMode])
 
-  // 認証状態を確認する
+  // 認証状態を確認する→トークンがある場合のみ有効
+  // TODO: トークンのリフレッシュ
   useEffect(() => {
-    dispatch(fetchUserDataState())
+    const token = localStorage.getItem('token')
+    if (token) dispatch(fetchUserDataState())
   }, [])
 
   // ユーザのアイコン画像を取得する

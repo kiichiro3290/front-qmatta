@@ -156,6 +156,7 @@ export const QmaPage: React.FC = () => {
             if (isLoggedIn) {
               // バックエンドからクマのセリフを取得する
               const res = await getQmaReplyAndMoya(dialogue)
+              console.log(res)
 
               if (!res.error && res.response) {
                 setQmaMessage(res.response)
@@ -177,7 +178,9 @@ export const QmaPage: React.FC = () => {
             } else {
               // ログインしていない時は,NotLoginバージョンを使う
               const res = await getQmaReplyAndMoyaNotLogin(dialogue)
-              if (!res.error && res.response && res.negPhrase) {
+
+              console.log(res)
+              if (!res.error && res.response) {
                 setQmaMessage(res.response)
 
                 // モヤスコアが閾値を超えたかどうかを確認

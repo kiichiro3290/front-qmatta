@@ -102,7 +102,7 @@ export const SideBar: React.FC<SideBarProps> = ({ closeSideBar }) => {
       closeSideBar()
       location.reload()
     } else {
-      console.log(res.errorMessage)
+      // console.log(res.errorMessage)
     }
   }
 
