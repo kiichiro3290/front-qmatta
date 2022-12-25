@@ -1,6 +1,7 @@
 import { SideBar } from '../../layouts/SideBar/SideBar'
 import { AccountSettingModal } from '../Modal/AccountSettingModal/AccountSettingModal'
 
+import { userApi } from '~/api/client/back/user'
 import { selectTheme } from '~/store/theme/themeSlice'
 import { logout } from '~/store/user/userSlice'
 
@@ -17,6 +18,7 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -25,9 +27,10 @@ type HeaderProps = {
   userIconSrc?: string
 }
 
-export const Header: React.FC<HeaderProps> = ({ userIconSrc }) => {
+export const Header: React.FC<HeaderProps> = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false)
   const theme = useSelector(selectTheme)
+  const { data } = useQuery(['user', 'icon'], userApi.getUserIcon)
 
   const onClickMenuButton = useCallback(() => {
     setIsShowSideBar((val) => !val)
@@ -115,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({ userIconSrc }) => {
           }}
           onClick={handleAccountMenu}
         >
-          <Avatar src={userIconSrc} />
+          <Avatar src={data} />
         </Box>
 
         <AccountMenu

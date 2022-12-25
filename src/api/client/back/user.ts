@@ -189,3 +189,16 @@ export const getUserIcon = async (): Promise<GetUserIconsType> => {
     })
   return res
 }
+
+// TODO: react-queryへの移行
+export const userApi = {
+  getUserIcon: async () => {
+    const res = await qmattaClient()
+      .get('user/icon')
+      .then((res) => {
+        const userIcon = 'data:image/png;base64,' + res.data.userIcon
+        return userIcon
+      })
+    return res
+  },
+}
